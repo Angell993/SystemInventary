@@ -1,0 +1,41 @@
+* {
+    -fx-primary : #2A2E37;
+    -fx-secondary : #FFFF8D;
+    -fx-primarytext : #B2B2B2;
+    -fx-blue: #1976D2;
+    -fx-red: #FF0000;
+    -fx-color-1:#1976D2;
+    -fx-clorfondo: #FBF8F8;
+}
+.root{
+    -fx-background-color: -fx-primary;
+}
+/*Estilo de label*/
+.label{
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 21px;
+}
+
+/*Estilo de TextField*/
+.text-field{
+    -fx-text-fill: -fx-primarytext;
+    -fx-font-size : 19px;
+    -jfx-focus-color: -fx-secondary;
+    -fx-text-fill: derive(-fx-secondary, 20%);
+    -fx-background-color: -fx-primary;
+    -fx-border-color: white;
+    -fx-border-radius: 10px;
+}
+
+.botonCerrar{
+    -fx-background-color: #084B8A;
+    -fx-text-fill: white;
+    -fx-font-size: 21px;
+    -fx-border-color: none;
+    -fx-border-radius: 0px;
+    -fx-background-radius: 0px;
+}
+
+
+

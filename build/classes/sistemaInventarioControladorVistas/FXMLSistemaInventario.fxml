@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="879.0" prefWidth="1306.0" stylesheets="@../estiloscss/SistemaInventarioCss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaInventarioControladorVistas.FXMLSistemaInventarioController">
+    <children>
+        <MenuBar fx:id="menuBar" layoutY="60.0" prefHeight="42.0" prefWidth="1077.0" stylesheets="@../estiloscss/SistemaInventarioCss.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="229.0" AnchorPane.topAnchor="60.0">
+            <menus>
+                <Menu fx:id="cliente" mnemonicParsing="false" text="Clientes">
+                    <items>
+                        <MenuItem fx:id="regCliente" mnemonicParsing="false" onAction="#registrarCliente" text="Registar">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="USER_PLUS" />
+                     </graphic></MenuItem>
+                        <MenuItem fx:id="modCliente" mnemonicParsing="false" onAction="#modificarEliminarCliente" text="Modificar / Eliminar">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="SEARCH" />
+                     </graphic></MenuItem>
+                    </items>
+                </Menu>
+                <Menu fx:id="venta" mnemonicParsing="false" text="Ventas">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#registrarVentas" text="Registar">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="SHOPPING_BASKET" />
+                     </graphic></MenuItem>
+                    </items>
+                </Menu>
+                <Menu fx:id="articulo" mnemonicParsing="false" text="Articulos">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#registrarArticulo" text="Registar">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="PLUS" />
+                     </graphic></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#registrarTipoArticulo" text="Tipo Articulo">
+                     <graphic>
+                        <FontAwesomeIconView />
+                     </graphic></MenuItem>
+                        <MenuItem fx:id="modArticulo" mnemonicParsing="false" onAction="#modificarEliminarArticulo" text="Stock">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="SEARCH" />
+                     </graphic></MenuItem>
+                    </items>
+                </Menu>
+                <Menu fx:id="proveedor" mnemonicParsing="false" text="Proveedor">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#registrarProveedor" text="Registar">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="USER_PLUS" />
+                     </graphic></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#modificarEliminarProveedor" text="Modificar / Eliminar">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="SEARCH" />
+                     </graphic></MenuItem>
+                    </items>
+                </Menu>
+                <Menu fx:id="devolucion" mnemonicParsing="false" text="Devolucion">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#registrarDevolucion" text="Registar Devolución" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Reportes">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#reporteSistema" text="Reporte General">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="BAR_CHART" />
+                     </graphic></MenuItem>
+               </items></Menu>
+                <Menu fx:id="empleado" mnemonicParsing="false" text="Empleado">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#registrarEmpleado" text="Registar">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="USER_PLUS" />
+                     </graphic></MenuItem>
+                        <MenuItem mnemonicParsing="false" onAction="#modificarEliminarEmpleado" text="Modificar / Eliminar">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="SEARCH" />
+                     </graphic></MenuItem>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+      <Button alignment="TOP_CENTER" layoutX="1077.0" layoutY="60.0" mnemonicParsing="false" onAction="#calculadora" prefHeight="42.0" prefWidth="229.0" styleClass="calculadora" text="Calculadora" textFill="#f2ecec" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+         <graphic>
+            <FontAwesomeIconView glyphName="CALCULATOR" />
+         </graphic></Button>
+      <AnchorPane fx:id="cabezeraRootPane" prefHeight="62.0" prefWidth="1306.0">
+         <children>
+            <Label fx:id="identificador" alignment="CENTER" layoutX="433.0" layoutY="10.0" prefHeight="42.0" prefWidth="232.0" styleClass="top-line" AnchorPane.leftAnchor="433.0" AnchorPane.rightAnchor="484.0">
+               <font>
+                  <Font size="21.0" />
+               </font></Label>
+            <Label fx:id="fecha" alignment="CENTER" layoutX="1164.0" layoutY="10.0" prefHeight="42.0" prefWidth="128.0" styleClass="top-line">
+               <font>
+                  <Font size="21.0" />
+               </font></Label>
+            <Label fx:id="hora" alignment="CENTER" layoutX="995.0" layoutY="10.0" prefHeight="42.0" prefWidth="128.0" styleClass="top-line">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="rootPane" layoutY="110.0" prefHeight="761.0" prefWidth="1306.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0" />
+    </children>
+</AnchorPane>

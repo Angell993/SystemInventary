@@ -1,0 +1,46 @@
+* { 
+    -fx-my-menu-color: #263238;     /* Change according to your needs */ 
+    -fx-my-menu-color-highlighted: #455a64;  /* Change according to your needs */ 
+    -fx-my-menu-font-color: #B2B2B2;    /* Change according to your needs */ 
+    -fx-my-menu-font-color-highlighted: #FFFFFF; /* Change according to your needs */ 
+    -fx-primary : #2A2E37;
+    -fx-secondary : #FFFF8D;
+} 
+
+.root{
+    -fx-background-color: -fx-primary;
+}
+
+.top-line{
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 24px;
+}
+
+/* MENU BAR*/   
+.menu-bar { 
+    -fx-base: -fx-primary;
+    -fx-font-size: 22px;
+} 
+
+
+/*Cambios recien hechos*/
+
+.context-menu{
+    -fx-background-color: derive(-fx-primary, 20%);
+}
+
+.seleccionado{
+    -fx-border-color: -fx-secondary;
+    -fx-border-width: 0px 0px 3px 0px;
+}
+
+
+.glyph-icon{
+    -fx-fill: #ebeae8;
+    -glyph-size: 22px;
+}
+.calculadora{
+    -fx-background-color:  #0096C9;
+    -fx-font-size: 22px;
+} 

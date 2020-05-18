@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="637.0" prefWidth="1334.0" stylesheets="@../estiloscss/estilolabeltextFieldcss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proveedorControladorVistas.FXMLModificarEliminarProveedorController">
+    <children>
+      <TableView fx:id="tblProveedor" layoutY="198.0" onMouseClicked="#modificarProveedor" prefHeight="439.0" prefWidth="1334.0" stylesheets="@../estiloscss/estilosTableView.css">
+        <columns>
+          <TableColumn fx:id="clmDocumento" prefWidth="143.0" text="Documento" />
+            <TableColumn fx:id="clmNombre" prefWidth="145.0" text="Nombre" />
+            <TableColumn fx:id="clmApellidos" prefWidth="161.0" text="Apellido" />
+            <TableColumn fx:id="clmNombComercial" prefWidth="174.0" text="Comercio" />
+            <TableColumn fx:id="clmTelefono" minWidth="0.0" prefWidth="105.0" text="Teléfono" />
+            <TableColumn fx:id="clmEmail" minWidth="0.0" prefWidth="177.0" text="E-mail" />
+            <TableColumn fx:id="clmPais" minWidth="0.0" prefWidth="109.0" text="Pais" />
+            <TableColumn fx:id="clmDireccion" minWidth="0.0" prefWidth="162.0" text="Dirección" />
+            <TableColumn fx:id="clmProducto" minWidth="0.0" prefWidth="154.0" text="Producto" />
+        </columns>
+      </TableView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="438.0" layoutY="20.0" prefHeight="43.0" prefWidth="450.0" text="Modificar / Eliminar  Proveedor">
+         <font>
+            <Font size="29.0" />
+         </font></Label>
+      <TextField fx:id="fieldDocumento" layoutX="140.0" layoutY="101.0" onAction="#onEnter" prefHeight="42.0" prefWidth="229.0" promptText="Documento" />
+      <Button fx:id="btnBuscar" layoutX="16.0" layoutY="100.0" mnemonicParsing="false" onAction="#buscar" stylesheets="@../estiloscss/buttonestilocss.css" text="Buscar">
+         <graphic>
+            <FontAwesomeIconView glyphName="SEARCH" />
+         </graphic></Button>
+   </children> 
+</AnchorPane>

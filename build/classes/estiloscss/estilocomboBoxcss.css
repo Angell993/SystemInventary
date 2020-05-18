@@ -1,0 +1,56 @@
+* {
+    -fx-primary : #2A2E37;
+    -fx-secondary : #FFFF8D;
+    -fx-primarytext : #B2B2B2;
+    -fx-red: #FF0000;
+}
+
+/*estilo comboBox*/
+.combo-box{
+    -fx-text-fill: -fx-primarytext;
+    -fx-background-color: -fx-primary;
+    -fx-border-color: -fx-secondary;
+    -fx-font-size: 21px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.combo-box .Pseudo-classes{
+    -fx-background-color: -fx-primary;
+    -fx-vertical: -fx-primary;
+}
+
+.combo-box .list-cell {
+    -fx-background: -fx-secondary;
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: -fx-secondary;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.combo-box .list-view {
+    -fx-text-fill: -fx-primarytext;
+    -fx-background-color: -fx-primary;
+    -fx-border-color: -fx-secondary;
+    -fx-font-size: 21px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.combo-box-popup .list-view .list-cell {   
+    -fx-background-color: -fx-primary;
+    -fx-font-size: 21px;
+    -fx-text-fill: -fx-primarytext;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover {
+    -fx-background: -fx-primary;
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: -fx-primarytext;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover {
+    -fx-background: -fx-primary;
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: -fx-primarytext;
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" stylesheets="@../estiloscss/estiloLogin.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.FXMLIngresarController">
+     <children>
+        <AnchorPane fx:id="fondoLogin" layoutX="405.0" prefHeight="456.0" prefWidth="407.0">
+            <children>
+                
+                <GridPane layoutX="118.0" layoutY="151.0" prefHeight="147.0" prefWidth="249.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="349.0" minWidth="10.0" prefWidth="349.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="83.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <TextField fx:id="usuario" onAction="#onEnter" promptText="Empleado">
+                     <opaqueInsets>
+                       
+                     </opaqueInsets></TextField>
+                        <PasswordField fx:id="password" onAction="#onEnter" promptText="Contraseña" GridPane.rowIndex="1" />
+                    </children>
+                </GridPane>
+                <Label fx:id="error" alignment="CENTER" contentDisplay="CENTER" layoutX="91.0" layoutY="298.0" prefHeight="41.0" prefWidth="283.0" textAlignment="CENTER" textFill="#ee0707" />
+                <Button fx:id="entrar" contentDisplay="RIGHT" layoutX="145.0" layoutY="376.0" mnemonicParsing="false" onAction="#ingresarSistema" prefHeight="42.0" prefWidth="195.0" text="Entrar" textFill="#fcfcfc">
+                </Button>
+            <FontAwesomeIconView fill="#fcf8f8" glyphName="LOCK" layoutX="196.0" layoutY="121.0" size="125" wrappingWidth="105.4285717010498" />
+            <FontAwesomeIconView fill="#fffdfd" glyphName="USER" layoutX="48.0" layoutY="208.0" size="50" wrappingWidth="42.428571701049805" />
+            <FontAwesomeIconView fill="WHITE" glyphName="KEY" layoutX="48.0" layoutY="279.0" size="50" wrappingWidth="42.42857122421265" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
