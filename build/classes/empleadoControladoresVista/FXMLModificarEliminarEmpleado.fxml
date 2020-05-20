@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="637.0" prefWidth="1252.0" stylesheets="@../estiloscss/estilolabeltextFieldcss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="empleadoControladoresVista.FXMLModificarEliminarEmpleadoController">
+<AnchorPane id="AnchorPane" prefHeight="761.0" prefWidth="1252.0" stylesheets="@../estiloscss/estilolabeltextFieldcss.css" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="empleadoControladoresVista.FXMLModificarEliminarEmpleadoController">
     <children>
-        <TableView fx:id="tblEmpleado" layoutY="154.0" onMouseClicked="#modificarEmpleado" prefHeight="482.0" prefWidth="1252.0" stylesheets="@../estiloscss/estilosTableView.css">
+        <TableView fx:id="tblEmpleado" layoutY="154.0" onMouseClicked="#modificarEmpleado" prefHeight="484.0" prefWidth="1252.0" stylesheets="@../estiloscss/estilosTableView.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="153.0">
             <columns>
                 <TableColumn fx:id="clmNumEmpleado" prefWidth="178.0" text="Nº Empleado" />
                 <TableColumn fx:id="clmDocumento" prefWidth="262.0" text="Documento" />
@@ -21,14 +21,19 @@
                 <TableColumn fx:id="clmPuesto" minWidth="0.0" prefWidth="174.0" text="Puesto" />
             </columns>
         </TableView>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="240.0" layoutY="14.0" prefHeight="43.0" prefWidth="673.0" text="Modificar / Eliminar Empleado">
-         <font>
-            <Font size="29.0" />
-         </font></Label>
-        <TextField fx:id="fieldDocumento" layoutX="142.0" layoutY="90.0" onAction="#onEnter" prefHeight="42.0" prefWidth="251.0" promptText="Codigo Empleado" />
-      <Button fx:id="btnBuscar" layoutX="14.0" layoutY="89.0" mnemonicParsing="false" onAction="#buscarEmpleado" prefHeight="46.0" prefWidth="121.0" stylesheets="@../estiloscss/buttonestilocss.css" text="Buscar">
+        <TextField fx:id="fieldDocumento" layoutX="142.0" layoutY="90.0" onAction="#onEnter" prefHeight="42.0" prefWidth="251.0" promptText="Codigo Empleado" AnchorPane.leftAnchor="142.0" AnchorPane.topAnchor="90.0" />
+      <Button fx:id="btnBuscar" layoutX="14.0" layoutY="89.0" mnemonicParsing="false" onAction="#buscarEmpleado" prefHeight="46.0" prefWidth="121.0" stylesheets="@../estiloscss/buttonestilocss.css" text="Buscar" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="89.0">
          <graphic>
             <FontAwesomeIconView glyphName="SEARCH" />
          </graphic></Button>
+      <AnchorPane prefHeight="58.0" prefWidth="1252.0" styleClass="titulo" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+              <Label contentDisplay="CENTER" layoutX="25.0" layoutY="8.0" prefHeight="43.0" prefWidth="359.0" styleClass="titulo" text="Modificar  &amp;  Eliminar Empleado">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
     </children> 
 </AnchorPane>

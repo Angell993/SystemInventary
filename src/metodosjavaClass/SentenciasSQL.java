@@ -23,7 +23,7 @@ public class SentenciasSQL {
             + ", Pais, Ciudad, Localidad, Direccion, CodigoPostal, Empleado) VALUES ";
     public static String sqlModificarCliente = "UPDATE cliente SET ";
     public static String sqlEliminarCliente = "DELETE FROM cliente WHERE ";
-    public static String sqlConsultarDocumentoCliente = "SELECT Documento from cliente";
+    public static String sqlConsultarDocumentoCliente = "SELECT Documento, Nombre, Apellidos from cliente";
     public static String sqlClienteTabla = "Select id_Cliente, Documento,cod_tipo_documento, Nombre, Apellidos, Telefono, Pais, Ciudad, Localidad, Direccion, CodigoPostal, email, Empleado "
             + "from cliente ";
 
@@ -77,7 +77,6 @@ public class SentenciasSQL {
     public static String sqlArticulos = "SELECT `id_articulo`, `nombre` FROM `articulo` order by `id_articulo`;";
     public static String sqlCantidad = "Select `id_articulo`, `stock` from `articulo` where `id_articulo` = ";
     public static String obtenerPrecio = "Select precio_venta from `articulo` where `id_articulo` = ";
-    //public static String obtenerPrecio = "Select truncate(`precio_venta`/`stock`,2) AS precio_unidad from `articulo` where `id_articulo` = ";
     public static String sqlEliminarDetalleFactura = "DELETE from detalle_factura WHERE ";
     public static String sqlIdArticulo = "SELECT id_articulo from articulo where Nombre = ";
     public static String sqlDocumentoNombreCliente = "SELECT documento, Nombre from cliente where documento = ";
@@ -96,12 +95,16 @@ public class SentenciasSQL {
     public static String sqlFechas = "Select distinct fecha from ";
 
     /* Factura Sentencias*/
-    public static String sqlFactura = "SELECT articulo.nombre, articulo.precio_venta, sum(detalle_factura.cantidad) as cantidad, "
-            + "sum(detalle_factura.total) as total "
-            + "FROM factura "
-            + "	INNER JOIN detalle_factura ON "
-            + "	factura.`Nnm_factura` = detalle_factura.cod_factura "
-            + "	INNER JOIN articulo ON "
-            + "	detalle_factura.cod_articulo = articulo.id_articulo "
-            + "group by articulo.id_articulo";
+    public static String sqlConsulCliente = "SELECT Nombre, Apellidos from cliente where Documento = ";
+    public static String sqlDistintasFactura = "Select distinct(factura.Nnm_factura), Fecha_facturacion "
+            + "from factura where cod_cliente = ";
+    public static String sqlFacturaImprimir = "SELECT  articulo.nombre, detalle_factura.cantidad, articulo.precio_venta, "
+            + " detalle_factura.total, factura.cod_cliente"
+            + " FROM factura "
+            + " INNER JOIN detalle_factura ON factura.Nnm_factura = detalle_factura.cod_factura "
+            + " INNER JOIN articulo ON 	detalle_factura.cod_articulo = articulo.id_articulo "
+            + " where Nnm_factura = ";
+    
+    public static String sqlTicket = "Select Nnm_factura from factura where id_factura = (select max(id_factura) from factura)";
+
 }

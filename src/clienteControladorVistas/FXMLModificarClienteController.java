@@ -107,7 +107,7 @@ public class FXMLModificarClienteController implements Initializable {
         if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isNumero(txtCodigoPostal.getText()) && MetodosJavaClass.isNumero(numEmpleado.getText())) {
             //if (documentoValido(txtDni.getText())) {
             if (Alertas.eliminarConfirmacion()) {
-                String eliminar = SentenciasSQL.sqlEliminarCliente + " id_Cliente = '" + id;
+                String eliminar = SentenciasSQL.sqlEliminarCliente + " id_Cliente = " + id;
                 ConexionInventario.EjecutarSQL(eliminar);
                 cerrarVentana(event);
             }

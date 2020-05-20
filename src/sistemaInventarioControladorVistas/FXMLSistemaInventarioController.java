@@ -32,7 +32,8 @@ import ventasControladorVistas.FXMLRegistrarVentaController;
 public class FXMLSistemaInventarioController extends Thread implements Initializable {
 
     //Label mostrar el nombre del empleado en el label
-    @FXML MenuBar menuBar;
+    @FXML
+    MenuBar menuBar;
     @FXML
     private Label identificador, fecha, hora;
     @FXML
@@ -75,7 +76,7 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
             FXMLRegistrarVentaController ventaEmpl = loader.getController();
             ventaEmpl.recibirCodEmpleado(String.valueOf(numEmpleado));
             rootPane.getChildren().setAll(root);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(FXMLSistemaInventarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -167,6 +168,12 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
 
     }
 
+    @FXML
+    private void imprimir() {
+        ruta = "/imprimir/FXMLImprimir.fxml";
+        visualizarInterfaz.mostarVentana(ruta, rootPane);
+    }
+
     public void permisosSistemas(int codEmpleado) {
 
         if (codEmpleado == 2) {
@@ -174,8 +181,6 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
             devolucion.setVisible(false);
             reporte.setVisible(false);
             empleado.setVisible(false);
-            /*modCliente.setVisible(false);
-            modArticulo.setVisible(false);*/
         }
 
     }
@@ -205,7 +210,7 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
     }
-    
+
 }

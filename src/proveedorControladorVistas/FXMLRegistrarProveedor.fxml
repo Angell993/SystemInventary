@@ -11,14 +11,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="637.0" prefWidth="1152.0" stylesheets="@../estiloscss/estilolabeltextFieldcss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proveedorControladorVistas.FXMLRegistrarProveedorController">
+<AnchorPane id="AnchorPane" prefHeight="761.0" prefWidth="1306.0" stylesheets="@../estiloscss/estilolabeltextFieldcss.css" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proveedorControladorVistas.FXMLRegistrarProveedorController">
    <children>
-      <Label layoutX="504.0" layoutY="19.0" prefHeight="44.0" prefWidth="189.0" text="Registro Proveedor">
-         <font>
-            <Font size="29.0" />
-         </font>
-      </Label>
-      <GridPane layoutX="96.0" layoutY="104.0" prefHeight="345.0" prefWidth="480.0">
+      <GridPane layoutX="125.0" layoutY="158.0" prefHeight="345.0" prefWidth="480.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="254.0" minWidth="10.0" prefWidth="120.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="372.0" minWidth="10.0" prefWidth="276.0" />
@@ -55,7 +50,7 @@
             </GridPane>
          </children>
       </GridPane>
-      <GridPane layoutX="662.0" layoutY="91.0" prefHeight="371.0" prefWidth="385.0">
+      <GridPane layoutX="740.0" layoutY="145.0" prefHeight="371.0" prefWidth="385.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="188.0" minWidth="10.0" prefWidth="119.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="266.0" minWidth="10.0" prefWidth="266.0" />
@@ -83,7 +78,7 @@
             <TextField fx:id="txtProducto" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <GridPane layoutX="369.0" layoutY="502.0" prefHeight="50.0" prefWidth="363.0" stylesheets="@../estiloscss/buttonestilocss.css">
+      <GridPane layoutX="472.0" layoutY="613.0" prefHeight="50.0" prefWidth="363.0" stylesheets="@../estiloscss/buttonestilocss.css">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -102,5 +97,14 @@
                </graphic></Button>
          </children>
       </GridPane>
+      <AnchorPane prefHeight="58.0" prefWidth="1306.0" styleClass="titulo" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="25.0" layoutY="7.0" prefHeight="44.0" prefWidth="189.0" styleClass="titulo" text="Proveedor">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

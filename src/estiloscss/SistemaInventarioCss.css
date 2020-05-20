@@ -43,4 +43,5 @@
 .calculadora{
     -fx-background-color:  #0096C9;
     -fx-font-size: 22px;
+    -fx-border: 0px 0px 0px 0px;
 } 

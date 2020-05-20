@@ -137,6 +137,8 @@ public class FXMLModificarEliminarClienteController implements Initializable {
                 Cliente aux = enviarDatos.getCliente();
                 if (aux != null) {
                     this.tblCliente.refresh();
+                }else{
+                   this.tblCliente.refresh(); 
                 }
             } catch (IOException e) {
                 Alertas.mensajeError(e.getLocalizedMessage());

@@ -27,8 +27,6 @@ import metodosjavaClass.MetodosJavaClass;
 import metodosjavaClass.SentenciasSQL;
 import metodosjavaClass.VentanaRootPane;
 import reportesistemainventario.CrearInforme;
-import ticketventa.Ticket;
-import ticketventa.Venta;
 
 public class FXMLPagoController implements Initializable {
 

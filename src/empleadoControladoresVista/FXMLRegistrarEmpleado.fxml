@@ -11,13 +11,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="637.0" prefWidth="1152.0" stylesheets="@../estiloscss/estilolabeltextFieldcss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="empleadoControladoresVista.FXMLRegistrarEmpleadoController">
+<AnchorPane id="AnchorPane" prefHeight="637.0" prefWidth="1152.0" stylesheets="@../estiloscss/estilolabeltextFieldcss.css" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="empleadoControladoresVista.FXMLRegistrarEmpleadoController">
    <children>
-      <Label alignment="CENTER" layoutX="345.0" layoutY="33.0" prefHeight="40.0" prefWidth="289.0" text="Registro de Empleado" AnchorPane.leftAnchor="345.0" AnchorPane.rightAnchor="345.0">
-         <font>
-            <Font size="29.0" />
-         </font></Label>
-      <GridPane layoutX="103.0" layoutY="142.0" prefHeight="220.0" prefWidth="451.0">
+      <GridPane layoutX="103.0" layoutY="142.0" prefHeight="220.0" prefWidth="451.0" AnchorPane.leftAnchor="103.0" AnchorPane.rightAnchor="598.0" AnchorPane.topAnchor="142.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="201.0" minWidth="10.0" prefWidth="134.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="277.0" minWidth="10.0" prefWidth="277.0" />
@@ -48,7 +44,7 @@
             </GridPane>
          </children>
       </GridPane>
-      <GridPane layoutX="640.0" layoutY="147.0" prefHeight="210.0" prefWidth="389.0">
+      <GridPane layoutX="640.0" layoutY="147.0" prefHeight="210.0" prefWidth="389.0" AnchorPane.topAnchor="142.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="216.0" minWidth="10.0" prefWidth="124.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="304.0" minWidth="10.0" prefWidth="228.0" />
@@ -86,5 +82,14 @@
                </graphic></Button>
          </children>
       </GridPane>
+      <AnchorPane layoutX="-6.0" prefHeight="58.0" prefWidth="1238.0" styleClass="titulo" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label layoutX="26.0" layoutY="9.0" prefHeight="40.0" prefWidth="289.0" styleClass="titulo" text="Empleado" AnchorPane.leftAnchor="26.0" AnchorPane.rightAnchor="664.0">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

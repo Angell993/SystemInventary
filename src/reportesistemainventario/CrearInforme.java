@@ -89,5 +89,22 @@ public class CrearInforme {
         }
     }
 
+    public void factura(String factura, String url) {
+        Map parametro = new HashMap();
+        try {
+            parametro.put("operacion", factura);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(url + ".jasper", parametro,
+                    con.conectar());
+
+            JRViewer viewer = new JRViewer(jasperPrint);
+            JFrame frame = new JFrame("Sistema de Reporte");
+            frame.getContentPane().add(viewer);
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.pack();
+            frame.setVisible(true);
+        } catch (JRException e) {
+            System.out.println(e.toString() + e);
+        }
+    }
     
 }

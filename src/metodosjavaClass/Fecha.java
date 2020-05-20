@@ -2,9 +2,11 @@ package metodosjavaClass;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import javafx.scene.control.DatePicker;
 
 public class Fecha {
 
@@ -33,4 +35,9 @@ public class Fecha {
         return pantalla;
     }
 
+    public static String fechaDB(DatePicker fech) {
+        LocalDate fecha = fech.getValue();
+        return fecha.toString();
+    }
+    
 }

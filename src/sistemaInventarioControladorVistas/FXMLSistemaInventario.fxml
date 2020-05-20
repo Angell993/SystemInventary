@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="879.0" prefWidth="1306.0" stylesheets="@../estiloscss/SistemaInventarioCss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaInventarioControladorVistas.FXMLSistemaInventarioController">
     <children>
-        <MenuBar fx:id="menuBar" layoutY="60.0" prefHeight="42.0" prefWidth="1077.0" stylesheets="@../estiloscss/SistemaInventarioCss.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="229.0" AnchorPane.topAnchor="60.0">
+        <MenuBar fx:id="menuBar" layoutY="60.0" prefHeight="48.0" prefWidth="933.0" stylesheets="@../estiloscss/SistemaInventarioCss.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="373.0" AnchorPane.topAnchor="60.0">
             <menus>
                 <Menu fx:id="cliente" mnemonicParsing="false" text="Clientes">
                     <items>
@@ -87,11 +87,7 @@
                 </Menu>
             </menus>
         </MenuBar>
-      <Button alignment="TOP_CENTER" layoutX="1077.0" layoutY="60.0" mnemonicParsing="false" onAction="#calculadora" prefHeight="42.0" prefWidth="229.0" styleClass="calculadora" text="Calculadora" textFill="#f2ecec" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
-         <graphic>
-            <FontAwesomeIconView glyphName="CALCULATOR" />
-         </graphic></Button>
-      <AnchorPane fx:id="cabezeraRootPane" prefHeight="62.0" prefWidth="1306.0">
+      <AnchorPane fx:id="cabezeraRootPane" prefHeight="56.0" prefWidth="1306.0">
          <children>
             <Label fx:id="identificador" alignment="CENTER" layoutX="433.0" layoutY="10.0" prefHeight="42.0" prefWidth="232.0" styleClass="top-line" AnchorPane.leftAnchor="433.0" AnchorPane.rightAnchor="484.0">
                <font>
@@ -109,5 +105,19 @@
          </children>
       </AnchorPane>
       <AnchorPane fx:id="rootPane" layoutY="110.0" prefHeight="761.0" prefWidth="1306.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0" />
+      <AnchorPane layoutX="933.0" layoutY="60.0" prefHeight="48.0" prefWidth="373.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+         <children>
+            <Button layoutX="1.0" mnemonicParsing="false" onAction="#imprimir" prefHeight="48.0" prefWidth="143.0" styleClass="calculadora" text="Imprimir" textFill="#f2ecec">
+               <graphic>
+                  <FontAwesomeIconView glyphName="PRINT" size="22" />
+               </graphic>
+            </Button>
+            <Button alignment="TOP_CENTER" layoutX="146.0" mnemonicParsing="false" onAction="#calculadora" prefHeight="48.0" prefWidth="227.0" styleClass="calculadora" text="Calculadora" textFill="#f2ecec">
+               <graphic>
+                  <FontAwesomeIconView glyphName="CALCULATOR" />
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
     </children>
 </AnchorPane>

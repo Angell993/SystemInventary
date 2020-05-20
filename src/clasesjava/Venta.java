@@ -20,6 +20,13 @@ public class Venta {
     private FloatProperty precioArticulo;
     private FloatProperty totalCompra;
 
+    public Venta(String nombreArticulo, int cantidadCompra, Float precioArticulo, Float totalCompra) {
+        this.nombreArticulo = new SimpleStringProperty(nombreArticulo);
+        this.cantidadCompra = new SimpleIntegerProperty(cantidadCompra);
+        this.precioArticulo = new SimpleFloatProperty(precioArticulo);
+        this.totalCompra = new SimpleFloatProperty(totalCompra);
+    }
+
     public Venta(String numeroFactura, int numeroCompra, String nombreArticulo, int cantidadCompra, Float precioArticulo, Float totalCompra) {
         this.numeroFactura = new SimpleStringProperty(numeroFactura);
         this.numeroCompra = new SimpleIntegerProperty(numeroCompra);
