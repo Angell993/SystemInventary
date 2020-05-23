@@ -63,6 +63,8 @@ public class FXMLCalculadoraController implements Initializable {
     Button btnComa;
     @FXML
     Button btnBorrar;
+    @FXML
+    Button btnCerrar;
 
     /*Aumentar celdas GridPane*/
     
@@ -245,6 +247,7 @@ public class FXMLCalculadoraController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //calculadoraGridPane.add(btn0, 0, 0,2,3);
+        capturarTeclas();
     }
 
     private void operacionesLogicas() {
@@ -345,6 +348,9 @@ public class FXMLCalculadoraController implements Initializable {
             }
             if (e.getCode() == KeyCode.DECIMAL) {
                 btnComa.fire();
+            }
+            if (e.getCode() == KeyCode.ESCAPE) {
+               btnCerrar.fire();
             }
         });
 
