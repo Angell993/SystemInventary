@@ -21,8 +21,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -52,6 +52,7 @@ public class FXMLModificarEliminarEmpleadoController implements Initializable {
 
     private ObservableList<Empleado> listaEmpleados;
     private ObservableList<Empleado> listaSelectEmpleado;
+    private AnchorPane rootPane;
 
     private ObservableList<Empleado> llenarTablaEmpleados(ObservableList<Empleado> empleadoLista, String sWhere) {
         empleadoLista = FXCollections.observableArrayList();
@@ -82,12 +83,10 @@ public class FXMLModificarEliminarEmpleadoController implements Initializable {
         if (event.getClickCount() == 2) {
             try {
                 Empleado empleado = tblEmpleado.getSelectionModel().getSelectedItem();
-                System.out.println(empleado.toString());
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/empleadoControladoresVista/FXMLModificarEmpleado.fxml"));
                 Parent root = loader.load();
-                System.out.println("Voy a cargar el controlador de mod and delete...........................");
                 FXMLModificarEmpleadoController enviarDatos = loader.getController();
-                enviarDatos.recibirDatos(empleado);
+                enviarDatos.recibirDatos(empleado, rootPane);
 
                 Scene scene_page = new Scene(root);
                 Stage stage = new Stage();
@@ -114,21 +113,24 @@ public class FXMLModificarEliminarEmpleadoController implements Initializable {
         tblEmpleado.setItems(llenarTablaEmpleados(listaEmpleados, ""));
     }
 
-   /*
     @FXML
     public void onEnter(ActionEvent ae) {
         btnBuscar.fire();
-    }*/
+    }
+
     @FXML
-    public void buscarEmpleado(KeyEvent event) {
-        String sWhere = fieldDocumento.getText();
+    public void buscarEmpleado(ActionEvent event) {
+            String sWhere = fieldDocumento.getText();
         if (fieldDocumento.getText() != null && !fieldDocumento.getText().contentEquals("")) {
             listaSelectEmpleado = FXCollections.observableArrayList();
-            tblEmpleado.setItems(llenarTablaEmpleados(listaSelectEmpleado, sWhere));
-            if (tblEmpleado.getItems().isEmpty()) {
-                Alertas.mensajeErrorPers("Consulta errónea", "El empleado con el nº de documento " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un documento válido");
-                fieldDocumento.deleteText(sWhere.length() - 1, sWhere.length());
-            }
+            llenarTablaEmpleados(listaSelectEmpleado, sWhere);
+            tblEmpleado.setItems(listaSelectEmpleado);
+        } else if (fieldDocumento.getText() == null || fieldDocumento.getText().contentEquals("")) {
+            Alertas.mensajeErrorPers("Búsqueda errónea", "Debe introducir un número de DNI o Nº Cliente para buscar");
         }
+    }
+    
+    public void recibirInformacion(AnchorPane rootPane){
+        this.rootPane = rootPane;
     }
 }

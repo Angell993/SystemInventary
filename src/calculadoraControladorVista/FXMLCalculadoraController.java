@@ -8,9 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.GridPane;
 import metodosjavaClass.OperadoresLogicos;
 import static metodosjavaClass.VentanaRootPane.closeVentana;
 
@@ -67,12 +64,11 @@ public class FXMLCalculadoraController implements Initializable {
 
     /*Aumentar celdas GridPane*/
     
-    @FXML
-    GridPane calcGridPane;
+    
     //TextFaild total
     @FXML
     TextField total;
-    
+
     //metodos de cada boton
     @FXML
     private void clic_cero(ActionEvent event) {
@@ -245,7 +241,6 @@ public class FXMLCalculadoraController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //calculadoraGridPane.add(btn0, 0, 0,2,3);
-        capturarTeclas();
     }
 
     private void operacionesLogicas() {
@@ -292,63 +287,5 @@ public class FXMLCalculadoraController implements Initializable {
             return false;
         }
         return true;
-    }
-    
-     @FXML
-    private void capturarTeclas() {
-        calcGridPane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
-            if ((e.getCode() == KeyCode.NUMPAD0) || (e.getCode() == KeyCode.DIGIT0)) {
-                btn0.fire();
-            }
-            if ((e.getCode() == KeyCode.NUMPAD1) || (e.getCode() == KeyCode.DIGIT1)) {
-                btn1.fire();
-            }
-            if ((e.getCode() == KeyCode.NUMPAD2) || (e.getCode() == KeyCode.DIGIT2)) {
-                btn2.fire();
-            }
-            if ((e.getCode() == KeyCode.NUMPAD3) || (e.getCode() == KeyCode.DIGIT3)) {
-                btn3.fire();
-            }
-            if ((e.getCode() == KeyCode.NUMPAD4) || (e.getCode() == KeyCode.DIGIT4)) {
-                btn4.fire();
-            }
-            if ((e.getCode() == KeyCode.NUMPAD5) || (e.getCode() == KeyCode.DIGIT5)) {
-                btn5.fire();
-            }
-            if ((e.getCode() == KeyCode.NUMPAD6) || (e.getCode() == KeyCode.DIGIT6)) {
-                btn6.fire();
-            }
-            if ((e.getCode() == KeyCode.NUMPAD7) || (e.getCode() == KeyCode.DIGIT7)) {
-                btn7.fire();
-            }
-            if ((e.getCode() == KeyCode.NUMPAD8) || (e.getCode() == KeyCode.DIGIT8)) {
-                btn8.fire();
-            }
-            if ((e.getCode() == KeyCode.NUMPAD9) || (e.getCode() == KeyCode.DIGIT9)) {
-                btn9.fire();
-            }
-            if (e.getCode() == KeyCode.ADD) {
-                btnSuma.fire();         //Exception in thread "JavaFX Application Thread" java.lang.NullPointerException
-            }
-            if (e.getCode() == KeyCode.DELETE) {
-                btnBorrar.fire();
-            }
-            if (e.getCode() == KeyCode.SUBTRACT) {
-                btnRestar.fire();
-            }
-            if (e.getCode() == KeyCode.DIVIDE) {
-                btnDividir.fire();
-            }
-            if (e.getCode() == KeyCode.MULTIPLY) {
-                btnMultiplicar.fire();
-            }
-            if (e.getCode() == KeyCode.ENTER) {
-                btnIgual.fire();
-            }
-            if (e.getCode() == KeyCode.DECIMAL) {
-                btnComa.fire();
-            }
-        });
-
     }
 }

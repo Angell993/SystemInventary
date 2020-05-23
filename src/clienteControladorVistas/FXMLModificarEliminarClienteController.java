@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 import clasesjava.Cliente;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import metodosjavaClass.Alertas;
@@ -63,6 +63,7 @@ public class FXMLModificarEliminarClienteController implements Initializable {
     private ObservableList<Cliente> listaClientes;
     private ObservableList<Cliente> listaSelectClientes;
     private Cliente cliente;
+    private AnchorPane rootPane;
 
     public ObservableList<Cliente> llenarTabla(ObservableList<Cliente> clienteLista, String sWhere) {
         clienteLista = FXCollections.observableArrayList();
@@ -101,24 +102,22 @@ public class FXMLModificarEliminarClienteController implements Initializable {
         tblCliente.setItems(llenarTabla(listaClientes, ""));
     }
 
-   /*
     @FXML
-    public void onEnter(KeyEvent ae) {
+    public void onEnter(ActionEvent ae) {
         btnBuscar.fire();
-    }*/
+    }
+
     @FXML
-    public void buscarCliente(KeyEvent event) {
-        String sWhere = fieldDocumento.getText();
+    public void buscarCliente(ActionEvent event) {
+            String sWhere = fieldDocumento.getText();
         if (fieldDocumento.getText() != null && !fieldDocumento.getText().contentEquals("")) {
             listaSelectClientes = FXCollections.observableArrayList();
             tblCliente.setItems(llenarTabla(listaSelectClientes, sWhere));
-            if (tblCliente.getItems().isEmpty()) {
-                Alertas.mensajeErrorPers("Consulta errónea", "El cliente con el nº de documento " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un documento válido");
-                fieldDocumento.deleteText(sWhere.length() - 1, sWhere.length());
-            }
+        } else if (fieldDocumento.getText() == null || fieldDocumento.getText().contentEquals("")) {
+            Alertas.mensajeErrorPers("Búsqueda errónea", "Debe introducir un número de DNI o Nº Cliente para buscar");
         }
     }
-    
+
     @FXML
     private void modificarCliente(MouseEvent event) {
         if (event.getClickCount() == 2) {
@@ -127,7 +126,7 @@ public class FXMLModificarEliminarClienteController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/clienteControladorVistas/FXMLModificarCliente.fxml"));
                 Parent root = loader.load();
                 FXMLModificarClienteController enviarDatos = loader.getController();
-                enviarDatos.datosCliente(listaClientes, cliente);
+                enviarDatos.datosCliente(listaClientes, cliente, rootPane);
 
                 Scene scene_page = new Scene(root);
                 Stage stage = new Stage();
@@ -150,5 +149,8 @@ public class FXMLModificarEliminarClienteController implements Initializable {
 
     }
 
+    public void recibirInformacion(AnchorPane rootPane){
+        this.rootPane = rootPane;
+    }
 
 }
