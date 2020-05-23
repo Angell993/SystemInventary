@@ -22,8 +22,8 @@
             <TableColumn fx:id="clmNombProveedor" prefWidth="293.0" text="Proveedor" />
         </columns>
       </TableView>
-      <TextField fx:id="fieldDocumento" layoutX="157.0" layoutY="91.0" onKeyReleased="#buscarArtículo" prefHeight="42.0" prefWidth="309.0" promptText="Codigo de Barras" AnchorPane.leftAnchor="157.0" AnchorPane.topAnchor="91.0" />
-      <Button fx:id="btnBuscar" layoutX="6.0" layoutY="90.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="137.0" stylesheets="@../estiloscss/buttonestilocss.css" text="Buscar" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="90.0">
+      <TextField fx:id="fieldDocumento" layoutX="157.0" layoutY="91.0" onAction="#onEnter" prefHeight="42.0" prefWidth="309.0" promptText="Codigo de Barras" AnchorPane.leftAnchor="157.0" AnchorPane.topAnchor="91.0" />
+      <Button fx:id="btnBuscar" layoutX="6.0" layoutY="90.0" mnemonicParsing="false" onAction="#buscarEmpleado" prefHeight="46.0" prefWidth="137.0" stylesheets="@../estiloscss/buttonestilocss.css" text="Buscar" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="90.0">
          <graphic>
             <FontAwesomeIconView glyphName="SEARCH" />
          </graphic></Button>

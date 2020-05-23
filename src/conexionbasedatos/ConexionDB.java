@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 public class ConexionDB {
     private final String user = "root";
-    private final String pass = "root";
+    private final String pass = "saladino";
     private final String server = "jdbc:mysql://localhost:3306/sistemainventario?verifyServerCertificate=false&useSSL=true";
     private final String espaniadb = "jdbc:mysql://localhost:3306/espania?verifyServerCertificate=false&useSSL=true";
     private Connection conexion;
