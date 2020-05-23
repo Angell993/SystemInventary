@@ -13,14 +13,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import metodosjavaClass.SentenciasSQL;
 import clasesjava.Item;
 import clasesjava.Venta;
@@ -28,12 +23,14 @@ import conexionbasedatos.ConexionDB;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Connection;
+import java.util.Arrays;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import metodosjavaClass.Alertas;
 import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.MetodosJavaClass;
@@ -76,6 +73,7 @@ public class FXMLRegistrarVentaController implements Initializable {
     private int n_Compra = 0;
     private Float total;
     private Venta venta;
+    private AnchorPane anchorPane;
 
     @FXML
     private void realizarPago(ActionEvent event) {
@@ -90,35 +88,21 @@ public class FXMLRegistrarVentaController implements Initializable {
             try {
                 Parent root = loader.load();
                 FXMLPagoController pagar = loader.getController();
-                pagar.recibirInformacionPago(nFactura.getText(), codEmpleado, String.valueOf(sumarDineroTotal()), idCantidadComprada);
-                Scene scene_page = new Scene(root);
-                Stage stage = new Stage();
-                stage.setTitle("Metodo Pago");
-                //Con el Modality.APPLICATION_MODAL nos permite que hasta que no terminemos con la ventana que se abre
-                //no dejara que utilize la otra ventana.
-                stage.initStyle(StageStyle.UNDECORATED);
-                stage.initModality(Modality.APPLICATION_MODAL);
-                Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.setScene(scene_page);
-                stage.showAndWait();
-
-                if (pagar.isConfirmacion()) {
-                    generarFactura();
-                    cancelar();
-                    transaction = con.conectar();
-                } else {
-                    transaction = con.conectar();
-                }
-
+                pagar.recibirInformacionPago(nFactura.getText(), codEmpleado, String.valueOf(sumarDineroTotal()), idCantidadComprada, anchorPane, listaArticulo);
+                System.out.println(nFactura.getText());
+                System.out.println(codEmpleado);
+                System.out.println(String.valueOf(sumarDineroTotal()));
+                System.out.println(idCantidadComprada);
+                System.out.println(Arrays.toString(listaArticulo.toArray()));
+                
+                //No se porque me da el error de NullPointerException
+                anchorPane.getChildren().setAll(root);
             } catch (IOException ex) {
                 Logger.getLogger(FXMLSistemaInventarioController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (SQLException ex) {
             Logger.getLogger(FXMLRegistrarVentaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        /* else {
-            System.out.println("no has registrado ninguna compra");
-        }*/
 
     }
 
@@ -213,14 +197,14 @@ public class FXMLRegistrarVentaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         transaction = con.conectar();
-        generarFactura();
+        generarNFactura();
         listaArticulo = FXCollections.observableArrayList();
         listaTotalCompra = FXCollections.observableArrayList();
         llenarCmb.llenarComboBox(listaArticulos, cmbArticulo, SentenciasSQL.sqlArticulos);
         precioArticulo.setText("0,00");
     }
 
-    private void generarFactura() {
+    private void generarNFactura() {
         nFactura.setText(String.valueOf(MetodosJavaClass.identificador()));
         while (!existeFactura(nFactura.getText())) {
             nFactura.setText(String.valueOf(MetodosJavaClass.identificador()));
@@ -241,8 +225,9 @@ public class FXMLRegistrarVentaController implements Initializable {
         }
     }
 
-    public void recibirCodEmpleado(String empleado) {
+    public void recibirCodEmpleado(String empleado, AnchorPane anchorPane) {
         codEmpleado = empleado;
+        this.anchorPane = anchorPane;
     }
 
     //He modificado aquí, cerrando la conexion de resultset
@@ -272,7 +257,6 @@ public class FXMLRegistrarVentaController implements Initializable {
         return true;
     }
 
-    //he cerrado la conexion de ResultSet
     private Boolean existeFactura(String codFactura) {
         try {
             try (ResultSet dato = ConexionInventario.sSQL(SentenciasSQL.sqlConsultarFactura)) {
@@ -291,13 +275,12 @@ public class FXMLRegistrarVentaController implements Initializable {
     private ObservableList<Venta> guardarCompraOB() {
         venta = new Venta();
         if (comprobarCampos()) {
-            String n_factura = String.valueOf(nFactura.getText());
             n_Compra++;
             String nombreArt = cmbArticulo.getSelectionModel().getSelectedItem().getDescripcion();
             Float precio = Float.parseFloat(precioArticulo.getText());
             int cantidad = Integer.parseInt(cmbCantidad.getSelectionModel().getSelectedItem().getDescripcion());
             total = precio * cantidad;
-            venta.setNumeroFactura(n_factura);
+            venta.setNumeroFactura(nFactura.getText());
             venta.setNumeroCompra(n_Compra);
             venta.setNombreArticulo(nombreArt);
             venta.setCantidadCompra(cantidad);
@@ -333,5 +316,41 @@ public class FXMLRegistrarVentaController implements Initializable {
             Logger.getLogger(FXMLRegistrarVentaController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return idStock;
+    }
+    
+    public void recuperarEmpleado(String empleado){
+        this.codEmpleado = empleado;
+        transaction = con.conectar();
+    }
+    
+    public void recuperarRegistros(ObservableList<Venta> listventa, String factura, String codEmpleado, AnchorPane rootPane){
+        System.out.println("Estoy recuperando datos: "+Arrays.toString(listventa.toArray()));
+        this.anchorPane = rootPane;
+        this.codEmpleado = codEmpleado;
+        transaction = con.conectar();
+        venta = new Venta();
+        nFactura.setText(factura);
+        for (int i = 0; i < listventa.size(); i++) {
+            total = listventa.get(i).getPrecioArticulo() * listventa.get(i).getCantidadCompra();
+            venta.setNumeroFactura(nFactura.getText());
+            venta.setNumeroCompra(i);
+            venta.setNombreArticulo(listventa.get(i).getNombreArticulo());
+            venta.setCantidadCompra(listventa.get(i).getCantidadCompra());
+            venta.setPrecioArticulo(listventa.get(i).getPrecioArticulo());
+            venta.setTotalCompra((float) (Math.rint(total * 10) / 10));
+            listaArticulo.add(venta);
+            listaTotalCompra.add(Double.valueOf(total));
+        }
+        clmNumVenta.setCellValueFactory(new PropertyValueFactory<>("numeroCompra"));
+        clmNombre.setCellValueFactory(new PropertyValueFactory<>("nombreArticulo"));
+        clmCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidadCompra"));
+        clmPrecio.setCellValueFactory(new PropertyValueFactory<>("precioArticulo"));
+        clmTotal.setCellValueFactory(new PropertyValueFactory<>("totalCompra"));
+
+        tblVenta.setItems(listaArticulo);
+        sumarDineroTotal();
+        cmbArticulo.getSelectionModel().select(-1);
+        cmbCantidad.getSelectionModel().select(-1);
+        precioArticulo.setText("0,00");
     }
 }

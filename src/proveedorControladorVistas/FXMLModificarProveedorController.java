@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import metodosjavaClass.Alertas;
 import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.MetodosJavaClass;
@@ -40,8 +41,9 @@ public class FXMLModificarProveedorController implements Initializable {
     private ObservableList<Item> listaProvincias;
     private ObservableList<Item> listaCiudades;
     private ObservableList<Item> listaDocumento;
-    private final MetodosJavaClass metodosJavaclass = new MetodosJavaClass();
     private final LLenarCombos llenarCmb = new LLenarCombos();
+    private final VentanaRootPane visualizarInterfaz = new VentanaRootPane();
+    private AnchorPane rootPane;
     private String sentencia;
     private Proveedor proveedor;
     private int id;
@@ -96,13 +98,15 @@ public class FXMLModificarProveedorController implements Initializable {
                 if (Alertas.eliminarConfirmacion()) {
                     sentencia = SentenciasSQL.sqlEliminarProveedor + " id_proveedor = " + id;
                     ConexionInventario.EjecutarSQL(sentencia);
+                    recargarVentana();
                     cerrarVentana(event); 
                 }                
             }
         }
     }
 
-    public void datosProveedor(Proveedor proveedor) {
+    public void datosProveedor(Proveedor proveedor, AnchorPane rootPane) {
+        this.rootPane = rootPane;
         this.proveedor = proveedor;
         id = proveedor.getIdProveedor();
         
@@ -171,5 +175,8 @@ public class FXMLModificarProveedorController implements Initializable {
     public Proveedor getProveedor() {
         return proveedor;
     }
-
+    
+    private void recargarVentana(){
+        visualizarInterfaz.mostarVentana("/proveedorControladorVistas/FXMLModificarEliminarProveedor.fxml", rootPane);
+    }
 }

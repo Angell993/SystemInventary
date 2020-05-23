@@ -23,6 +23,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -60,6 +61,7 @@ public class FXMLModificarEliminarProveedorController implements Initializable {
     private ObservableList<Proveedor> listaProveedores;
     private ObservableList<Proveedor> listaSeleccionProveedores;
     private Proveedor proveedor ;
+    private AnchorPane rootPane;
 
     private ObservableList<Proveedor> llenarTablaProveedores(ObservableList<Proveedor> provLsita, String sWhere) {
         provLsita = FXCollections.observableArrayList();
@@ -92,11 +94,10 @@ public class FXMLModificarEliminarProveedorController implements Initializable {
         if (event.getClickCount() == 2) {
             try {
                 proveedor = tblProveedor.getSelectionModel().getSelectedItem();
-                
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/proveedorControladorVistas/FXMLModificarProveedor.fxml"));
                 Parent root = loader.load();
                 FXMLModificarProveedorController enviarDatos = loader.getController();
-                enviarDatos.datosProveedor(proveedor);
+                enviarDatos.datosProveedor(proveedor, rootPane);
 
                 Scene scene_page = new Scene(root);
                 Stage stage = new Stage();
@@ -122,7 +123,7 @@ public class FXMLModificarEliminarProveedorController implements Initializable {
         tblProveedor.setItems(llenarTablaProveedores(listaProveedores, ""));
     }
 
-    @FXML
+     @FXML
     public void buscarProveedor(KeyEvent event) {
         String sWhere = fieldDocumento.getText();
         if (fieldDocumento.getText() != null && !fieldDocumento.getText().contentEquals("")) {
@@ -132,6 +133,11 @@ public class FXMLModificarEliminarProveedorController implements Initializable {
                 Alertas.mensajeErrorPers("Consulta errónea", "El proveedor con el nº de documento " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un documento válido");
                 fieldDocumento.deleteText(sWhere.length() - 1, sWhere.length());
             }
-        }
+        }else  
+            tblProveedor.setItems(llenarTablaProveedores(listaProveedores, ""));
+    }
+    
+    public void recibirInformacion(AnchorPane rootPane){
+        this.rootPane = rootPane;
     }
 }

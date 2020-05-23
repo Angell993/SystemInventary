@@ -26,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import metodosjavaClass.Alertas;
 import metodosjavaClass.SentenciasSQL;
 
@@ -47,23 +48,24 @@ public class FXMLModificarEliminarArticuloController implements Initializable {
     private TableColumn<Articulo, String> clmDescArticulo;
     @FXML
     private TableColumn<Articulo, String> clmNombProveedor;
-    
-    private ObservableList<Articulo> listaArticulos;
-    private ObservableList<Articulo> listaSelectArticulo;
-    private Articulo articulo;
     @FXML
     private TextField fieldDocumento;
     @FXML
     private Button btnBuscar;
 
+    private ObservableList<Articulo> listaArticulos;
+    private ObservableList<Articulo> listaSelectArticulo;
+    private Articulo articulo;
+    private AnchorPane rootPane;
+
     private ObservableList<Articulo> llenarTabla(ObservableList<Articulo> articulosLista, String sWhere) {
-        try{
-        String sSelect = SentenciasSQL.sqlConsultaArticulotabla + " where articulo.codigo_barras LIKE ('%" + sWhere +"%') order by articulo.id_articulo ";
-         ResultSet rSet = ConexionInventario.sSQL(sSelect);
+        try {
+            String sSelect = SentenciasSQL.sqlConsultaArticulotabla + " where articulo.codigo_barras LIKE ('%" + sWhere + "%') order by articulo.id_articulo ";
+            ResultSet rSet = ConexionInventario.sSQL(sSelect);
             while (rSet.next()) {
                 articulosLista.add(new Articulo(rSet.getInt(1), rSet.getString(2),
                         rSet.getFloat(3), rSet.getFloat(4), rSet.getInt(5),
-                        rSet.getString(6), rSet.getString(7), rSet.getString(8),rSet.getInt(9)));
+                        rSet.getString(6), rSet.getString(7), rSet.getString(8), rSet.getInt(9)));
             }
             clmNombre.setCellValueFactory(new PropertyValueFactory<>("nombreArticulo"));
             clmCodigoBarras.setCellValueFactory(new PropertyValueFactory<>("codigoBarras"));
@@ -88,7 +90,7 @@ public class FXMLModificarEliminarArticuloController implements Initializable {
                 Parent root = loader.load();
 
                 FXMLModificarArticuloController enviarDatos = loader.getController();
-                enviarDatos.recibirDatos(articulo);
+                enviarDatos.recibirDatos(articulo, rootPane);
 
                 Scene scene_page = new Scene(root);
                 Stage stage = new Stage();
@@ -97,7 +99,7 @@ public class FXMLModificarEliminarArticuloController implements Initializable {
                 Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene_page);
                 stage.showAndWait();
-                
+
                 Articulo art = enviarDatos.getArticulo();
                 if (art != null) {
                     tblArticulo.refresh();
@@ -115,7 +117,7 @@ public class FXMLModificarEliminarArticuloController implements Initializable {
         listaArticulos = FXCollections.observableArrayList();
         tblArticulo.setItems(llenarTabla(listaArticulos, ""));
     }
-    
+
     @FXML
     public void buscarArtículo(KeyEvent event) {
         String sWhere = fieldDocumento.getText();
@@ -126,7 +128,11 @@ public class FXMLModificarEliminarArticuloController implements Initializable {
                 Alertas.mensajeErrorPers("Consulta errónea", "El artículo con el código de barras " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un código de barras válido");
                 fieldDocumento.deleteText(sWhere.length() - 1, sWhere.length());
             }
-        }
+        }else  
+            tblArticulo.setItems(llenarTabla(listaArticulos, ""));
     }
 
+    public void recibirInformacion(AnchorPane rootPane){
+        this.rootPane = rootPane;
+    }
 }

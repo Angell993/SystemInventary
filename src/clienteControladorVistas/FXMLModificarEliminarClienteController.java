@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,6 +24,7 @@ import clasesjava.Cliente;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import metodosjavaClass.Alertas;
@@ -62,6 +64,7 @@ public class FXMLModificarEliminarClienteController implements Initializable {
     private ObservableList<Cliente> listaClientes;
     private ObservableList<Cliente> listaSelectClientes;
     private Cliente cliente;
+    private AnchorPane rootPane;
 
     public ObservableList<Cliente> llenarTabla(ObservableList<Cliente> clienteLista, String sWhere) {
         clienteLista = FXCollections.observableArrayList();
@@ -100,7 +103,8 @@ public class FXMLModificarEliminarClienteController implements Initializable {
         tblCliente.setItems(llenarTabla(listaClientes, ""));
     }
 
-   @FXML
+
+    @FXML
     public void buscarCliente(KeyEvent event) {
         String sWhere = fieldDocumento.getText();
         if (fieldDocumento.getText() != null && !fieldDocumento.getText().contentEquals("")) {
@@ -110,6 +114,8 @@ public class FXMLModificarEliminarClienteController implements Initializable {
                 Alertas.mensajeErrorPers("Consulta errónea", "El cliente con el nº de documento " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un documento válido");
                 fieldDocumento.deleteText(sWhere.length() - 1, sWhere.length());
             }
+        } else {
+            tblCliente.setItems(llenarTabla(listaClientes, ""));
         }
     }
 
@@ -121,7 +127,7 @@ public class FXMLModificarEliminarClienteController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/clienteControladorVistas/FXMLModificarCliente.fxml"));
                 Parent root = loader.load();
                 FXMLModificarClienteController enviarDatos = loader.getController();
-                enviarDatos.datosCliente(listaClientes, cliente);
+                enviarDatos.datosCliente(listaClientes, cliente, rootPane);
 
                 Scene scene_page = new Scene(root);
                 Stage stage = new Stage();
@@ -144,5 +150,8 @@ public class FXMLModificarEliminarClienteController implements Initializable {
 
     }
 
+    public void recibirInformacion(AnchorPane rootPane){
+        this.rootPane = rootPane;
+    }
 
 }

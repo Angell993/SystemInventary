@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -70,7 +71,6 @@ public class FXMLCalculadoraController implements Initializable {
     
     @FXML
     GridPane calcGridPane;
-    
     //TextFaild total
     @FXML
     TextField total;
@@ -295,7 +295,7 @@ public class FXMLCalculadoraController implements Initializable {
         }
         return true;
     }
-        @FXML
+            @FXML
     private void capturarTeclas() {
         calcGridPane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             if ((e.getCode() == KeyCode.NUMPAD0) || (e.getCode() == KeyCode.DIGIT0)) {

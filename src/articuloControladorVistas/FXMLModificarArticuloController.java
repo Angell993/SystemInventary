@@ -13,7 +13,9 @@ import javafx.scene.control.TextField;
 import metodosjavaClass.MetodosJavaClass;
 import metodosjavaClass.SentenciasSQL;
 import clasesjava.Articulo;
+import clasesjava.Venta;
 import javafx.event.ActionEvent;
+import javafx.scene.layout.AnchorPane;
 import metodosjavaClass.Alertas;
 import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.VentanaRootPane;
@@ -29,9 +31,11 @@ public class FXMLModificarArticuloController implements Initializable {
     private ObservableList<Item> listaArticulo;
     private ObservableList<Item> listaProveedor;
     private LLenarCombos llenarComb = new LLenarCombos();
+    private final VentanaRootPane visualizarInterfaz = new VentanaRootPane();
     private Articulo articulo = new Articulo();
     private String sentencia;
     private int idArticulo;
+    private AnchorPane rootPane;
 
     private void actualizarTabla() {
         articulo.setIdArticulo(idArticulo);
@@ -67,12 +71,14 @@ public class FXMLModificarArticuloController implements Initializable {
             if (Alertas.eliminarConfirmacion()) {
                 sentencia = SentenciasSQL.sqlEliminarArticulo + " id_articulo = " + idArticulo;
                 ConexionInventario.EjecutarSQL(sentencia);
+                recargarVentana();
                 cerrarVentana(event);
             }
         }
     }
 
-    public void recibirDatos(Articulo articulo) {
+    public void recibirDatos(Articulo articulo, AnchorPane rootPane) {
+        this.rootPane  = rootPane;
         this.articulo = articulo;
         idArticulo = articulo.getIdArticulo();
         txtNomArticulo.setText(articulo.getNombreArticulo());
@@ -116,4 +122,7 @@ public class FXMLModificarArticuloController implements Initializable {
         return articulo;
     }
 
+    private void recargarVentana(){
+        visualizarInterfaz.mostarVentana("/articuloControladorVistas/FXMLModificarEliminarArticulo.fxml", rootPane);
+    }
 }
