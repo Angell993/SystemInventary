@@ -16,7 +16,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import metodosjavaClass.Alertas;
 import metodosjavaClass.CalcularDocumentoIdentidadCIF;
 import metodosjavaClass.LLenarCombos;
@@ -57,8 +56,6 @@ public class FXMLModificarClienteController implements Initializable {
     private String tipodocumento;
     private int id;
     private final LLenarCombos llenarCmb = new LLenarCombos();
-    private final VentanaRootPane visualizarInterfaz = new VentanaRootPane();
-    private AnchorPane rootPane;
 
     @FXML
     public void seleccion(ActionEvent event) {
@@ -112,15 +109,13 @@ public class FXMLModificarClienteController implements Initializable {
             if (Alertas.eliminarConfirmacion()) {
                 String eliminar = SentenciasSQL.sqlEliminarCliente + " id_Cliente = " + id;
                 ConexionInventario.EjecutarSQL(eliminar);
-                recargarVentana();
                 cerrarVentana(event);
             }
             //}
         }
     }
 
-    public void datosCliente(ObservableList<Cliente> listaCliente, Cliente cliente, AnchorPane rootPane) {
-        this.rootPane = rootPane;
+    public void datosCliente(ObservableList<Cliente> listaCliente, Cliente cliente) {
         this.listaCliente = listaCliente;
         this.cliente = cliente;
         id = cliente.getIdCliente();
@@ -197,7 +192,4 @@ public class FXMLModificarClienteController implements Initializable {
         return cliente;
     }
 
-    private void recargarVentana(){
-        visualizarInterfaz.mostarVentana("/clienteControladorVistas/FXMLModificarEliminarCliente.fxml", rootPane);
-    }
 }

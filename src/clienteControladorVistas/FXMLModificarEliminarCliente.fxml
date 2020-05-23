@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="761.0" prefWidth="1306.0" stylesheets="@../estiloscss/estilosTableView.css" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="clienteControladorVistas.FXMLModificarEliminarClienteController">
    <children>
-      <TextField fx:id="fieldDocumento" layoutX="156.0" layoutY="102.0" onAction="#onEnter" promptText="DNI/NIE" AnchorPane.leftAnchor="156.0" AnchorPane.topAnchor="102.0" />
+      <TextField fx:id="fieldDocumento" layoutX="156.0" layoutY="102.0" onKeyTyped="#buscarCliente" promptText="DNI/NIE" AnchorPane.leftAnchor="156.0" AnchorPane.topAnchor="102.0" />
       <Button fx:id="btnBuscar" layoutX="14.0" layoutY="101.0" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="46.0" prefWidth="135.0" stylesheets="@../estiloscss/buttonestilocss.css" text="Buscar" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="101.0">
          <graphic>
             <FontAwesomeIconView glyphName="SEARCH" />

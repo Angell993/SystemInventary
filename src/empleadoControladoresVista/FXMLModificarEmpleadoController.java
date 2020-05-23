@@ -16,7 +16,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import metodosjavaClass.Alertas;
 import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.MetodosJavaClass;
@@ -34,11 +33,9 @@ public class FXMLModificarEmpleadoController implements Initializable {
     private ComboBox<Item> cmbPuesto;
     private ObservableList<Item> listaPuesto;
     private final LLenarCombos llenarComb = new LLenarCombos();
-    private Empleado empleado = new Empleado();
-    private final VentanaRootPane visualizarInterfaz = new VentanaRootPane();
-    private AnchorPane rootPane;
     private String sentencia;
     private int idEmpleado;
+    private Empleado empleado = new Empleado();
 
     public void actualizarTabla() {
         empleado.setIdEmpleado(idEmpleado);
@@ -78,7 +75,6 @@ public class FXMLModificarEmpleadoController implements Initializable {
                     if (Alertas.eliminarConfirmacion()) {
                         sentencia = SentenciasSQL.sqlEliminarEmpleado + " codigoEmpleado = " + Integer.parseInt(txtEmpleado.getText());
                         ConexionInventario.EjecutarSQL(sentencia);
-                        recargarVentana();
                         cerrarVentana(event);
                     }
                 }
@@ -87,8 +83,7 @@ public class FXMLModificarEmpleadoController implements Initializable {
 
     }
 
-    public void recibirDatos(Empleado empleado, AnchorPane rootPane) {
-        this.rootPane = rootPane;
+    public void recibirDatos(Empleado empleado) {
         this.empleado = empleado;
         idEmpleado = empleado.getIdEmpleado();
         txtEmpleado.setText(String.valueOf(empleado.getCodigoEmpleado()));
@@ -146,8 +141,4 @@ public class FXMLModificarEmpleadoController implements Initializable {
         return empleado;
     }
 
-     private void recargarVentana(){
-        visualizarInterfaz.mostarVentana("/empleadoControladoresVista/FXMLModificarEliminarEmpleado.fxml", rootPane);
-    }
-     
 }

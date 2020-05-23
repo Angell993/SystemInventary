@@ -1,12 +1,9 @@
 package sistemaInventarioControladorVistas;
 
-import articuloControladorVistas.FXMLModificarEliminarArticuloController;
 import calculadoraControladorVista.FXMLCalculadoraController;
-import clienteControladorVistas.FXMLModificarEliminarClienteController;
 import clienteControladorVistas.FXMLRegistrarClienteController;
 import conexionbasedatos.ConexionInventario;
 import devolucioncontrollervista.FXMLDevolucionController;
-import empleadoControladoresVista.FXMLModificarEliminarEmpleadoController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
@@ -30,7 +27,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import metodosjavaClass.Fecha;
 import metodosjavaClass.VentanaRootPane;
-import proveedorControladorVistas.FXMLModificarEliminarProveedorController;
 import ventasControladorVistas.FXMLRegistrarVentaController;
 
 public class FXMLSistemaInventarioController extends Thread implements Initializable {
@@ -66,13 +62,9 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
     }
 
     @FXML
-    private void modificarEliminarCliente(ActionEvent event) throws IOException {
+    private void modificarEliminarCliente(ActionEvent event) {
         ruta = "/clienteControladorVistas/FXMLModificarEliminarCliente.fxml";
-        loader = new FXMLLoader(getClass().getResource(ruta));
-        root = loader.load();
-        FXMLModificarEliminarClienteController modClient = loader.getController();
-        modClient.recibirInformacion(rootPane);
-        rootPane.getChildren().setAll(root);
+        visualizarInterfaz.mostarVentana(ruta, rootPane);
     }
 
     @FXML
@@ -82,7 +74,7 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
             loader = new FXMLLoader(getClass().getResource(ruta));
             root = loader.load();
             FXMLRegistrarVentaController ventaEmpl = loader.getController();
-            ventaEmpl.recibirCodEmpleado(String.valueOf(numEmpleado), rootPane);
+            ventaEmpl.recibirCodEmpleado(String.valueOf(numEmpleado));
             rootPane.getChildren().setAll(root);
 
         } catch (IOException ex) {
@@ -103,13 +95,9 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
     }
 
     @FXML
-    private void modificarEliminarArticulo(ActionEvent event) throws IOException {
+    private void modificarEliminarArticulo(ActionEvent event) {
         ruta = "/articuloControladorVistas/FXMLModificarEliminarArticulo.fxml";
-        loader = new FXMLLoader(getClass().getResource(ruta));
-        root = loader.load();
-        FXMLModificarEliminarArticuloController modArti = loader.getController();
-        modArti.recibirInformacion(rootPane);
-        rootPane.getChildren().setAll(root);
+        visualizarInterfaz.mostarVentana(ruta, rootPane);
     }
 
     @FXML
@@ -119,13 +107,9 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
     }
 
     @FXML
-    private void modificarEliminarEmpleado(ActionEvent event) throws IOException {
+    private void modificarEliminarEmpleado(ActionEvent event) {
         ruta = "/empleadoControladoresVista/FXMLModificarEliminarEmpleado.fxml";
-        loader = new FXMLLoader(getClass().getResource(ruta));
-        root = loader.load();
-        FXMLModificarEliminarEmpleadoController modEmple = loader.getController();
-        modEmple.recibirInformacion(rootPane);
-        rootPane.getChildren().setAll(root);
+        visualizarInterfaz.mostarVentana(ruta, rootPane);
     }
 
     @FXML
@@ -135,13 +119,9 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
     }
 
     @FXML
-    private void modificarEliminarProveedor(ActionEvent event) throws IOException {
+    private void modificarEliminarProveedor(ActionEvent event) {
         ruta = "/proveedorControladorVistas/FXMLModificarEliminarProveedor.fxml";
-        loader = new FXMLLoader(getClass().getResource(ruta));
-        root = loader.load();
-        FXMLModificarEliminarProveedorController modProvee = loader.getController();
-        modProvee.recibirInformacion(rootPane);
-        rootPane.getChildren().setAll(root);
+        visualizarInterfaz.mostarVentana(ruta, rootPane);
     }
 
     @FXML

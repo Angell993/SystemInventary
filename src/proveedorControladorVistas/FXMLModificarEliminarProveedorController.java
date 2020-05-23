@@ -22,7 +22,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -60,7 +59,6 @@ public class FXMLModificarEliminarProveedorController implements Initializable {
     private ObservableList<Proveedor> listaProveedores;
     private ObservableList<Proveedor> listaSeleccionProveedores;
     private Proveedor proveedor ;
-    private AnchorPane rootPane;
 
     private ObservableList<Proveedor> llenarTablaProveedores(ObservableList<Proveedor> provLsita, String sWhere) {
         provLsita = FXCollections.observableArrayList();
@@ -93,10 +91,11 @@ public class FXMLModificarEliminarProveedorController implements Initializable {
         if (event.getClickCount() == 2) {
             try {
                 proveedor = tblProveedor.getSelectionModel().getSelectedItem();
+                
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/proveedorControladorVistas/FXMLModificarProveedor.fxml"));
                 Parent root = loader.load();
                 FXMLModificarProveedorController enviarDatos = loader.getController();
-                enviarDatos.datosProveedor(proveedor, rootPane);
+                enviarDatos.datosProveedor(proveedor);
 
                 Scene scene_page = new Scene(root);
                 Stage stage = new Stage();
@@ -137,9 +136,5 @@ public class FXMLModificarEliminarProveedorController implements Initializable {
         } else if (fieldDocumento.getText() == null || fieldDocumento.getText().contentEquals("")) {
             Alertas.mensajeErrorPers("Búsqueda errónea", "Debe introducir un número de DNI o Nº Cliente para buscar");
         }
-    }
-    
-    public void recibirInformacion(AnchorPane rootPane){
-        this.rootPane = rootPane;
     }
 }
