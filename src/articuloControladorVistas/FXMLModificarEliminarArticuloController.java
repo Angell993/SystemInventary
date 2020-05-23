@@ -25,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import metodosjavaClass.Alertas;
 import metodosjavaClass.SentenciasSQL;
 
@@ -115,20 +116,16 @@ public class FXMLModificarEliminarArticuloController implements Initializable {
         tblArticulo.setItems(llenarTabla(listaArticulos, ""));
     }
     
-     @FXML
-    public void onEnter(ActionEvent ae) {
-        btnBuscar.fire();
-    }
-
     @FXML
-    public void buscarEmpleado(ActionEvent event) {
-            String sWhere = fieldDocumento.getText();
+    public void buscarArtículo(KeyEvent event) {
+        String sWhere = fieldDocumento.getText();
         if (fieldDocumento.getText() != null && !fieldDocumento.getText().contentEquals("")) {
             listaSelectArticulo = FXCollections.observableArrayList();
-            llenarTabla(listaSelectArticulo, sWhere);
-            tblArticulo.setItems(listaSelectArticulo);
-        } else if (fieldDocumento.getText() == null || fieldDocumento.getText().contentEquals("")) {
-            Alertas.mensajeErrorPers("Búsqueda errónea", "Debe introducir un número de DNI o Nº Cliente para buscar");
+            tblArticulo.setItems(llenarTabla(listaSelectArticulo, sWhere));
+            if (tblArticulo.getItems().isEmpty()) {
+                Alertas.mensajeErrorPers("Consulta errónea", "El artículo con el código de barras " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un código de barras válido");
+                fieldDocumento.deleteText(sWhere.length() - 1, sWhere.length());
+            }
         }
     }
 
