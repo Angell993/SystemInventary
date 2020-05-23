@@ -25,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import metodosjavaClass.Alertas;
 import metodosjavaClass.SentenciasSQL;
 
@@ -46,7 +47,7 @@ public class FXMLModificarEliminarArticuloController implements Initializable {
     private TableColumn<Articulo, String> clmDescArticulo;
     @FXML
     private TableColumn<Articulo, String> clmNombProveedor;
-    
+
     private ObservableList<Articulo> listaArticulos;
     private ObservableList<Articulo> listaSelectArticulo;
     private Articulo articulo;
@@ -56,13 +57,13 @@ public class FXMLModificarEliminarArticuloController implements Initializable {
     private Button btnBuscar;
 
     private ObservableList<Articulo> llenarTabla(ObservableList<Articulo> articulosLista, String sWhere) {
-        try{
-        String sSelect = SentenciasSQL.sqlConsultaArticulotabla + " where articulo.codigo_barras LIKE ('%" + sWhere +"%') order by articulo.id_articulo ";
-         ResultSet rSet = ConexionInventario.sSQL(sSelect);
+        try {
+            String sSelect = SentenciasSQL.sqlConsultaArticulotabla + " where articulo.codigo_barras LIKE ('%" + sWhere + "%') order by articulo.id_articulo ";
+            ResultSet rSet = ConexionInventario.sSQL(sSelect);
             while (rSet.next()) {
                 articulosLista.add(new Articulo(rSet.getInt(1), rSet.getString(2),
                         rSet.getFloat(3), rSet.getFloat(4), rSet.getInt(5),
-                        rSet.getString(6), rSet.getString(7), rSet.getString(8),rSet.getInt(9)));
+                        rSet.getString(6), rSet.getString(7), rSet.getString(8), rSet.getInt(9)));
             }
             clmNombre.setCellValueFactory(new PropertyValueFactory<>("nombreArticulo"));
             clmCodigoBarras.setCellValueFactory(new PropertyValueFactory<>("codigoBarras"));
@@ -96,7 +97,7 @@ public class FXMLModificarEliminarArticuloController implements Initializable {
                 Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene_page);
                 stage.showAndWait();
-                
+
                 Articulo art = enviarDatos.getArticulo();
                 if (art != null) {
                     tblArticulo.refresh();
@@ -114,22 +115,21 @@ public class FXMLModificarEliminarArticuloController implements Initializable {
         listaArticulos = FXCollections.observableArrayList();
         tblArticulo.setItems(llenarTabla(listaArticulos, ""));
     }
-    
-     @FXML
+
+    /* @FXML
     public void onEnter(ActionEvent ae) {
         btnBuscar.fire();
-    }
-
+    }*/
     @FXML
-    public void buscarEmpleado(ActionEvent event) {
-            String sWhere = fieldDocumento.getText();
+    public void buscarArtículo(KeyEvent event) {
+        String sWhere = fieldDocumento.getText();
         if (fieldDocumento.getText() != null && !fieldDocumento.getText().contentEquals("")) {
             listaSelectArticulo = FXCollections.observableArrayList();
-            llenarTabla(listaSelectArticulo, sWhere);
-            tblArticulo.setItems(listaSelectArticulo);
-        } else if (fieldDocumento.getText() == null || fieldDocumento.getText().contentEquals("")) {
-            Alertas.mensajeErrorPers("Búsqueda errónea", "Debe introducir un número de DNI o Nº Cliente para buscar");
+            tblArticulo.setItems(llenarTabla(listaSelectArticulo, sWhere));
+            if (tblArticulo.getItems().isEmpty()) {
+                Alertas.mensajeErrorPers("Consulta errónea", "El artículo con el código de barras " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un código de barras válido");
+                fieldDocumento.deleteText(sWhere.length() - 1, sWhere.length());
+            }
         }
     }
-
 }
