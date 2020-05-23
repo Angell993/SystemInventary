@@ -21,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
@@ -127,15 +128,16 @@ public class FXMLModificarEliminarProveedorController implements Initializable {
         btnBuscar.fire();
     }
 
-    @FXML
-    public void buscar(ActionEvent event) {
-            String sWhere = fieldDocumento.getText();
+     @FXML
+    public void buscarProveedor(KeyEvent event) {
+        String sWhere = fieldDocumento.getText();
         if (fieldDocumento.getText() != null && !fieldDocumento.getText().contentEquals("")) {
             listaSeleccionProveedores = FXCollections.observableArrayList();
-            llenarTablaProveedores(listaSeleccionProveedores, sWhere);
-            tblProveedor.setItems(listaSeleccionProveedores);
-        } else if (fieldDocumento.getText() == null || fieldDocumento.getText().contentEquals("")) {
-            Alertas.mensajeErrorPers("Búsqueda errónea", "Debe introducir un número de DNI o Nº Cliente para buscar");
+            tblProveedor.setItems(llenarTablaProveedores(listaSeleccionProveedores, sWhere));
+            if (tblProveedor.getItems().isEmpty()) {
+                Alertas.mensajeErrorPers("Consulta errónea", "El proveedor con el nº de documento " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un documento válido");
+                fieldDocumento.deleteText(sWhere.length() - 1, sWhere.length());
+            }
         }
     }
     
