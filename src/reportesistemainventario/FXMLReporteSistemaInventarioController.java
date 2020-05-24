@@ -77,7 +77,7 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
         
             if (itemSeleccionadoTabla().equals("Articulo")) {
             if (cmbConsulta.getSelectionModel().isSelected(-1)) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\Articulo";
+            url = "src/reportesistemainventario/Articulo/Articulo";
             report.generarReporte(url);
             }
             articulo();
@@ -85,7 +85,7 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
             
             if (itemSeleccionadoTabla().equals("Cliente")) {
             if (cmbConsulta.getSelectionModel().isSelected(-1)) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\Cliente";
+            url = "src/reportesistemainventario/Cliente/Cliente";
             report.generarReporte(url);
             }
             cliente();
@@ -93,7 +93,7 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
             
             if (itemSeleccionadoTabla().equals("Factura")) {
             if (cmbConsulta.getSelectionModel().isSelected(-1)) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\Factura";
+            url = "src/reportesistemainventario/Factura/Factura";
             report.generarReporte(url);
             }
             factura();
@@ -102,7 +102,7 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
             
             if (itemSeleccionadoTabla().equals("Detalle Factura")) {
             if (cmbConsulta.getSelectionModel().isSelected(-1)) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\DetalleFactura";
+            url = "src/reportesistemainventario/DetalleFactura/DetalleFactura";
             report.generarReporte(url);
             }
             detalleFactura();
@@ -110,7 +110,7 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
             
             if (itemSeleccionadoTabla().equals("Devolucion")) {
             if (cmbConsulta.getSelectionModel().isSelected(-1)) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\Devolucion";
+            url = "src/reportesistemainventario/Devolucion/Devolucion";
             report.generarReporte(url);
             }
             devolucion();
@@ -118,7 +118,7 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
             
             if (itemSeleccionadoTabla().equals("Empleado")) {
             if (cmbConsulta.getSelectionModel().isSelected(-1)) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\Empleado";
+            url = "src/reportesistemainventario/Empleado/Empleado";
             report.generarReporte(url);
             }
             empleado();
@@ -126,7 +126,7 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
             
             if (itemSeleccionadoTabla().equals("Proveedor")) {
             if (cmbConsulta.getSelectionModel().isSelected(-1)) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\Proveedor";
+            url = "src/reportesistemainventario/Proveedor/Proveedor";
             report.generarReporte(url);
             }
             }
@@ -135,12 +135,12 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
 
     private void articulo() {
         if (itemSeleccionadoConsulta().equals("Nombre")) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\ArticuloNombre";
+            url = "src/reportesistemainventario/Articulo/ArticuloNombre";
             i = 2;
             report.generarReporteConsulta(url, txtConsulta.getText(), i);
         }
         if (itemSeleccionadoConsulta().equals("Fecha")) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\ArticuloFecha";
+            url = "src/reportesistemainventario/Articulo/ArticuloFecha";
             i = 3;
             report.generarReporteConsulta(url, txtConsulta.getText(), i);
         }
@@ -148,12 +148,12 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
 
     private void cliente() {
         if (itemSeleccionadoConsulta().equals("Identificador")) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\ClienteDocumento";
+            url = "src/reportesistemainventario/Cliente/ClienteDocumento";
             i = 1;
             report.generarReporteConsulta(url, txtConsulta.getText(), i);
         }
         if (itemSeleccionadoConsulta().equals("Nombre")) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\ClienteNombre";
+            url = "src/reportesistemainventario/Cliente/ClienteNombre";
             i = 2;
             report.generarReporteConsulta(url, txtConsulta.getText(), i);
         }
@@ -161,12 +161,12 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
 
     private void factura() {
         if (itemSeleccionadoConsulta().equals("Identificador")) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\FacturaDocumento";
+            url = "src/reportesistemainventario/Factura/FacturaDocumento";
             i = 1;
             report.generarReporteConsulta(url, txtConsulta.getText(), i);
         }
         if (itemSeleccionadoConsulta().equals("Fecha")) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\FacturaFecha";
+            url = "src/reportesistemainventario/Factura/FacturaFecha";
             i = 3;
             report.generarReporteConsulta(url, txtConsulta.getText(), i);
         }
@@ -174,7 +174,7 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
 
     private void detalleFactura() {
          if (itemSeleccionadoConsulta().equals("Identificador")) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\DetalleFacturaDocumento";
+            url = "src/reportesistemainventario/DetalleFactura/DetalleFacturaDocumento";
             i = 1;
             report.generarReporteConsulta(url, txtConsulta.getText(), i);
         }
@@ -182,12 +182,12 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
 
     private void devolucion() {
         if (itemSeleccionadoConsulta().equals("Identificador")) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\DevolucionDocumento";
+            url = "src/reportesistemainventario/Devolucion/DevolucionDocumento";
             i = 1;
             report.generarReporteConsulta(url, txtConsulta.getText(), i);
         }
         if (itemSeleccionadoConsulta().equals("Fecha")) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\DevolucionFecha";
+            url = "src/reportesistemainventario/Devolucion/DevolucionFecha";
             i = 3;
             report.generarReporteConsulta(url, txtConsulta.getText(), i);
         }
@@ -195,12 +195,12 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
 
     private void empleado() {
         if (itemSeleccionadoConsulta().equals("Identificador")) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\EmpleadoDocumento";
+            url = "src/reportesistemainventario/Empleado/EmpleadoDocumento";
             i = 1;
             report.generarReporteConsulta(url, txtConsulta.getText(), i);
         }
         if (itemSeleccionadoConsulta().equals("Nombre")) {
-            url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\EmpleadoNombre";
+            url = "src/reportesistemainventario/Empleado/EmpleadoNombre";
             i = 2;
             report.generarReporteConsulta(url, txtConsulta.getText(), i);
         }
