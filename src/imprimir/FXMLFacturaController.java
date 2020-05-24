@@ -19,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import metodosjavaClass.Alertas;
@@ -55,7 +56,7 @@ public class FXMLFacturaController implements Initializable {
     private ObservableList<Venta> listaVenta;
 
     @FXML
-    private void Buscar() {
+    private void Buscar(KeyEvent event) {
         if (!txtDocumento.getText().isEmpty()) {
             facturaDB.setVisible(true);
             tblFacturas.setItems(distintasFacturas(txtDocumento.getText()));
@@ -147,7 +148,7 @@ public class FXMLFacturaController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(FXMLRegistrarClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        txtDocumento.setText(" ");
+        txtDocumento.setText("");
         lblIdentidad.setText("No existe el cliente");
         return false;
     }
