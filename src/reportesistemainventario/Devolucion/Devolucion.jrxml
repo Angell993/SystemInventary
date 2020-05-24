@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Devolucion" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
 	<property name="com.jaspersoft.studio.data.sql.tables">
 		<![CDATA[c2lzdGVtYWludmVudGFyaW8uZGV2b2x1Y2lvbiBBUyAsMTAwLDEwLDFhMWQzNTE3LWRjZjgtNGE3
 Yi04MDgxLTY5MDZlZmFmYzUzMTs=]]>
 	</property>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SISTEMAINVENTARIO"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sistema Inventario"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -19,9 +19,9 @@ Yi04MDgxLTY5MDZlZmFmYzUzMTs=]]>
 	<queryString language="SQL">
 		<![CDATA[SELECT sistemainventario.devolucion.cod_detallefactura,
 	sistemainventario.devolucion.cod_detallearticulo,
-	sistemainventario.devolucion.`Motivo`,
+	sistemainventario.devolucion.Motivo,
 	sistemainventario.devolucion.cantidad,
-	sistemainventario.devolucion.fecha,
+	sistemainventario.devolucion.fecha_devolucion,
 	sistemainventario.devolucion.cod_empleado
 FROM sistemainventario.devolucion]]>
 	</queryString>
@@ -41,7 +41,7 @@ FROM sistemainventario.devolucion]]>
 		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="devolucion"/>
 	</field>
-	<field name="fecha" class="java.sql.Date">
+	<field name="fecha_devolucion" class="java.sql.Date">
 		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="devolucion"/>
 	</field>
@@ -164,7 +164,7 @@ FROM sistemainventario.devolucion]]>
 					<reportElement style="Detail" x="532" y="0" width="133" height="15" uuid="fdaa15da-ddef-4211-8f97-4731b62c6824">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7e8741e0-481a-414d-998c-dbfbe1292fe1"/>
 					</reportElement>
-					<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{fecha_devolucion}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="StretchHeight">
 					<reportElement style="Detail" x="665" y="0" width="133" height="15" uuid="2299d445-3ac8-4942-9e0a-07a037bb9516">
