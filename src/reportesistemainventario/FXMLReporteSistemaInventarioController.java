@@ -31,7 +31,7 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
     private ComboBox<Item> cmbConsulta;
 
     @FXML
-    private void buscarRuta(){
+    private void buscarRuta() {
         JFileChooser dlg = new JFileChooser();
         int option = dlg.showSaveDialog(dlg);
         if (option == JFileChooser.APPROVE_OPTION) {
@@ -39,17 +39,17 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
             txtRuta.setText(f.toString());
         }
     }
-    
+
     @FXML
     private String itemSeleccionadoTabla() {
         String itemSeleccionado = cmbTabla.getSelectionModel().getSelectedItem().getDescripcion();
+        LLenarCombos.consultaDB(cmbTabla.getSelectionModel().getSelectedItem().getId(), cmbConsulta);
         return itemSeleccionado;
     }
 
     @FXML
     private String itemSeleccionadoConsulta() {
         String itemSeleccionado = cmbConsulta.getSelectionModel().getSelectedItem().getDescripcion();
-
         return itemSeleccionado;
     }
 
@@ -62,74 +62,62 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
 
     @FXML
     private void consultar() {
-        Alertas.mensajeInformación("Fecha", "Formato Fecha  'YYYY-MM-DD' Ejmpl: (2016-02-16) ");
+        Alertas.mensajeInformación("Fecha", "Formato Fecha: 'YYYY-MM-DD'\nEjemplo: (2016-02-16) ");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         LLenarCombos.tablasDB(cmbTabla);
-        LLenarCombos.consultaDB(cmbConsulta);
 
     }
 
     @FXML
     private void crearReporte(ActionEvent event) {
-        
-            if (itemSeleccionadoTabla().equals("Articulo")) {
-            if (cmbConsulta.getSelectionModel().isSelected(-1)) {
+
+        if (itemSeleccionadoTabla().equals("Articulo") && cmbConsulta.getSelectionModel().isSelected(-1)) {
             url = "src/reportesistemainventario/Articulo/Articulo";
             report.generarReporte(url);
-            }
             articulo();
-            }
-            
-            if (itemSeleccionadoTabla().equals("Cliente")) {
-            if (cmbConsulta.getSelectionModel().isSelected(-1)) {
+        }
+
+        if (itemSeleccionadoTabla().equals("Cliente") && cmbConsulta.getSelectionModel().isSelected(-1)) {
             url = "src/reportesistemainventario/Cliente/Cliente";
             report.generarReporte(url);
-            }
             cliente();
-            }
-            
-            if (itemSeleccionadoTabla().equals("Factura")) {
-            if (cmbConsulta.getSelectionModel().isSelected(-1)) {
+        }
+
+        if (itemSeleccionadoTabla().equals("Factura") && cmbConsulta.getSelectionModel().isSelected(-1)) {
             url = "src/reportesistemainventario/Factura/Factura";
             report.generarReporte(url);
-            }
             factura();
-            
-            }
-            
-            if (itemSeleccionadoTabla().equals("Detalle Factura")) {
-            if (cmbConsulta.getSelectionModel().isSelected(-1)) {
+
+        }
+
+        if (itemSeleccionadoTabla().equals("Detalle Factura") && cmbConsulta.getSelectionModel().isSelected(-1)) {
             url = "src/reportesistemainventario/DetalleFactura/DetalleFactura";
             report.generarReporte(url);
-            }
             detalleFactura();
-            }
-            
-            if (itemSeleccionadoTabla().equals("Devolucion")) {
-            if (cmbConsulta.getSelectionModel().isSelected(-1)) {
+        }
+
+        if (itemSeleccionadoTabla().equals("Devolucion") && cmbConsulta.getSelectionModel().isSelected(-1)) {
             url = "src/reportesistemainventario/Devolucion/Devolucion";
             report.generarReporte(url);
-            }
             devolucion();
-            }
-            
-            if (itemSeleccionadoTabla().equals("Empleado")) {
-            if (cmbConsulta.getSelectionModel().isSelected(-1)) {
+        }
+
+        if (itemSeleccionadoTabla().equals("Empleado") && cmbConsulta.getSelectionModel().isSelected(-1)) {
             url = "src/reportesistemainventario/Empleado/Empleado";
             report.generarReporte(url);
-            }
             empleado();
-            }
-            
-            if (itemSeleccionadoTabla().equals("Proveedor")) {
-            if (cmbConsulta.getSelectionModel().isSelected(-1)) {
+        }
+
+        if (itemSeleccionadoTabla().equals("Proveedor") && cmbConsulta.getSelectionModel().isSelected(-1)) {
             url = "src/reportesistemainventario/Proveedor/Proveedor";
             report.generarReporte(url);
-            }
-            }
+            proveedor();     
+            
+            //java.lang.reflect.InvocationTargetException
+        }
 
     }
 
@@ -173,12 +161,12 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
     }
 
     private void detalleFactura() {
-         if (itemSeleccionadoConsulta().equals("Identificador")) {
+        if (itemSeleccionadoConsulta().equals("Identificador")) {
             url = "src/reportesistemainventario/DetalleFactura/DetalleFacturaDocumento";
             i = 1;
             report.generarReporteConsulta(url, txtConsulta.getText(), i);
         }
-    }   
+    }
 
     private void devolucion() {
         if (itemSeleccionadoConsulta().equals("Identificador")) {
@@ -205,5 +193,18 @@ public class FXMLReporteSistemaInventarioController implements Initializable {
             report.generarReporteConsulta(url, txtConsulta.getText(), i);
         }
     }
-    
+
+    private void proveedor() {
+        if (itemSeleccionadoConsulta().equals("Identificador")) {
+            url = "src/reportesistemainventario/Proveedor/ProveedorDocumento";
+            i = 1;
+            report.generarReporteConsulta(url, txtConsulta.getText(), i);
+        }
+        if (itemSeleccionadoConsulta().equals("Nombre")) {
+            url = "src/reportesistemainventario/Proveedor/ProveedorNombre";
+            i = 2;
+            report.generarReporteConsulta(url, txtConsulta.getText(), i);
+        }
+    }
+
 }

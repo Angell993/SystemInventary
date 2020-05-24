@@ -13,6 +13,9 @@
 			<style backcolor="#E6DAC3"/>
 		</conditionalStyle>
 	</style>
+	<parameter name="NombreCom" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
 		<![CDATA[SELECT sistemainventario.tipo_de_documento.`Descripcion`,
 	sistemainventario.proveedor.`No_documento`,
@@ -28,7 +31,9 @@
 	sistemainventario.proveedor.`Productos`
 FROM sistemainventario.proveedor
 	INNER JOIN sistemainventario.tipo_de_documento ON 
-	 sistemainventario.proveedor.cod_tipo_documento = sistemainventario.tipo_de_documento.id_tipo_documento]]>
+	 sistemainventario.proveedor.cod_tipo_documento = sistemainventario.tipo_de_documento.id_tipo_documento 
+WHERE 
+	 sistemainventario.proveedor.`Nombre_comercial` = $P{NombreCom}]]>
 	</queryString>
 	<field name="Descripcion" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="Descripcion"/>
