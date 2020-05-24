@@ -75,7 +75,7 @@ public class FXMLFacturaController implements Initializable {
     @FXML
     private void imprimir() {
         if (!txtFactura.getText().isEmpty()) {
-            String url = "C:\\Users\\juanc\\OneDrive\\Documentos\\NetBeansProjects\\GitProyecto\\SystemInventary\\ticket&factura\\RegistroFactura";
+            String url = "src/ticket&factura/RegistroFactura";
             CrearInforme ventaTicket = new CrearInforme();
             ventaTicket.factura(txtFactura.getText(), url);
         }
