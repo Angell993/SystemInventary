@@ -51,6 +51,12 @@ public class FXMLImprimirController implements Initializable {
             Logger.getLogger(FXMLImprimirController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    @FXML
+    private void correo() {
+        String ruta = "/correo/FXMLCorreo.fxml";
+        visualizarInterfaz.mostarVentana(ruta, rootPane);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

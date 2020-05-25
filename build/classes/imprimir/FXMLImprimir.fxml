@@ -34,6 +34,11 @@
                   <Font name="System Bold" size="35.0" />
                </font>
             </Button>
+            <Button mnemonicParsing="false" onAction="#correo" prefHeight="88.0" prefWidth="209.0" text="Correo" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="35.0" />
+               </font>
+            </Button>
          </children>
       </GridPane>
       <AnchorPane fx:id="rootPane" layoutX="426.0" prefHeight="804.0" prefWidth="880.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="426.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />

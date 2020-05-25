@@ -1,5 +1,6 @@
 package correo;
 
+import configuracionadministrador.Fichero;
 import java.io.File;
 import java.net.URL;
 import java.util.Properties;
@@ -32,18 +33,25 @@ public class FXMLCorreoController implements Initializable {
     @FXML
     private TextArea txtACuerpo;
     private File f = null;
-    private final String correoEnvia = "funakyangel@gmail.com";
+    private  String contrasenia;
     private final String pieDeMensaje = "\n-------------------------------------------------------------------- \nConercial 4 Cantos S.L";
     private final String aviso = "\nNo responda a este mensaje.";
 
+    private void extraerCorreo(){
+        File file = new File("src/configuracionadministrador/configCorreo.dat");
+        if (file.exists()) {
+            Fichero fich = new Fichero();
+            txtPropietario.setText(fich.leerObjetoCorreo().getCorreo());
+            contrasenia = fich.leerObjetoCorreo().getContrasenia();
+        }
+    }
+    
     @FXML
     private void enviarCorreo() {
         //Agregar Correo desde el cual puedes enviar a los clientes o empleados.
         try {
-            if (comprobarCampos()) {
-
-                String contrasenia = "saladino";
-                
+            if (comprobarCampos()) {         
+                extraerCorreo();
                 MimeMultipart multipart = new MimeMultipart();
                 
                 BodyPart texto = new MimeBodyPart();
@@ -68,14 +76,14 @@ public class FXMLCorreoController implements Initializable {
                 //multipart.addBodyPart(adjunto);
 
                 MimeMessage mail = new MimeMessage(conexionServidorCorreo());
-                mail.setFrom(new InternetAddress(correoEnvia));
+                mail.setFrom(new InternetAddress(txtPropietario.getText()));
                 mail.addRecipient(Message.RecipientType.TO, new InternetAddress(txtDestinatario.getText()));
                 mail.setSubject(txtAsunto.getText());
                 mail.setContent(multipart,"ISO-8859-1");
                 //mail.setText(txtACuerpo.getText(),"ISO-8859-1");
 
                 Transport transport = conexionServidorCorreo().getTransport("smtp");
-                transport.connect(correoEnvia, contrasenia);
+                transport.connect(txtPropietario.getText(), contrasenia);
                 transport.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
                 transport.close();
 
@@ -122,7 +130,7 @@ public class FXMLCorreoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        txtPropietario.setText(correoEnvia);
+        extraerCorreo();
         txtACuerpo.setText(pieDeMensaje + aviso);
     }
 

@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="804.0" prefWidth="880.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="correo.FXMLCorreoController">
+<AnchorPane id="AnchorPane" prefHeight="804.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="correo.FXMLCorreoController">
    <children>
       <Button layoutX="763.0" layoutY="720.0" mnemonicParsing="false" onAction="#enviarCorreo" text="Enviar" />
       <TextArea fx:id="txtACuerpo" layoutX="38.0" layoutY="300.0" prefHeight="407.0" prefWidth="802.0">
