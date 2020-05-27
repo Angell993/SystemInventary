@@ -52,9 +52,9 @@ public class FXMLRegistrarVentaController implements Initializable {
     @FXML
     private TableColumn<Venta, Integer> clmCantidad;
     @FXML
-    private TableColumn<Venta, Float> clmPrecio;
+    private TableColumn<Venta, Double> clmPrecio;
     @FXML
-    private TableColumn<Venta, Float> clmTotal;
+    private TableColumn<Venta, Double> clmTotal;
     @FXML
     private Button aniadir;
 
@@ -71,7 +71,7 @@ public class FXMLRegistrarVentaController implements Initializable {
     private ObservableList<Item> idCantidadComprada;
     private String codEmpleado;
     private int n_Compra = 0;
-    private Float total;
+    private Double total;
     private Venta venta;
     private AnchorPane anchorPane;
 
@@ -89,11 +89,11 @@ public class FXMLRegistrarVentaController implements Initializable {
                 Parent root = loader.load();
                 FXMLPagoController pagar = loader.getController();
                 pagar.recibirInformacionPago(nFactura.getText(), codEmpleado, String.valueOf(sumarDineroTotal()), idCantidadComprada, anchorPane, listaArticulo);
-                System.out.println(nFactura.getText());
+                /*System.out.println(nFactura.getText());
                 System.out.println(codEmpleado);
                 System.out.println(String.valueOf(sumarDineroTotal()));
                 System.out.println(idCantidadComprada);
-                System.out.println(Arrays.toString(listaArticulo.toArray()));
+                System.out.println(Arrays.toString(listaArticulo.toArray()));*/
                 
                 //No se porque me da el error de NullPointerException
                 anchorPane.getChildren().setAll(root);
@@ -143,7 +143,7 @@ public class FXMLRegistrarVentaController implements Initializable {
         for (int i = 0; i < listaTotalCompra.size(); i++) {
             sum += new BigDecimal(listaTotalCompra.get(i)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
         }
-        txtTotalCompra.setText(String.valueOf(sum = Math.rint(sum * 10) / 10));
+        txtTotalCompra.setText(MetodosJavaClass.quitarDecimal(sum));
         return sum;
     }
 
@@ -167,7 +167,7 @@ public class FXMLRegistrarVentaController implements Initializable {
                 listaArticulo.remove(vent);
                 listaTotalCompra.clear();
                 txtTotalCompra.setText("");
-                total = 0.00f;
+                total = 0.00;
                 n_Compra = 1;
                 for (int i = 0; i < listaArticulo.size(); i++) {
                     listaArticulo.get(i).setNumeroCompra(n_Compra);
@@ -230,15 +230,16 @@ public class FXMLRegistrarVentaController implements Initializable {
         this.anchorPane = anchorPane;
     }
 
-    //He modificado aquí, cerrando la conexion de resultset
+    //He modificado aquí, cerrando la conexion de resultset en try con recursos
     private void recibirPrecio(int idArticulo) {
         try {
             String sSelect = SentenciasSQL.obtenerPrecio + idArticulo + " ;";
-            ResultSet rSet = conexionbasedatos.ConexionInventario.sSQL(sSelect);
-            while (rSet.next()) {
-                precioArticulo.setText(rSet.getString(1));
+            try (ResultSet rSet = conexionbasedatos.ConexionInventario.sSQL(sSelect)) {
+                while (rSet.next()) {
+                    double precio = rSet.getDouble(3);
+                    precioArticulo.setText(MetodosJavaClass.quitarDecimal(precio));
+                }
             }
-            rSet.close();
         } catch (SQLException ex) {
             Alertas.errorSQL("ERROR DE SQL", ex);
         }
@@ -277,7 +278,7 @@ public class FXMLRegistrarVentaController implements Initializable {
         if (comprobarCampos()) {
             n_Compra++;
             String nombreArt = cmbArticulo.getSelectionModel().getSelectedItem().getDescripcion();
-            Float precio = Float.parseFloat(precioArticulo.getText());
+            Double precio = MetodosJavaClass.quitarComa(precioArticulo.getText());
             int cantidad = Integer.parseInt(cmbCantidad.getSelectionModel().getSelectedItem().getDescripcion());
             total = precio * cantidad;
             venta.setNumeroFactura(nFactura.getText());
@@ -285,10 +286,10 @@ public class FXMLRegistrarVentaController implements Initializable {
             venta.setNombreArticulo(nombreArt);
             venta.setCantidadCompra(cantidad);
             venta.setPrecioArticulo(precio);
-            venta.setTotalCompra((float) (Math.rint(total * 10) / 10));
+            venta.setTotalCompra(MetodosJavaClass.quitarComa(String.valueOf(total)));
             listaArticulo.add(venta);
 
-            listaTotalCompra.add(Double.valueOf(total));
+            listaTotalCompra.add(total);
         }
         return listaArticulo;
     }
@@ -337,9 +338,9 @@ public class FXMLRegistrarVentaController implements Initializable {
             venta.setNombreArticulo(listventa.get(i).getNombreArticulo());
             venta.setCantidadCompra(listventa.get(i).getCantidadCompra());
             venta.setPrecioArticulo(listventa.get(i).getPrecioArticulo());
-            venta.setTotalCompra((float) (Math.rint(total * 10) / 10));
+            venta.setTotalCompra(total);
             listaArticulo.add(venta);
-            listaTotalCompra.add(Double.valueOf(total));
+            listaTotalCompra.add(total);
         }
         clmNumVenta.setCellValueFactory(new PropertyValueFactory<>("numeroCompra"));
         clmNombre.setCellValueFactory(new PropertyValueFactory<>("nombreArticulo"));

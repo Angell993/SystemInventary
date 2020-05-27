@@ -36,18 +36,18 @@ public class FXMLRegistrarArticuloController implements Initializable {
     private void ingresarArticulo(ActionEvent event) {
         System.out.println(cmbProveedor.getSelectionModel().getSelectedItem().getDocProveedor());
         if (MetodosJavaClass.txtVacios(datosArray())) {
-            if (MetodosJavaClass.isNumero(txtPrecioVenta.getText()) && MetodosJavaClass.isNumero(txtPrecioCosto.getText())) {
-                if (MetodosJavaClass.cmbSeleccionado(cmbArticulo) && MetodosJavaClass.cmbSeleccionado(cmbProveedor)) {
-                    
-                    String sentencia = SentenciasSQL.ingresarArticulo + "('" + txtNomArticulo.getText() + "', " + Double.valueOf(txtPrecioVenta.getText())
-                            + " , " + Double.valueOf(txtPrecioCosto.getText()) + " , " + txtStock.getText()
-                            + " , " + cmbArticulo.getSelectionModel().getSelectedItem().getId()
-                            + " , '" + cmbProveedor.getSelectionModel().getSelectedItem().getDocProveedor()
-                            + "' , '" + Fecha.fechaSQl() + "', " + Integer.parseInt(txtCodBarras.getText()) + " )";
-                    ConexionInventario.EjecutarSQL(sentencia);
-                    clearArticulo(event);
+            if (MetodosJavaClass.isDouble(txtPrecioVenta.getText()) && MetodosJavaClass.isDouble(txtPrecioCosto.getText())) {
+                if (MetodosJavaClass.esNumero(txtCodBarras.getText())) {
+                    if (MetodosJavaClass.cmbSeleccionado(cmbArticulo) && MetodosJavaClass.cmbSeleccionado(cmbProveedor)) {
+                        String sentencia = SentenciasSQL.ingresarArticulo + "('" + txtNomArticulo.getText() + "', " + Double.valueOf(txtPrecioVenta.getText())
+                                + " , " + Double.valueOf(txtPrecioCosto.getText()) + " , " + txtStock.getText()
+                                + " , " + cmbArticulo.getSelectionModel().getSelectedItem().getId()
+                                + " , '" + cmbProveedor.getSelectionModel().getSelectedItem().getDocProveedor()
+                                + "' , '" + Fecha.fechaSQl() + "', " + Integer.parseInt(txtCodBarras.getText()) + " )";
+                        ConexionInventario.EjecutarSQL(sentencia);
+                        clearArticulo(event);
+                    }
                 }
-                
             }
         }
 

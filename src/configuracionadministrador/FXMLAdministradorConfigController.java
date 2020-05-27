@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -36,6 +37,9 @@ public class FXMLAdministradorConfigController implements Initializable {
     private TextField txtUrl, txtUsuario, txtPass, txtDB, txtPuerto, txtCorreoEmpresa, txtCorreoPass;
     @FXML
     private Label lblUrl, lblUrl1, lblConexion, lblCorreo;
+    @FXML
+    private Button siguiente;
+    private Boolean verifica;
     private ConexionDB conexion;
     private final Fichero fich = new Fichero();
 
@@ -61,8 +65,7 @@ public class FXMLAdministradorConfigController implements Initializable {
 
     @FXML
     private void comprobarConexionDB() {
-        String server = lblUrl.getText() + txtUrl.getText() + lblUrl1.getText();
-        if (txtUrl.getText().contains("/")) {
+            String server = lblUrl.getText() + txtUrl.getText() + lblUrl1.getText();
             conexion = new ConexionDB(server, txtUsuario.getText(), txtPass.getText());
             if (conexion.conectar() == null) {
                 lblConexion.setText("Conexión Fallida!!");
@@ -71,9 +74,6 @@ public class FXMLAdministradorConfigController implements Initializable {
                 fich.escribirObjeto(server, txtUsuario.getText(), txtPass.getText());
                 fich.leerObjetoDB();
             }
-        } else {
-            lblConexion.setText("Conexión Fallida!!");
-        }
     }
 
     @FXML
@@ -125,7 +125,6 @@ public class FXMLAdministradorConfigController implements Initializable {
 
                 lblCorreo.setText("Comprueba tu correo electónico OK");
                 fich.escribirObjeto(txtCorreoEmpresa.getText(), txtCorreoPass.getText());
-                fich.leerObjetoCorreo();
             }
         } catch (AddressException ex) {
             Logger.getLogger(FXMLCorreoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -153,4 +152,11 @@ public class FXMLAdministradorConfigController implements Initializable {
         return false;
     }
 
+    public void distintasInicializacion(Boolean verifica) {
+        this.verifica = verifica;
+        if (verifica) {
+            siguiente.setVisible(false);
+            txtPass.setText(fich.leerObjetoDB().getPass());
+        }
+    }
 }

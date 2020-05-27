@@ -35,14 +35,14 @@ import reportesistemainventario.CrearInforme;
 
 public class FXMLPagoController implements Initializable {
 
-    @FXML
+    @FXML  ///, txtTotal
     private ComboBox<Item> combPago;
     @FXML
     private TextField txtDocumento, codEmpleado, fechaPago, txtFactura;
     @FXML
-    private TextField txtIva, txtTotal, txtImporte;
+    private TextField txtIva, txtImporte;
     @FXML
-    private Label lblSinIva, lblIva, lblTotal, lblImporte, lblAdevolver, lblTotalIva, lblCambio;
+    private Label lblSinIva, lblIva, lblTotal, lblImporte, lblAdevolver, lblTotalIva, lblCambio, lblBase, lblTotalPorcent;
     private final LLenarCombos llenarComb = new LLenarCombos();
     private final VentanaRootPane visualizarInterfaz = new VentanaRootPane();
     private AnchorPane rootPane;
@@ -51,6 +51,7 @@ public class FXMLPagoController implements Initializable {
     private ObservableList<Item> idCantidadCompra;
     private ObservableList<Item> listaPago;
     private ObservableList<Venta> listaVenta = FXCollections.observableArrayList();
+    private ObservableList<Item> listaIva;
     private Venta venta = new Venta();
     private double dinero;
     private String sentencia;
@@ -99,39 +100,20 @@ public class FXMLPagoController implements Initializable {
     }
 
     /*Recibir Informacion desde la ventana de registrar Venta*/
-    public void recibirInformacionPago(String factura, String empleado, String neto, ObservableList<Item> idCantidadCompra, AnchorPane rootPane, ObservableList<Venta> listaVenta) {
+    public void recibirInformacionPago(String factura, String empleado, String total, ObservableList<Item> idCantidadCompra,
+            AnchorPane rootPane, ObservableList<Venta> listaVenta) {
         this.listaVenta = listaVenta;
         this.rootPane = rootPane;
-        System.out.println("Acabo de recibir los datos: " + Arrays.toString(listaVenta.toArray()));
         this.idCantidadCompra = idCantidadCompra;
         txtFactura.setText(factura);
         codEmpleado.setText(empleado);
         llenarComb.llenarComboBox(listaPago, combPago, SentenciasSQL.sqlPago);
-        txtTotal.setText(neto);
-        dinero = Double.parseDouble(neto);
-        lblSinIva.setText(neto);
+        //txtTotal.setText(MetodosJavaClass.quitarDecimal(Double.parseDouble(total)));
+        dinero = Double.parseDouble(total);
+        lblTotal.setText(MetodosJavaClass.quitarDecimal(Double.parseDouble(total)));
+        ivaProcentaje();
     }
 
-    private void obtenerPrecioConIVA() {
-        txtIva.textProperty().addListener((ov, oldValue, newValue) -> {
-            try {
-                if (Integer.parseInt(newValue) < 100) {
-                    double iva = Double.parseDouble(newValue) / 100;
-                    money = new BigDecimal(dinero * iva).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                    double acobrar = money + dinero;
-                    txtTotal.setText(String.valueOf(Math.rint(acobrar * 10) / 10));
-                    lblTotal.setText(txtTotal.getText());
-                    lblTotalIva.setText(String.valueOf(money));
-                } else {
-                    Alertas.mensajeErrorPers("¡IVA!", "La cantidad de IVA no puede ser del 100%");
-                    txtIva.setText(String.valueOf(21));
-                }
-            } catch (NumberFormatException e) {
-                Alertas.mensajeError(e.getLocalizedMessage());
-            }
-        }
-        );
-    }
 
     @FXML
     private void registrarFacturPago(ActionEvent event) {
@@ -142,13 +124,13 @@ public class FXMLPagoController implements Initializable {
                     sentencia = SentenciasSQL.insertarFactura + "('" + txtFactura.getText() + "', '" + txtDocumento.getText()
                             + "', " + Integer.parseInt(codEmpleado.getText()) + " ,'" + Fecha.fechaSQl()
                             + "', " + combPago.getSelectionModel().getSelectedItem().getId()
-                            + " , " + Double.parseDouble(txtTotal.getText()) + " , " + Double.parseDouble(txtIva.getText()) + " )";
+                            + " , " + MetodosJavaClass.quitarComa(lblTotal.getText()) + " )";
 
                     ConexionInventario.EjecutarSQL(sentencia);
                     Alertas.alertaPers("Cambio", "El cambio a recibir.", String.valueOf(cambio()));
 
-                    CrearInforme ventaTicket = new CrearInforme();
-                    ventaTicket.ticketVenta(txtFactura.getText(), url);
+                    /*CrearInforme ventaTicket = new CrearInforme();
+                    ventaTicket.ticketVenta(txtFactura.getText(), url);*/
                     cargarNuevaVentana();
                 }
             }
@@ -157,7 +139,6 @@ public class FXMLPagoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        obtenerPrecioConIVA();
         fechaPago.setText(Fecha.fecha());
         lblDinero();
     }
@@ -165,14 +146,14 @@ public class FXMLPagoController implements Initializable {
     private double cambio() {
         double devolver = 0;
         try {
-            if (Double.parseDouble(txtImporte.getText()) < Double.parseDouble(txtTotal.getText())) {
+            if (Double.parseDouble(txtImporte.getText()) < MetodosJavaClass.quitarComa(lblTotal.getText())) {
                 lblCambio.setText("Falta");
                 lblCambio.getStyleClass().add("cambio");
-                devolver = Double.parseDouble(txtTotal.getText()) - Double.parseDouble(txtImporte.getText());
+                devolver = MetodosJavaClass.quitarComa(lblTotal.getText()) - Double.parseDouble(txtImporte.getText());
             } else {
                 lblCambio.setText("Cambio");
                 lblCambio.getStyleClass().add("dinero-completo");
-                devolver = Double.parseDouble(txtImporte.getText()) - Double.parseDouble(txtTotal.getText());
+                devolver = Double.parseDouble(txtImporte.getText()) - MetodosJavaClass.quitarComa(lblTotal.getText());
             }
         } catch (NumberFormatException e) {
         }
@@ -183,7 +164,6 @@ public class FXMLPagoController implements Initializable {
         ObservableList<TextField> listaDatos = FXCollections.observableArrayList();
         listaDatos.removeAll(listaDatos);
         listaDatos.add(txtDocumento);
-        listaDatos.add(txtIva);
 
         return listaDatos;
     }
@@ -207,9 +187,6 @@ public class FXMLPagoController implements Initializable {
         txtImporte.textProperty().addListener((ov, oldValue, newValue) -> {
             lblImporte.setText(txtImporte.getText());
             lblAdevolver.setText(String.valueOf(cambio()));
-        });
-        txtIva.textProperty().addListener((ov, oldValue, newValue) -> {
-            lblIva.setText(txtIva.getText());
         });
     }
 
@@ -236,5 +213,78 @@ public class FXMLPagoController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(FXMLPagoController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void ivaProcentaje() {
+        listaIva = FXCollections.observableArrayList();
+        double sinIva = 0;
+        for (int i = 0; i < idCantidadCompra.size(); i++) {
+            ResultSet datos = ConexionInventario.sSQL(SentenciasSQL.sqlIvaPorcentaje + idCantidadCompra.get(i).getId());
+            try {
+                while (datos.next()) {
+                    String porcentajeIva = String.valueOf((Math.rint(datos.getDouble(2) * 100) / 100) * (Double.parseDouble(idCantidadCompra.get(i).getDescripcion())));
+                    String precioSinIva = String.valueOf((Math.rint(datos.getDouble(3) * 100) / 100) * (Double.parseDouble(idCantidadCompra.get(i).getDescripcion())));
+                    listaIva.add(new Item(datos.getInt(1), porcentajeIva ,precioSinIva));
+                    sinIva += (Math.rint(datos.getDouble(3) * 100) / 100) * (Double.parseDouble(idCantidadCompra.get(i).getDescripcion()));
+                    System.out.println("IVA: "+datos.getInt(1));
+                    System.out.println("Porcentaje: "+porcentajeIva);
+                    System.out.println("PrecioTotal: "+precioSinIva);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(FXMLPagoController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        System.out.println("Sin iva: " + Math.rint(sinIva * 100) / 100);
+        lblSinIva.setText(String.valueOf(sinIva));
+        desgloseIva(listaIva);
+    }
+
+    private void desgloseIva(ObservableList<Item> listaIva) {
+        StringBuilder iva = new StringBuilder();
+        StringBuilder porcentaje = new StringBuilder();
+        StringBuilder precio = new StringBuilder();        
+        int iva4 = 0;
+        int iva10 = 0;
+        int iva21 = 0;
+        double porcentaje4 = 0;
+        double porcentaje10 = 0;
+        double porcentaje21 = 0;
+        double precio4 = 0;
+        double precio10 = 0;
+        double precio21 = 0;
+        int count1 = 1, count2 = 1, count3 = 1;
+        for (int i = 0; i < listaIva.size(); i++) {
+            if (listaIva.get(i).getId() == 4) {
+                if (count1 > 0) {
+                    iva4 = listaIva.get(i).getId();
+                    count1--;
+                }
+                porcentaje4 += Double.parseDouble(listaIva.get(i).getDescripcion());
+                precio4 += Double.parseDouble(listaIva.get(i).getDocProveedor());
+            }
+            if (listaIva.get(i).getId() == 10) {
+                if (count2 > 0) {
+                    iva10 = listaIva.get(i).getId();
+                    count2--;
+                }
+                porcentaje10 += Double.parseDouble(listaIva.get(i).getDescripcion());
+                precio10 += Double.parseDouble(listaIva.get(i).getDocProveedor());
+            }
+            if (listaIva.get(i).getId() == 21) {
+                if (count3 > 0) {
+                    iva21 = listaIva.get(i).getId();
+                    count3--;
+                }
+                porcentaje21 += Double.parseDouble(listaIva.get(i).getDescripcion());
+                precio21 += Double.parseDouble(listaIva.get(i).getDocProveedor());
+            }
+        }
+        iva.append(iva4+"%\n"+iva10+"%\n"+iva21+"%\n");
+        porcentaje.append(porcentaje4 +"€\n"+ porcentaje10 +"€\n"+ porcentaje21+"€\n");
+        precio.append(precio4+"€\n" + precio10+"€\n" + precio21+"€\n");
+        lblIva.setText(iva.toString());
+        lblBase.setText(porcentaje.toString());
+        lblTotalIva.setText(precio.toString());
+        lblTotalPorcent.setText(String.valueOf(porcentaje4+porcentaje10+porcentaje21));
     }
 }

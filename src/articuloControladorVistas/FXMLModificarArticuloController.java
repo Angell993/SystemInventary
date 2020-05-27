@@ -52,23 +52,24 @@ public class FXMLModificarArticuloController implements Initializable {
     @FXML
     private void modificarArticulo(ActionEvent event) {
         if (MetodosJavaClass.txtVacios(datosArray())) {
-            sentencia = SentenciasSQL.sqlModificarArticulo + " nombre = '" + txtNomArticulo.getText() + "', precio_venta = " + Double.valueOf(txtPrecioVenta.getText())
-                    + " , precio_costo = " + Double.valueOf(txtPrecioCosto.getText()) + " , stock = " + Integer.parseInt(txtStock.getText())
-                    + " , cod_tipo_articulo = " + cmbArticulo.getSelectionModel().getSelectedItem().getId()
-                    + " , cod_proveedor = '" + cmbProveedor.getSelectionModel().getSelectedItem().getDocProveedor()
-                    + "' , fecha_ingreso = '" + txtFecha.getText() + "', codigo_barras = " + Integer.parseInt(txtCodBarras.getText())
-                    + " WHERE id_articulo = " + idArticulo;
-            ConexionInventario.EjecutarSQL(sentencia);
-            actualizarTabla();
-            cerrarVentana(event);
-
+            if (MetodosJavaClass.esNumero(txtCodBarras.getText())) {
+                sentencia = SentenciasSQL.sqlModificarArticulo + " nombre = '" + txtNomArticulo.getText() + "', precio_venta = " + Double.valueOf(txtPrecioVenta.getText())
+                        + " , precio_costo = " + Double.valueOf(txtPrecioCosto.getText()) + " , stock = " + Integer.parseInt(txtStock.getText())
+                        + " , cod_tipo_articulo = " + cmbArticulo.getSelectionModel().getSelectedItem().getId()
+                        + " , cod_proveedor = '" + cmbProveedor.getSelectionModel().getSelectedItem().getDocProveedor()
+                        + "' , fecha_ingreso = '" + txtFecha.getText() + "', codigo_barras = " + Integer.parseInt(txtCodBarras.getText())
+                        + " WHERE id_articulo = " + idArticulo;
+                ConexionInventario.EjecutarSQL(sentencia);
+                actualizarTabla();
+                cerrarVentana(event);
+            }
         }
     }
 
     @FXML
     private void eliminarArticulo(ActionEvent event) {
         if (MetodosJavaClass.txtVacios(datosArray())) {
-            if (Alertas.eliminarConfirmacion()) {
+            if (Alertas.Confirmacion()) {
                 sentencia = SentenciasSQL.sqlEliminarArticulo + " id_articulo = " + idArticulo;
                 ConexionInventario.EjecutarSQL(sentencia);
                 recargarVentana();
@@ -78,7 +79,7 @@ public class FXMLModificarArticuloController implements Initializable {
     }
 
     public void recibirDatos(Articulo articulo, AnchorPane rootPane) {
-        this.rootPane  = rootPane;
+        this.rootPane = rootPane;
         this.articulo = articulo;
         idArticulo = articulo.getIdArticulo();
         txtNomArticulo.setText(articulo.getNombreArticulo());
@@ -87,8 +88,8 @@ public class FXMLModificarArticuloController implements Initializable {
         txtPrecioCosto.setText(String.valueOf(articulo.getPrecioCosto()));
         txtStock.setText(String.valueOf(articulo.getCantidadStock()));
         txtFecha.setText(articulo.getFecha());
-        
-        cmbArticulo.getSelectionModel().select(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlTipoArticulo + "'" + articulo.getDescripcionArticulo()+"'"),
+
+        cmbArticulo.getSelectionModel().select(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlTipoArticulo + "'" + articulo.getDescripcionArticulo() + "'"),
                 articulo.getDescripcionArticulo()));
         cmbProveedor.getSelectionModel().select(new Item(MetodosJavaClass.obtenerDocumentoProveedor(articulo.getNombreProveedor()), articulo.getNombreProveedor()));
         llenarComb.llenarComboBox(listaArticulo, cmbArticulo, SentenciasSQL.sqlArticulo);
@@ -122,7 +123,7 @@ public class FXMLModificarArticuloController implements Initializable {
         return articulo;
     }
 
-    private void recargarVentana(){
+    private void recargarVentana() {
         visualizarInterfaz.mostarVentana("/articuloControladorVistas/FXMLModificarEliminarArticulo.fxml", rootPane);
     }
 }

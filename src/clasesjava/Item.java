@@ -14,6 +14,12 @@ public class Item {
         this.descripcion = descripcion;
     }
 
+    public Item(int id, String descripcion, String docProveedor) {
+        this.id = id;
+        this.descripcion = descripcion;
+        this.docProveedor = docProveedor;
+    }
+
     public Item( String docProveedor, String descripcion) {
         this.docProveedor= docProveedor;
         this.descripcion = descripcion;

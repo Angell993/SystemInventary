@@ -56,20 +56,25 @@ public class FXMLRegistrarProveedorController implements Initializable {
         if (MetodosJavaClass.txtVacios(datosArray())) {
             if (MetodosJavaClass.cmbSeleccionado(cmbDocumento) && MetodosJavaClass.cmbSeleccionado(cmbProvincia)
                     && MetodosJavaClass.cmbSeleccionado(cmbMunicipio)) {
-                //if (documentoValido(cif.getText())) {
-                if (existeProveedor()) {
-                    String sInsert = SentenciasSQL.ingresarProveedor + "( '" + txtDocumento.getText() + "', " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
-                            + ", ' " + txtNombre.getText() + "', '" + txtApellido.getText() + "+', '" + txtComercio.getText() + "', '"
-                            + txtTelefono.getText() + "', '" + txtEmail.getText() + "', '" + txtPais.getText()
-                            + "', '" + cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion()
-                            + "', '" + cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion()
-                            + "', '" + txtDireccion.getText() + "', '" + txtProducto.getText() + "')";
+                //if (documentoValido(txtDocumento.getText())) {
+                if (MetodosJavaClass.verificarEmail(txtEmail)) {
+                    if (cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")) {
+                        if (existeProveedor()) {
+                            String sInsert = SentenciasSQL.ingresarProveedor + "( '" + txtDocumento.getText() + "', " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
+                                    + ", ' " + txtNombre.getText() + "', '" + txtApellido.getText() + "+', '" + txtComercio.getText() + "', '"
+                                    + txtTelefono.getText() + "', '" + txtEmail.getText() + "', '" + txtPais.getText()
+                                    + "', '" + cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion()
+                                    + "', '" + cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion()
+                                    + "', '" + txtDireccion.getText() + "', '" + txtProducto.getText() + "')";
 
-                    ConexionInventario.EjecutarSQL(sInsert);
-                    cancelar(event);
-                    //}
+                            ConexionInventario.EjecutarSQL(sInsert);
+                            cancelar(event);
+                        }
+                    } else {
+                        Alertas.información("Tipo de Documento", "El Tipo de Documento no es válido.\n\tDebe ser CIF.");
+                    }
                 }
-
+                //}
             }
         }
 

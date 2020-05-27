@@ -58,12 +58,28 @@ public class Alertas {
         mensaje.show();
     }
 
-    public static Boolean eliminarConfirmacion() {
+    public static Boolean Confirmacion() {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setTitle("Eliminar");
         alerta.setHeaderText(null);
         alerta.setContentText("¿Estas seguro que deseas eliminar el registro?");
         Optional<ButtonType> action = alerta.showAndWait();
         return action.get() != ButtonType.CANCEL;
+    }
+    
+    public static Boolean puestoConfirmacion() {
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Puesto");
+        alerta.setHeaderText(null);
+        alerta.setContentText("¿Estas seguro que deseas darle el puesto de Administrador Total?");
+        Optional<ButtonType> action = alerta.showAndWait();
+        return action.get() != ButtonType.CANCEL;
+    }
+    
+     public static void información(String aceptarTitulo, String cuerpoMensaje) {
+        Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
+        mensaje.setTitle(aceptarTitulo);
+        mensaje.setContentText(cuerpoMensaje);
+        mensaje.show();
     }
 }

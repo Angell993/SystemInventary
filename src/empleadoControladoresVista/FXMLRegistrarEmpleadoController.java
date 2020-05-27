@@ -48,16 +48,26 @@ public class FXMLRegistrarEmpleadoController implements Initializable {
 
     @FXML
     private void registrarEmpleado(ActionEvent event) {
-        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isNumero(txtEmpleado.getText())) {
+        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtEmpleado.getText())) {
             if (MetodosJavaClass.cmbSeleccionado(cmbPuesto) && MetodosJavaClass.cmbSeleccionado(cmbDocumento)) {
-                String sentencia = SentenciasSQL.ingresarEmpleado + " (" + Integer.parseInt(txtEmpleado.getText()) + ", " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
-                        + " , '" + txtDocumento.getText() + "', '" + txtNombre.getText() + "', '" + txtApellido.getText() + "', '" + txtEmail.getText()
-                        + "', " + cmbPuesto.getSelectionModel().getSelectedItem().getId() + ")";
-                ConexionInventario.EjecutarSQL(sentencia);
-                cancelar(event);
-                registrarContrasenia(event);
-                txtEmpleado.setText(String.valueOf(metodosJavaclass.identificadorEmpleado()));
-
+                if (!cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")
+                        && !cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("PASAPORTE")) {
+                    if (MetodosJavaClass.verificarEmail(txtEmail)) {
+                        if (Alertas.puestoConfirmacion()) {
+                            String sentencia = SentenciasSQL.ingresarEmpleado + " (" + Integer.parseInt(txtEmpleado.getText()) + ", " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
+                                    + " , '" + txtDocumento.getText() + "', '" + txtNombre.getText() + "', '" + txtApellido.getText() + "', '" + txtEmail.getText()
+                                    + "', " + cmbPuesto.getSelectionModel().getSelectedItem().getId() + ")";
+                            ConexionInventario.EjecutarSQL(sentencia);
+                            cancelar(event);
+                            registrarContrasenia(event);
+                            txtEmpleado.setText(String.valueOf(metodosJavaclass.identificadorEmpleado()));
+                        }else{
+                            Alertas.información("Puesto", "Elige otro cargo para el empleado.");
+                        }                       
+                    }
+                } else {
+                    Alertas.información("Tipo de Documento", "El Tipo de Documento no es válido.\n\tNo puede ser CIF ni Pasaporte.");
+                }
             }
         }
 

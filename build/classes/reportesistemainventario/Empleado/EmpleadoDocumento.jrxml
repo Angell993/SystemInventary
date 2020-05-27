@@ -14,6 +14,7 @@
 		</conditionalStyle>
 	</style>
 	<parameter name="Documento" class="java.lang.String"/>
+	<parameter name="Identificador" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT sistemainventario.empleado.`Id_empleado`,
 	sistemainventario.empleado.`CodigoEmpleado`,
@@ -28,7 +29,8 @@ FROM sistemainventario.empleado
 	 sistemainventario.empleado.`Puesto` = sistemainventario.puesto_empleado.`Id_puesto` 
 	INNER JOIN sistemainventario.tipo_de_documento ON 
 	 sistemainventario.empleado.cod_tipodocumento = sistemainventario.tipo_de_documento.id_tipo_documento
-	 where sistemainventario.empleado.`CodigoEmpleado` = $P{Documento}]]>
+	 where sistemainventario.empleado.`CodigoEmpleado` = $P{Identificador} or
+	sistemainventario.empleado.`DNI_NIE` = $P{Documento}]]>
 	</queryString>
 	<field name="Id_empleado" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="Id_empleado"/>
@@ -91,7 +93,7 @@ FROM sistemainventario.empleado
 				<text><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor purus gravida arcu aliquam mattis. Donec et nulla libero, ut varius massa. Nulla sed turpis elit. Etiam aliquet mauris a ligula hendrerit in auctor leo lobortis.]]></text>
 			</staticText>
 			<image>
-				<reportElement x="633" y="-73" width="219" height="209" uuid="4aa6f4d1-27dc-4b34-9227-59e19ce2c959"/>
+				<reportElement x="633" y="-50" width="189" height="186" uuid="4aa6f4d1-27dc-4b34-9227-59e19ce2c959"/>
 				<imageExpression><![CDATA["coffee_stain.png"]]></imageExpression>
 			</image>
 		</band>

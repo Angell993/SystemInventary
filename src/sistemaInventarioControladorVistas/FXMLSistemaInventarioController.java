@@ -189,8 +189,8 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
     }
 
     @FXML
-    private void imprimir() {
-        ruta = "/imprimir/FXMLImprimir.fxml";
+    private void opciones() {
+        ruta = "/opciones/FXMLOpciones.fxml";
         visualizarInterfaz.mostarVentana(ruta, rootPane);
     }
 

@@ -84,7 +84,7 @@ public class FXMLModificarClienteController implements Initializable {
 
     @FXML
     private void modificarRegistro(ActionEvent event) {
-        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isNumero(txtCodigoPostal.getText()) && MetodosJavaClass.isNumero(numEmpleado.getText())) {
+        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtCodigoPostal.getText()) && MetodosJavaClass.isDouble(numEmpleado.getText())) {
             //if (documentoValido(txtDni.getText())) {
             String modificar = SentenciasSQL.sqlModificarCliente + " Documento ='" + txtDni.getText() + "' ,"
                     + " cod_tipo_documento = " + cmbDocumento.getSelectionModel().getSelectedItem().getId() + " ,"
@@ -107,9 +107,9 @@ public class FXMLModificarClienteController implements Initializable {
 
     @FXML
     private void eliminarCliente(ActionEvent event) {
-        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isNumero(txtCodigoPostal.getText()) && MetodosJavaClass.isNumero(numEmpleado.getText())) {
+        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtCodigoPostal.getText()) && MetodosJavaClass.isDouble(numEmpleado.getText())) {
             //if (documentoValido(txtDni.getText())) {
-            if (Alertas.eliminarConfirmacion()) {
+            if (Alertas.Confirmacion()) {
                 String eliminar = SentenciasSQL.sqlEliminarCliente + " id_Cliente = " + id;
                 ConexionInventario.EjecutarSQL(eliminar);
                 recargarVentana();

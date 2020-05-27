@@ -18,14 +18,14 @@
 		<![CDATA[SELECT sistemainventario.factura.`Nnm_factura`,
 	sistemainventario.factura.cod_cliente,
 	sistemainventario.factura.cod_empleado,
-	sistemainventario.factura.fecha,
+	sistemainventario.factura.Fecha_facturacion,
 	sistemainventario.forma_de_pago.`Descripcion_formapago`,
 	sistemainventario.factura.`IVA`,
 	sistemainventario.factura.total_factura
 FROM sistemainventario.factura
 	INNER JOIN sistemainventario.forma_de_pago ON 
 	 sistemainventario.factura.cod_formapago = sistemainventario.forma_de_pago.id_formapago
-	 where  sistemainventario.factura.fecha  like $P{Fecha} ]]>
+	 where  sistemainventario.factura.Fecha_facturacion  like $P{Fecha}]]>
 	</queryString>
 	<field name="Nnm_factura" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="Nnm_factura"/>
@@ -39,8 +39,8 @@ FROM sistemainventario.factura
 		<property name="com.jaspersoft.studio.field.label" value="cod_empleado"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 	</field>
-	<field name="fecha" class="java.sql.Date">
-		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+	<field name="Fecha_facturacion" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="Fecha_facturacion"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
 	</field>
 	<field name="Descripcion_formapago" class="java.lang.String">
@@ -170,7 +170,7 @@ FROM sistemainventario.factura
 					<reportElement style="Detail" x="342" y="0" width="114" height="15" uuid="d2721d8c-7496-47b5-895c-4df33f82daba">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="41108051-40d1-4791-8766-aa6624f61012"/>
 					</reportElement>
-					<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{Fecha_facturacion}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="StretchHeight">
 					<reportElement style="Detail" x="456" y="0" width="114" height="15" uuid="fac2fb92-a8cb-4452-b48f-9c2e46668255">

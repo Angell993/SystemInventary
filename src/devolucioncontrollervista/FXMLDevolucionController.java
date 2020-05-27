@@ -27,7 +27,7 @@ public class FXMLDevolucionController implements Initializable {
     private void registrarDevolucion() {
         //Con este if compruebo en la base de datos si ya esta registrado la devolucion
         if (MetodosJavaClass.txtVacios(datosArray())) {
-            if (MetodosJavaClass.isNumero(txtCantidad.getText())) {
+            if (MetodosJavaClass.isDouble(txtCantidad.getText())) {
                 if (existeDevolucion() && existeDevolucionFactura()) {
                     String sentencia = SentenciasSQL.ingresarDevolucion + "('" + txtFactura.getText() + "', " + Integer.parseInt(txtArticulo.getText())
                             + ", '" + txtMotivo.getText() + "', '" + Fecha.fechaSQl()

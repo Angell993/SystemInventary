@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ArticuloNombre" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sistema Inventario"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SISTEMAINVENTARIO"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -21,14 +21,14 @@
 	sistemainventario.articulo.precio_costo,
 	sistemainventario.articulo.stock,
 	sistemainventario.tipo_articulo.descripcion_articulo,
-	sistemainventario.proveedor.Nombre_comercial,
-	sistemainventario.articulo.fecha_ingreso,
+	sistemainventario.proveedor.`Nombre_comercial`,
+	sistemainventario.articulo.fecha,
 	sistemainventario.articulo.codigo_barras
 FROM sistemainventario.articulo
 	INNER JOIN sistemainventario.tipo_articulo ON 
 	 sistemainventario.articulo.cod_tipo_articulo = sistemainventario.tipo_articulo.id_tipoarticulo 
 	INNER JOIN sistemainventario.proveedor ON 
-	 sistemainventario.articulo.cod_proveedor = sistemainventario.proveedor.No_documento
+	 sistemainventario.articulo.cod_proveedor = sistemainventario.proveedor.`No_documento`
 	 where sistemainventario.articulo.nombre = $P{Nombre}]]>
 	</queryString>
 	<field name="id_articulo" class="java.lang.Integer">
@@ -59,7 +59,7 @@ FROM sistemainventario.articulo
 		<property name="com.jaspersoft.studio.field.label" value="Nombre_comercial"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
 	</field>
-	<field name="fecha_ingreso" class="java.sql.Date">
+	<field name="fecha" class="java.sql.Date">
 		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="articulo"/>
 	</field>
@@ -218,7 +218,7 @@ FROM sistemainventario.articulo
 					<reportElement style="Detail" x="623" y="0" width="89" height="15" uuid="50c115e7-8612-4db8-bb02-23d3843fd4d9">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="162e8794-a049-43a5-95c4-af58762cbfb9"/>
 					</reportElement>
-					<textFieldExpression><![CDATA[$F{fecha_ingreso}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="StretchHeight">
 					<reportElement style="Detail" x="712" y="0" width="89" height="15" uuid="07cf45fa-730c-486f-b516-7b97825d688a">

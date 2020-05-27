@@ -12,18 +12,21 @@ import metodosjavaClass.SentenciasSQL;
 public class FXMLTipoArticuloController implements Initializable {
 
     @FXML
-    TextField codArticulo, descripcionArt;
+    TextField txtIva, txtArticulo;
 
     @FXML
     private void registrarTipoArticulo(ActionEvent event) {
-        System.out.println("Estoy en botón de registrar *-*-*-*-*-*-*-*-*-*-*-*-*-*-");
-        String sentencia = SentenciasSQL.ingresarTipoArticulo + "(' " + descripcionArt.getText() + " ')";
-        ConexionInventario.EjecutarSQL(sentencia);
-        borrarDescripcion(event);
+        if (!txtArticulo.getText().isEmpty() && !txtIva.getText().isEmpty()) {
+            String sentencia = SentenciasSQL.ingresarTipoArticulo + "(' " + txtArticulo.getText() + " ', " + txtIva.getText() + ")";
+            ConexionInventario.EjecutarSQL(sentencia);
+            borrarDescripcion(event);
+        }
     }
-    
-    @FXML private void borrarDescripcion(ActionEvent event){
-        descripcionArt.setText(null);
+
+    @FXML
+    private void borrarDescripcion(ActionEvent event) {
+        txtArticulo.setText(null);
+        txtIva.setText(null);
     }
 
     @Override

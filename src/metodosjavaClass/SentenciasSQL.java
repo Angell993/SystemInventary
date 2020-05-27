@@ -42,7 +42,7 @@ public class SentenciasSQL {
     *Sentecnias para registrar Articulos
      */
     //tipo de Articulo
-    public static String ingresarTipoArticulo = "INSERT INTO tipo_articulo ( descripcion_articulo ) VALUES ";
+    public static String ingresarTipoArticulo = "INSERT INTO tipo_articulo ( descripcion_articulo, IVA ) VALUES ";
     public static String ingresarArticulo = "INSERT INTO articulo (nombre, precio_venta, precio_costo, stock, cod_tipo_articulo, cod_proveedor, fecha_ingreso, codigo_barras) VALUES ";
     public static String sqlConsultaArticulotabla = "SELECT articulo.id_articulo, articulo.Nombre, articulo.precio_venta, "
             + "articulo.precio_costo, articulo.stock, tipo_articulo.descripcion_articulo , proveedor.Nombre_comercial, "
@@ -75,14 +75,24 @@ public class SentenciasSQL {
     public static String sqlRegCompra = "INSERT INTO detalle_factura (cod_factura, cod_articulo, cantidad, total) VALUES ";
     public static String insertarFactura = "INSERT INTO factura (Nnm_factura, cod_cliente, cod_empleado, Fecha_facturacion, cod_formapago, total_factura, IVA) VALUES ";
     public static String sqlArticulos = "SELECT `id_articulo`, `nombre` FROM `articulo` order by `id_articulo`;";
-    public static String sqlCantidad = "Select `id_articulo`, `stock` from `articulo` where `id_articulo` = ";
-    public static String obtenerPrecio = "Select precio_venta from `articulo` where `id_articulo` = ";
+    public static String sqlCantidad = "Select `id_articulo`, `stock` from articulo where id_articulo = ";
+    
+    //public static String obtenerPrecio = "Select precio_venta from `articulo` where `id_articulo` = ";
     public static String sqlEliminarDetalleFactura = "DELETE from detalle_factura WHERE ";
     public static String sqlIdArticulo = "SELECT id_articulo from articulo where Nombre = ";
     public static String sqlDocumentoNombreCliente = "SELECT documento, Nombre from cliente where documento = ";
     public static String sqlConsultarActualizarDb = "Select id_articulo, stock from articulo where Nombre = ";
     public static String sqlConsultarStockArticulo = "Select stock from articulo where id_articulo = ";
     public static String sqlActualizarArticuloDb = "UPDATE articulo SET ";
+
+    //Nueva sql Venta
+    public static String obtenerPrecio = "select tipo_articulo.IVA,(articulo.precio_venta * (tipo_articulo.IVA / 100)) ,"
+            + " ((articulo.precio_venta * (tipo_articulo.IVA / 100)) + articulo.precio_venta ) as precio_iva "
+            + "from articulo inner join tipo_articulo on articulo.cod_tipo_articulo = tipo_articulo.id_tipoarticulo "
+            + "where id_articulo = ";
+    public static String sqlIvaPorcentaje = "select tipo_articulo.IVA,(articulo.precio_venta * (tipo_articulo.IVA / 100)), articulo.precio_venta "
+            + "from articulo inner join tipo_articulo on articulo.cod_tipo_articulo = tipo_articulo.id_tipoarticulo "
+            + "where id_articulo = ";
 
     /*
     *Sentencia de Registrar Devoluciones
@@ -104,7 +114,7 @@ public class SentenciasSQL {
             + " INNER JOIN detalle_factura ON factura.Nnm_factura = detalle_factura.cod_factura "
             + " INNER JOIN articulo ON 	detalle_factura.cod_articulo = articulo.id_articulo "
             + " where Nnm_factura = ";
-    
+
     public static String sqlTicket = "Select Nnm_factura from factura where id_factura = (select max(id_factura) from factura)";
 
 }

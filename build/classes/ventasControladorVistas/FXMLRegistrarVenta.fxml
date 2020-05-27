@@ -75,7 +75,7 @@
         </columns>
       </TableView>
       <TextField fx:id="txtTotalCompra" alignment="CENTER_RIGHT" disable="true" layoutX="1109.0" layoutY="682.0" prefHeight="44.0" prefWidth="183.0" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="14.0" />
-      <Label layoutX="552.0" layoutY="682.0" text="Total Sin IVA" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="552.0" AnchorPane.rightAnchor="635.0" />
+      <Label layoutX="552.0" layoutY="682.0" text="Total " AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="552.0" AnchorPane.rightAnchor="635.0" />
       <AnchorPane prefHeight="58.0" prefWidth="1238.0" styleClass="titulo" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Label layoutX="14.0" layoutY="8.0" prefHeight="42.0" prefWidth="268.0" styleClass="titulo" text="Venta" textAlignment="CENTER">

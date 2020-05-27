@@ -75,17 +75,23 @@ public class FXMLModificarProveedorController implements Initializable {
     @FXML
     private void modificarProveedor(ActionEvent event) {
         if (MetodosJavaClass.txtVacios(datosArray())) {
-            if (existeProveedor()) {
-                sentencia = SentenciasSQL.sqlModificarProveedor + "No_documento = '" + txtDocumento.getText() + "', cod_tipo_documento = " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
-                        + ", Nombre = '" + txtNombre.getText() + "', Apellido = '" + txtApellido.getText() + "', Nombre_comercial = '" + txtComercio.getText() + "',"
-                        + " Telefono = '" + txtTelefono.getText() + "', email = '" + txtEmail.getText() + "', Pais = '" + txtPais.getText()
-                        + "', Ciudad = '" + cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion()
-                        + "', Localidad = '" + cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion()
-                        + "', direccion = '" + txtDireccion.getText() + "', Productos = '" + txtProducto.getText()
-                        + "' where id_proveedor = " +id ;
-                ConexionInventario.EjecutarSQL(sentencia);
-                actualizartabla();
-                cerrarVentana(event);
+            if (MetodosJavaClass.verificarEmail(txtEmail)) {
+                if (cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")) {
+                    if (existeProveedor()) {
+                        sentencia = SentenciasSQL.sqlModificarProveedor + "No_documento = '" + txtDocumento.getText() + "', cod_tipo_documento = " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
+                                + ", Nombre = '" + txtNombre.getText() + "', Apellido = '" + txtApellido.getText() + "', Nombre_comercial = '" + txtComercio.getText() + "',"
+                                + " Telefono = '" + txtTelefono.getText() + "', email = '" + txtEmail.getText() + "', Pais = '" + txtPais.getText()
+                                + "', Ciudad = '" + cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion()
+                                + "', Localidad = '" + cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion()
+                                + "', direccion = '" + txtDireccion.getText() + "', Productos = '" + txtProducto.getText()
+                                + "' where id_proveedor = " + id;
+                        ConexionInventario.EjecutarSQL(sentencia);
+                        actualizartabla();
+                        cerrarVentana(event);
+                    }
+                } else {
+                    Alertas.información("Tipo de Documento", "El Tipo de Documento no es válido.\n\tDebe ser CIF");
+                }
             }
         }
 
@@ -95,12 +101,12 @@ public class FXMLModificarProveedorController implements Initializable {
     private void eliminarProveedor(ActionEvent event) {
         if (MetodosJavaClass.txtVacios(datosArray())) {
             if (existeProveedor()) {
-                if (Alertas.eliminarConfirmacion()) {
+                if (Alertas.Confirmacion()) {
                     sentencia = SentenciasSQL.sqlEliminarProveedor + " id_proveedor = " + id;
                     ConexionInventario.EjecutarSQL(sentencia);
                     recargarVentana();
-                    cerrarVentana(event); 
-                }                
+                    cerrarVentana(event);
+                }
             }
         }
     }
@@ -109,7 +115,7 @@ public class FXMLModificarProveedorController implements Initializable {
         this.rootPane = rootPane;
         this.proveedor = proveedor;
         id = proveedor.getIdProveedor();
-        
+
         txtDocumento.setText(proveedor.getCifProveedor());
         txtNombre.setText(proveedor.getNombreProveedor());
         txtApellido.setText(proveedor.getApellidosProveedor());
@@ -175,8 +181,9 @@ public class FXMLModificarProveedorController implements Initializable {
     public Proveedor getProveedor() {
         return proveedor;
     }
-    
-    private void recargarVentana(){
+
+    private void recargarVentana() {
         visualizarInterfaz.mostarVentana("/proveedorControladorVistas/FXMLModificarEliminarProveedor.fxml", rootPane);
     }
+
 }

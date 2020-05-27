@@ -4,6 +4,7 @@ import clasesjava.Item;
 import conexionbasedatos.ConexionInventario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -11,7 +12,7 @@ import javafx.scene.control.TextField;
 public class MetodosJavaClass {
 
     /*Verificar si es número*/
-    public static Boolean isNumero(String numero) {
+    public static Boolean isDouble(String numero) {
         try {
             Double.parseDouble(numero);
             return true;
@@ -20,7 +21,7 @@ public class MetodosJavaClass {
         }
         return false;
     }
-    
+
     public static Boolean esNumero(String numero) {
         try {
             Integer.parseInt(numero);
@@ -28,6 +29,27 @@ public class MetodosJavaClass {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+
+    public static String quitarDecimal(Double precio) {
+        String retorno = "";
+        retorno = Double.toString(precio);
+        if (precio % 1 == 0) {
+            retorno = retorno.substring(0, retorno.length() - 2);
+        } else {
+            if (String.valueOf(precio).contains(".")) {
+                precio = (Math.rint(precio * 100) / 100);
+                retorno = String.valueOf(precio).replace(".", ",");
+            }
+        }
+        return retorno;
+    }
+
+    public static Double quitarComa(String precio) {
+        if (precio.contains(",")) {
+            return Double.parseDouble(precio.replace(",", "."));
+        }
+        return Double.parseDouble(precio);
     }
 
     /*generar número de 5 cifrar para el identificador de cada ventana*/
@@ -68,7 +90,7 @@ public class MetodosJavaClass {
     public static String obtenerTipoDoc(int idDoc) {
         String tipodocumento = null;
         try {
-            ResultSet rSet = ConexionInventario.sSQL(SentenciasSQL.sqlDocumentoId + idDoc );
+            ResultSet rSet = ConexionInventario.sSQL(SentenciasSQL.sqlDocumentoId + idDoc);
             while (rSet.next()) {
                 tipodocumento = rSet.getString("Descripcion");
             }
@@ -78,7 +100,7 @@ public class MetodosJavaClass {
         return tipodocumento;
     }
 
-    public static String obtenerDocumentoProveedor(String idDoc) {                  
+    public static String obtenerDocumentoProveedor(String idDoc) {
         String tipodocumento = null;
         try {
             ResultSet rSet = ConexionInventario.sSQL(SentenciasSQL.sqlNomComercioProveedor + " '" + idDoc + "'");
@@ -103,5 +125,29 @@ public class MetodosJavaClass {
         }
         return tipodocumento;
     }
-    
+
+    // Correo Electronico
+    private static ObservableList<String> correoElectronico() {
+        ObservableList<String> correo = FXCollections.observableArrayList();
+        correo.remove(correo);
+
+        correo.add("@hotmail.com");
+        correo.add("@hotmail.es");
+        correo.add("@yahoo.com");
+        correo.add("@yahoo.es");
+        correo.add("@gmail.com");
+        correo.add("@gmail.es");
+        return correo;
+    }
+
+    public static Boolean verificarEmail(TextField email) {
+        for (int i = 0; i < correoElectronico().size(); i++) {
+            if (email.getText().contains(MetodosJavaClass.correoElectronico().get(i))) {
+                return true;
+            }
+        }
+        Alertas.información("Email", "Correo electrónico incorrecto");
+        return false;
+    }
+
 }

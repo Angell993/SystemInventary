@@ -54,18 +54,30 @@ public class FXMLModificarEmpleadoController implements Initializable {
 
     @FXML
     private void modificarEmpleado(ActionEvent event) {
-        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isNumero(txtEmpleado.getText())) {
-            if (existeEmpleado()) {
-                sentencia = SentenciasSQL.sqlModificarEmpleado + " codigoEmpleado = " + Integer.parseInt(txtEmpleado.getText())
-                        + ", cod_tipodocumento = " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
-                        + ", DNI_NIE = '" + txtDocumento.getText() + "', Nombre = '" + txtNombre.getText()
-                        + "', Apellidos = '" + txtApellido.getText() + "', Email = '" + txtEmail.getText()
-                        + "', Puesto = " + cmbPuesto.getSelectionModel().getSelectedItem().getId()
-                        + " WHERE codigoEmpleado = " + Integer.parseInt(txtEmpleado.getText());
-                ConexionInventario.EjecutarSQL(sentencia);
-                actualizarTabla();
-                cerrarVentana(event);
+        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtEmpleado.getText())) {
+            if (MetodosJavaClass.verificarEmail(txtEmail)) {
+                if (!cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")
+                        && !cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("PASAPORTE")) {
+                    if (Alertas.puestoConfirmacion()) {
+                        if (existeEmpleado()) {
+                            sentencia = SentenciasSQL.sqlModificarEmpleado + " codigoEmpleado = " + Integer.parseInt(txtEmpleado.getText())
+                                    + ", cod_tipodocumento = " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
+                                    + ", DNI_NIE = '" + txtDocumento.getText() + "', Nombre = '" + txtNombre.getText()
+                                    + "', Apellidos = '" + txtApellido.getText() + "', Email = '" + txtEmail.getText()
+                                    + "', Puesto = " + cmbPuesto.getSelectionModel().getSelectedItem().getId()
+                                    + " WHERE codigoEmpleado = " + Integer.parseInt(txtEmpleado.getText());
+                            ConexionInventario.EjecutarSQL(sentencia);
+                            actualizarTabla();
+                            cerrarVentana(event);
+                        }
+                    } else {
+                        Alertas.información("Puesto", "Elige otro cargo para el empleado.");
+                    }
+                } else {
+                    Alertas.información("Tipo de Documento", "El Tipo de Documento no es válido.\n\tNo puede ser CIF ni Pasaporte");
+                }
             }
+
         }
 
     }
@@ -73,9 +85,9 @@ public class FXMLModificarEmpleadoController implements Initializable {
     @FXML
     private void eliminarEmpleado(ActionEvent event) {
         if (MetodosJavaClass.txtVacios(datosArray())) {
-            if (MetodosJavaClass.isNumero(txtEmpleado.getText())) {
+            if (MetodosJavaClass.isDouble(txtEmpleado.getText())) {
                 if (existeEmpleado()) {
-                    if (Alertas.eliminarConfirmacion()) {
+                    if (Alertas.Confirmacion()) {
                         sentencia = SentenciasSQL.sqlEliminarEmpleado + " codigoEmpleado = " + Integer.parseInt(txtEmpleado.getText());
                         ConexionInventario.EjecutarSQL(sentencia);
                         recargarVentana();
@@ -96,9 +108,9 @@ public class FXMLModificarEmpleadoController implements Initializable {
         txtNombre.setText(empleado.getNombreEmpleado());
         txtApellido.setText(empleado.getApellidosEmpleado());
         txtEmail.setText(empleado.getEmailEmpleado());
-        
+
         cmbDocumento.getSelectionModel().select(new Item(empleado.getTipoDocumento(), MetodosJavaClass.obtenerTipoDoc(empleado.getTipoDocumento())));
-        cmbPuesto.getSelectionModel().select(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlIdPuesto + "'" + empleado.getPuesto()+ "'"), empleado.getPuesto()));
+        cmbPuesto.getSelectionModel().select(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlIdPuesto + "'" + empleado.getPuesto() + "'"), empleado.getPuesto()));
 
         llenarComb.llenarComboBox(listaPuesto, cmbPuesto, SentenciasSQL.sqlPuesto);
         llenarComb.llenarComboBox(listaDocumento, cmbDocumento, SentenciasSQL.sqlDocumento);
@@ -146,8 +158,8 @@ public class FXMLModificarEmpleadoController implements Initializable {
         return empleado;
     }
 
-     private void recargarVentana(){
+    private void recargarVentana() {
         visualizarInterfaz.mostarVentana("/empleadoControladoresVista/FXMLModificarEliminarEmpleado.fxml", rootPane);
     }
-     
+
 }

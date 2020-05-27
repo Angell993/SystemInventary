@@ -3,7 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/juanc/OneDrive/Documentos/NetBeansProjects/GitProyecto/SystemInventary/src/reportesistemainventario/FXMLReporteSistemaInventarioController.java</file>
+            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/opciones/FXMLFacturaController.java</file>
+            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/login/Login.java</file>
+            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/empleadoControladoresVista/FXMLRegistrarEmpleadoController.java</file>
+            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/opciones/FXMLOpcionesController.java</file>
+            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/metodosjavaClass/Alertas.java</file>
+            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/sistemaInventarioControladorVistas/FXMLSistemaInventarioController.java</file>
+            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/empleadoControladoresVista/FXMLModificarEmpleadoController.java</file>
+            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/metodosjavaClass/MetodosJavaClass.java</file>
         </group>
     </open-files>
 </project-private>

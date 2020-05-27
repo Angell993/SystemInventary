@@ -61,21 +61,27 @@ public class FXMLRegistrarClienteController implements Initializable {
 
     @FXML
     private void registrarCliente(ActionEvent event) {
-        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isNumero(txtCodigoPostal.getText()) && MetodosJavaClass.isNumero(txtEmpleado.getText())) {
+        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtCodigoPostal.getText()) && MetodosJavaClass.isDouble(txtEmpleado.getText())) {
             if (MetodosJavaClass.cmbSeleccionado(cmbDocumento) && MetodosJavaClass.cmbSeleccionado(cmbProvincia) && MetodosJavaClass.cmbSeleccionado(cmbMunicipio)) {
-                ///if (documentoValido(txtDni.getText())) {
-                if (existeCliente()) {
-                    String sInsert = SentenciasSQL.ingresarCliente + "('" + txtDni.getText()
-                            + "', " + cmbDocumento.getSelectionModel().getSelectedItem().getId() + " , '" + txtNombre.getText() + "', '" + txtApellido.getText() + "', '"
-                            + txtTelefono.getText() + "','" + txtEmail.getText() + "', '" + txtPais.getText() + "', '"
-                            + cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion() + "', '"
-                            + cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion() + "', '"
-                            + txtDireccion.getText() + "' , " + Integer.valueOf(txtCodigoPostal.getText()) + " , "
-                            + Integer.parseInt(txtEmpleado.getText()) + ");";
-                    ConexionInventario.EjecutarSQL(sInsert);
-                    cleanFields(event);
+                if (MetodosJavaClass.verificarEmail(txtEmail)) {
+                    if (!cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")) {
+                        ///if (documentoValido(txtDni.getText())) {
+                        if (existeCliente()) {
+                            String sInsert = SentenciasSQL.ingresarCliente + "('" + txtDni.getText()
+                                    + "', " + cmbDocumento.getSelectionModel().getSelectedItem().getId() + " , '" + txtNombre.getText() + "', '" + txtApellido.getText() + "', '"
+                                    + txtTelefono.getText() + "','" + txtEmail.getText() + "', '" + txtPais.getText() + "', '"
+                                    + cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion() + "', '"
+                                    + cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion() + "', '"
+                                    + txtDireccion.getText() + "' , " + Integer.valueOf(txtCodigoPostal.getText()) + " , "
+                                    + Integer.parseInt(txtEmpleado.getText()) + ");";
+                            ConexionInventario.EjecutarSQL(sInsert);
+                            cleanFields(event);
+                        }
+                        // }
+                    }else{
+                        Alertas.información("Tipo de Documento", "El Tipo de Documento no es válido.\n\tNo puede ser CIF.");
+                    }
                 }
-                // }
             }
         }
     }
@@ -114,8 +120,7 @@ public class FXMLRegistrarClienteController implements Initializable {
         llenarCmb.llenarComboBox(listaProvincias, cmbProvincia, SentenciasSQL.sqlProvincia);
         llenarCmb.llenarComboBox(listaDocumento, cmbDocumento, SentenciasSQL.sqlDocumento);
     }
-    
-    
+
     private ObservableList<TextField> datosArray() {
         ObservableList<TextField> listaDatos = FXCollections.observableArrayList();
         listaDatos.removeAll(listaDatos);
@@ -129,8 +134,8 @@ public class FXMLRegistrarClienteController implements Initializable {
 
         return listaDatos;
     }
-    
-    private Boolean existeCliente(){
+
+    private Boolean existeCliente() {
         try {
             ResultSet dato = ConexionInventario.sSQL(SentenciasSQL.sqlConsultarDocumentoCliente);
             while (dato.next()) {

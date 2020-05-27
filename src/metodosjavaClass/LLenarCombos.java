@@ -73,22 +73,22 @@ public class LLenarCombos {
     public static void consultaDB(int idSelected, ComboBox<Item> cmbOpciones) {
         ObservableList<Item> opciones = FXCollections.observableArrayList();
         if (idSelected == 1) { // Opciones para Artículo
-            opciones.clear();
+            opciones.remove(opciones);
             opciones.add(new Item(1, "Nombre"));
             opciones.add(new Item(2, "Fecha"));
         }
         if (idSelected == 3 || idSelected == 5) { // Opciones para Factura y Devolución
-            opciones.clear();
+            opciones.remove(opciones);
             opciones.add(new Item(1, "Identificador"));
             opciones.add(new Item(2, "Fecha"));
         }
         if (idSelected == 2 || idSelected == 6 || idSelected == 7) { // Opciones para Cliente, Empleado y Proveedor
-            opciones.clear();
-            opciones.add(new Item(1, "Documento"));
+            opciones.remove(opciones);
+            opciones.add(new Item(1, "Documento o Identificador"));
             opciones.add(new Item(2, "Nombre"));
         }
         if (idSelected == 4) { // Opciones para DetalleFactura  
-            opciones.clear();
+            opciones.remove(opciones);
             opciones.add(new Item(1, "Identificador"));
         }
         cmbOpciones.setItems(opciones);

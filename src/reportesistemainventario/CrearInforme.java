@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JFrame;
 import metodosjavaClass.Alertas;
+import metodosjavaClass.MetodosJavaClass;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -33,7 +34,11 @@ public class CrearInforme {
 
         Map parametro = new HashMap();
         if (itemSeleccionado == 1) {
+            if (MetodosJavaClass.esNumero(consulta)) {
+                parametro.put("Identificador", consulta);
+            }else{
             parametro.put("Documento", consulta);
+            }
         }
         if (itemSeleccionado == 2) {
             parametro.put("Nombre", consulta);

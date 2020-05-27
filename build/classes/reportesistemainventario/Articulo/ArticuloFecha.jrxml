@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ArticuloFecha" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sistema Inventario"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="SISTEMAINVENTARIO"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -21,15 +21,16 @@
 	sistemainventario.articulo.precio_costo,
 	sistemainventario.articulo.stock,
 	sistemainventario.tipo_articulo.descripcion_articulo,
-	sistemainventario.proveedor.Nombre_comercial,
-	sistemainventario.articulo.fecha_ingreso,
-	sistemainventario.articulo.codigo_barras
+	sistemainventario.proveedor.`Nombre_comercial`,
+	sistemainventario.articulo.codigo_barras,
+	sistemainventario.articulo.fecha_ingreso
 FROM sistemainventario.articulo
 	INNER JOIN sistemainventario.tipo_articulo ON 
 	 sistemainventario.articulo.cod_tipo_articulo = sistemainventario.tipo_articulo.id_tipoarticulo 
 	INNER JOIN sistemainventario.proveedor ON 
-	 sistemainventario.articulo.cod_proveedor = sistemainventario.proveedor.`No_documento`
-	 where sistemainventario.articulo.fecha_ingreso like $P{Fecha}]]>
+	 sistemainventario.articulo.cod_proveedor = sistemainventario.proveedor.`No_documento` 
+WHERE 
+	sistemainventario.articulo.fecha_ingreso LIKE $P{Fecha}]]>
 	</queryString>
 	<field name="id_articulo" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="id_articulo"/>
@@ -59,12 +60,12 @@ FROM sistemainventario.articulo
 		<property name="com.jaspersoft.studio.field.label" value="Nombre_comercial"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
 	</field>
-	<field name="fecha_ingreso" class="java.sql.Date">
-		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="articulo"/>
-	</field>
 	<field name="codigo_barras" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="codigo_barras"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="articulo"/>
+	</field>
+	<field name="fecha_ingreso" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha_ingreso"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="articulo"/>
 	</field>
 	<background>
@@ -78,7 +79,7 @@ FROM sistemainventario.articulo
 			</image>
 			<staticText>
 				<reportElement style="Title" x="270" y="0" width="250" height="62" uuid="bc1ce1da-8232-46ea-be55-cec4abb986dd"/>
-				<textElement verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Articulo]]></text>
 			</staticText>
 			<staticText>
@@ -88,15 +89,8 @@ FROM sistemainventario.articulo
 				</textElement>
 				<text><![CDATA[Sistema Inventario]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="172" y="94" width="383" height="42" uuid="8240065e-64b6-4170-b5d9-6341598e7b35"/>
-				<textElement textAlignment="Right">
-					<font size="10"/>
-				</textElement>
-				<text><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor purus gravida arcu aliquam mattis. Donec et nulla libero, ut varius massa. Nulla sed turpis elit. Etiam aliquet mauris a ligula hendrerit in auctor leo lobortis.]]></text>
-			</staticText>
 			<image>
-				<reportElement x="633" y="-73" width="219" height="209" uuid="4aa6f4d1-27dc-4b34-9227-59e19ce2c959"/>
+				<reportElement x="633" y="0" width="159" height="135" uuid="4aa6f4d1-27dc-4b34-9227-59e19ce2c959"/>
 				<imageExpression><![CDATA["coffee_stain.png"]]></imageExpression>
 			</image>
 		</band>
@@ -215,16 +209,16 @@ FROM sistemainventario.articulo
 					<textFieldExpression><![CDATA[$F{Nombre_comercial}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="StretchHeight">
-					<reportElement style="Detail" x="623" y="0" width="89" height="15" uuid="c5dbc5e4-127b-4398-8c6b-0a314f4e473d">
-						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8f83dbb6-88da-4e3c-9be8-ce6f6acf5e54"/>
-					</reportElement>
-					<textFieldExpression><![CDATA[$F{fecha_ingreso}]]></textFieldExpression>
-				</textField>
-				<textField textAdjust="StretchHeight">
 					<reportElement style="Detail" x="712" y="0" width="89" height="15" uuid="fa010b92-83d2-4468-b158-64f8b77a9fd8">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a652f159-3063-4c70-9d2c-f5d5c1a08ab2"/>
 					</reportElement>
 					<textFieldExpression><![CDATA[$F{codigo_barras}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="623" y="0" width="88" height="15" uuid="cf2cf100-cbc3-40bf-bf65-2c65130e5269">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c9a5c6c3-a13d-46d4-9120-0c84f1d1d234"/>
+					</reportElement>
+					<textFieldExpression><![CDATA[$F{fecha_ingreso}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
