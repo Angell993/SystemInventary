@@ -73,7 +73,7 @@ public class SentenciasSQL {
     public static String sqlPago = "SELECT * from forma_de_pago";
     public static String sqlConsultarFactura = "SELECT cod_factura from detalle_factura ";
     public static String sqlRegCompra = "INSERT INTO detalle_factura (cod_factura, cod_articulo, cantidad, total) VALUES ";
-    public static String insertarFactura = "INSERT INTO factura (Nnm_factura, cod_cliente, cod_empleado, Fecha_facturacion, cod_formapago, total_factura, IVA) VALUES ";
+    public static String insertarFactura = "INSERT INTO factura (Nnm_factura, cod_cliente, cod_empleado, Fecha_facturacion, cod_formapago, total_factura) VALUES ";
     public static String sqlArticulos = "SELECT `id_articulo`, `nombre` FROM `articulo` order by `id_articulo`;";
     public static String sqlCantidad = "Select `id_articulo`, `stock` from articulo where id_articulo = ";
     

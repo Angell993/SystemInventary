@@ -11,6 +11,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -114,11 +115,10 @@ public class FXMLPagoController implements Initializable {
         ivaProcentaje();
     }
 
-
     @FXML
     private void registrarFacturPago(ActionEvent event) {
         if (cambio() >= 0) {
-            String url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\TicketVenta";
+            //String url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\TicketVenta";
             if (MetodosJavaClass.txtVacios(datosArray())) {
                 if (MetodosJavaClass.cmbSeleccionado(combPago)) {
                     sentencia = SentenciasSQL.insertarFactura + "('" + txtFactura.getText() + "', '" + txtDocumento.getText()
@@ -157,7 +157,7 @@ public class FXMLPagoController implements Initializable {
             }
         } catch (NumberFormatException e) {
         }
-        return devolver;
+        return (Math.rint(devolver * 100) / 100);
     }
 
     private ObservableList<TextField> datosArray() {
@@ -224,11 +224,11 @@ public class FXMLPagoController implements Initializable {
                 while (datos.next()) {
                     String porcentajeIva = String.valueOf((Math.rint(datos.getDouble(2) * 100) / 100) * (Double.parseDouble(idCantidadCompra.get(i).getDescripcion())));
                     String precioSinIva = String.valueOf((Math.rint(datos.getDouble(3) * 100) / 100) * (Double.parseDouble(idCantidadCompra.get(i).getDescripcion())));
-                    listaIva.add(new Item(datos.getInt(1), porcentajeIva ,precioSinIva));
+                    listaIva.add(new Item(datos.getInt(1), porcentajeIva, precioSinIva));
                     sinIva += (Math.rint(datos.getDouble(3) * 100) / 100) * (Double.parseDouble(idCantidadCompra.get(i).getDescripcion()));
-                    System.out.println("IVA: "+datos.getInt(1));
-                    System.out.println("Porcentaje: "+porcentajeIva);
-                    System.out.println("PrecioTotal: "+precioSinIva);
+                    System.out.println("IVA: " + datos.getInt(1));
+                    System.out.println("Porcentaje: " + porcentajeIva);
+                    System.out.println("PrecioTotal: " + precioSinIva);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(FXMLPagoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -242,10 +242,7 @@ public class FXMLPagoController implements Initializable {
     private void desgloseIva(ObservableList<Item> listaIva) {
         StringBuilder iva = new StringBuilder();
         StringBuilder porcentaje = new StringBuilder();
-        StringBuilder precio = new StringBuilder();        
-        int iva4 = 0;
-        int iva10 = 0;
-        int iva21 = 0;
+        StringBuilder precio = new StringBuilder();
         double porcentaje4 = 0;
         double porcentaje10 = 0;
         double porcentaje21 = 0;
@@ -255,36 +252,35 @@ public class FXMLPagoController implements Initializable {
         int count1 = 1, count2 = 1, count3 = 1;
         for (int i = 0; i < listaIva.size(); i++) {
             if (listaIva.get(i).getId() == 4) {
-                if (count1 > 0) {
-                    iva4 = listaIva.get(i).getId();
-                    count1--;
-                }
-                porcentaje4 += Double.parseDouble(listaIva.get(i).getDescripcion());
-                precio4 += Double.parseDouble(listaIva.get(i).getDocProveedor());
+                porcentaje4 += (Math.rint(Double.parseDouble(listaIva.get(i).getDescripcion()) * 100) / 100);
+                precio4 += (Math.rint(Double.parseDouble(listaIva.get(i).getDocProveedor()) * 100) / 100);
             }
             if (listaIva.get(i).getId() == 10) {
-                if (count2 > 0) {
-                    iva10 = listaIva.get(i).getId();
-                    count2--;
-                }
-                porcentaje10 += Double.parseDouble(listaIva.get(i).getDescripcion());
-                precio10 += Double.parseDouble(listaIva.get(i).getDocProveedor());
+                porcentaje10 += (Math.rint(Double.parseDouble(listaIva.get(i).getDescripcion()) * 100) / 100);
+                precio10 += (Math.rint(Double.parseDouble(listaIva.get(i).getDocProveedor()) * 100) / 100);
             }
             if (listaIva.get(i).getId() == 21) {
-                if (count3 > 0) {
-                    iva21 = listaIva.get(i).getId();
-                    count3--;
-                }
-                porcentaje21 += Double.parseDouble(listaIva.get(i).getDescripcion());
-                precio21 += Double.parseDouble(listaIva.get(i).getDocProveedor());
+                porcentaje21 += (Math.rint(Double.parseDouble(listaIva.get(i).getDescripcion()) * 100) / 100);
+                precio21 += (Math.rint(Double.parseDouble(listaIva.get(i).getDocProveedor()) * 100) / 100);
             }
         }
-        iva.append(iva4+"%\n"+iva10+"%\n"+iva21+"%\n");
-        porcentaje.append(porcentaje4 +"€\n"+ porcentaje10 +"€\n"+ porcentaje21+"€\n");
-        precio.append(precio4+"€\n" + precio10+"€\n" + precio21+"€\n");
+            for (int i = 0; i < imprimirIva().size(); i++) {
+            iva.append(String.valueOf(imprimirIva().get(i))).append("%\n");
+        }
+        porcentaje.append(porcentaje4).append("€\n").append(porcentaje10).append("€\n").append(porcentaje21).append("€\n");
+        precio.append(precio4).append("€\n").append(precio10).append("€\n").append(precio21).append("€\n");
         lblIva.setText(iva.toString());
         lblBase.setText(porcentaje.toString());
         lblTotalIva.setText(precio.toString());
-        lblTotalPorcent.setText(String.valueOf(porcentaje4+porcentaje10+porcentaje21));
+        lblTotalPorcent.setText(String.valueOf((Math.rint((porcentaje4 + porcentaje10 + porcentaje21) * 100) / 100)));
+    }
+
+    private ArrayList<Integer> imprimirIva() {
+        ArrayList<Integer> iVa = new ArrayList<>();
+        iVa.remove(iVa);
+        iVa.add(4);
+        iVa.add(10);
+        iVa.add(21);
+        return iVa;
     }
 }

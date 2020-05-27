@@ -88,7 +88,7 @@ public class FXMLAdministradorConfigController implements Initializable {
         txtUsuario.setText("root");
         txtPass.setText("root");
         txtPuerto.setText("localhost:3306/");
-        txtDB.setText("sistemainventario");
+        txtDB.setText("sistemainventario1");
         txtUrl.setText(txtPuerto.getText() + txtDB.getText());
         completarURL();
     }
@@ -116,7 +116,7 @@ public class FXMLAdministradorConfigController implements Initializable {
                 mail.addRecipient(Message.RecipientType.TO, new InternetAddress(txtCorreoEmpresa.getText()));
                 mail.setSubject("Biembenido al Sistema de Inventario");
                 mail.setText("Verificación de  correo OK, Sistema de Inventario\n----------------------------------------\nConercial 4 Cantos S.L"
-                        + "\nNo responder a este mensaje.", "ISO-8859-1");
+                        + "\nNo responder a este mensaje.", "UTF-8");
 
                 Transport transport = conexionServidorCorreo().getTransport("smtp");
                 transport.connect(txtCorreoEmpresa.getText(), txtCorreoPass.getText());

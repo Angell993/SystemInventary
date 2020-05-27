@@ -286,7 +286,7 @@ public class FXMLRegistrarVentaController implements Initializable {
             venta.setNombreArticulo(nombreArt);
             venta.setCantidadCompra(cantidad);
             venta.setPrecioArticulo(precio);
-            venta.setTotalCompra(MetodosJavaClass.quitarComa(String.valueOf(total)));
+            venta.setTotalCompra(MetodosJavaClass.quitarComa(String.valueOf((Math.rint(total * 100) / 100))));
             listaArticulo.add(venta);
 
             listaTotalCompra.add(total);
