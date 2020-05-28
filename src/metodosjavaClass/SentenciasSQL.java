@@ -76,16 +76,12 @@ public class SentenciasSQL {
     public static String insertarFactura = "INSERT INTO factura (Nnm_factura, cod_cliente, cod_empleado, Fecha_facturacion, cod_formapago, total_factura) VALUES ";
     public static String sqlArticulos = "SELECT `id_articulo`, `nombre` FROM `articulo` order by `id_articulo`;";
     public static String sqlCantidad = "Select `id_articulo`, `stock` from articulo where id_articulo = ";
-    
-    //public static String obtenerPrecio = "Select precio_venta from `articulo` where `id_articulo` = ";
     public static String sqlEliminarDetalleFactura = "DELETE from detalle_factura WHERE ";
     public static String sqlIdArticulo = "SELECT id_articulo from articulo where Nombre = ";
     public static String sqlDocumentoNombreCliente = "SELECT documento, Nombre from cliente where documento = ";
     public static String sqlConsultarActualizarDb = "Select id_articulo, stock from articulo where Nombre = ";
     public static String sqlConsultarStockArticulo = "Select stock from articulo where id_articulo = ";
     public static String sqlActualizarArticuloDb = "UPDATE articulo SET ";
-
-    //Nueva sql Venta
     public static String obtenerPrecio = "select tipo_articulo.IVA,(articulo.precio_venta * (tipo_articulo.IVA / 100)) ,"
             + " ((articulo.precio_venta * (tipo_articulo.IVA / 100)) + articulo.precio_venta ) as precio_iva "
             + "from articulo inner join tipo_articulo on articulo.cod_tipo_articulo = tipo_articulo.id_tipoarticulo "
@@ -100,9 +96,6 @@ public class SentenciasSQL {
     public static String sqlDevolucion = "SELECT cod_detallefactura from devolucion";
     public static String sqlDevolucionFactura = "SELECT Nnm_factura from factura";
     public static String ingresarDevolucion = "INSERT INTO devolucion (cod_detallefactura, cod_detallearticulo, Motivo, Fecha_devolucion, cantidad,cod_empleado) VALUES ";
-
-    /*Reporte*/
-    public static String sqlFechas = "Select distinct fecha from ";
 
     /* Factura Sentencias*/
     public static String sqlConsulCliente = "SELECT Nombre, Apellidos from cliente where Documento = ";

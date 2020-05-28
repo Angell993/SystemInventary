@@ -25,6 +25,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.swing.JFileChooser;
 import metodosjavaClass.Alertas;
+import metodosjavaClass.MetodosJavaClass;
 
 public class FXMLCorreoController implements Initializable {
 
@@ -34,7 +35,7 @@ public class FXMLCorreoController implements Initializable {
     private TextArea txtACuerpo;
     private File f = null;
     private  String contrasenia;
-    private final String pieDeMensaje = "\n-------------------------------------------------------------------- \nConercial 4 Cantos S.L";
+    private final String pieDeMensaje = "\n-------------------------------------------------------------------- \nComercial 4 Cantos S.L";
     private final String aviso = "\nNo responda a este mensaje.";
 
     private void extraerCorreo(){
@@ -79,7 +80,7 @@ public class FXMLCorreoController implements Initializable {
                 mail.setFrom(new InternetAddress(txtPropietario.getText()));
                 mail.addRecipient(Message.RecipientType.TO, new InternetAddress(txtDestinatario.getText()));
                 mail.setSubject(txtAsunto.getText());
-                mail.setContent(multipart,"ISO-8859-1");
+                mail.setContent(multipart,"UTF-8");
                 //mail.setText(txtACuerpo.getText(),"ISO-8859-1");
 
                 Transport transport = conexionServidorCorreo().getTransport("smtp");
@@ -111,17 +112,32 @@ public class FXMLCorreoController implements Initializable {
     }
 
     private Session conexionServidorCorreo() {
-        Properties propiedad = new Properties();
-        propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
-        propiedad.setProperty("mail.smtp.starttls.enable", "true");
-        propiedad.setProperty("mail.smtp.port", "587");
-        propiedad.setProperty("mail.smtp.auth", "true");
-        Session sesion = Session.getDefaultInstance(propiedad);
+        Session sesion = null;
+        Properties propiedad;
+        if (txtPropietario.getText().contains("@gmail")) {
+            propiedad = new Properties();
+            propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
+            propiedad.setProperty("mail.smtp.starttls.enable", "true");
+            propiedad.setProperty("mail.smtp.port", "587");
+            propiedad.setProperty("mail.smtp.auth", "true");
+            sesion = Session.getDefaultInstance(propiedad);
+        } else if (txtPropietario.getText().contains("@hotmail")) {
+            propiedad = new Properties();
+            if (txtPropietario.getText().contains("@hotmail.es")) {
+            propiedad.setProperty("mail.smtp.host", "smtp.office365.es");
+            }else{
+                propiedad.setProperty("mail.smtp.host", "smtp.office365.com");
+            }
+            propiedad.setProperty("mail.smtp.starttls.enable", "true");
+            propiedad.setProperty("mail.smtp.port", "587");
+            propiedad.setProperty("mail.smtp.auth", "true");
+            sesion = Session.getDefaultInstance(propiedad);
+        }
         return sesion;
     }
 
     private Boolean comprobarCampos() {
-        if (!txtDestinatario.getText().isEmpty() && txtDestinatario.getText().contains("@")) {
+        if (!txtPropietario.getText().isEmpty() && MetodosJavaClass.verificarEmail(txtPropietario)) {
             return true;
         }
             Alertas.mensajeInformación("Correo", "No has ingredo un correo electrónico válido.");

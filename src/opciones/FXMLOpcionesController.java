@@ -25,7 +25,7 @@ public class FXMLOpcionesController implements Initializable {
 
     @FXML
     private void factura() {
-        String ruta = "/imprimir/FXMLFactura.fxml";
+        String ruta = "/opciones/FXMLFactura.fxml";
         visualizarInterfaz.mostarVentana(ruta, rootPane);
     }
 

@@ -47,14 +47,16 @@ public class Alertas {
     public static void mensajeConfirmacion(String aceptarTitulo, String mensajeConfirmacion) {
         Alert mensaje = new Alert(Alert.AlertType.CONFIRMATION);
         mensaje.setTitle(aceptarTitulo);
-        mensaje.setHeaderText(mensajeConfirmacion);
+        mensaje.setHeaderText(null);
+        mensaje.setContentText(mensajeConfirmacion);
         mensaje.show();
     }
 
     public static void mensajeInformación(String aceptarTitulo, String mensajeConfirmacion) {
         Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
         mensaje.setTitle(aceptarTitulo);
-        mensaje.setHeaderText(mensajeConfirmacion);
+        mensaje.setHeaderText(null);
+        mensaje.setContentText(mensajeConfirmacion);
         mensaje.show();
     }
 

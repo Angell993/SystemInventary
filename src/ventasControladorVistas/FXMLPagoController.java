@@ -36,12 +36,10 @@ import reportesistemainventario.CrearInforme;
 
 public class FXMLPagoController implements Initializable {
 
-    @FXML  ///, txtTotal
+    @FXML  
     private ComboBox<Item> combPago;
     @FXML
-    private TextField txtDocumento, codEmpleado, fechaPago, txtFactura;
-    @FXML
-    private TextField txtIva, txtImporte;
+    private TextField txtDocumento, codEmpleado, fechaPago, txtFactura, txtImporte;
     @FXML
     private Label lblSinIva, lblIva, lblTotal, lblImporte, lblAdevolver, lblTotalIva, lblCambio, lblBase, lblTotalPorcent;
     private final LLenarCombos llenarComb = new LLenarCombos();
@@ -103,20 +101,26 @@ public class FXMLPagoController implements Initializable {
     /*Recibir Informacion desde la ventana de registrar Venta*/
     public void recibirInformacionPago(String factura, String empleado, String total, ObservableList<Item> idCantidadCompra,
             AnchorPane rootPane, ObservableList<Venta> listaVenta) {
+        System.out.println("------------------Informacion de la otra ventana---------------------");
+        System.out.println(Arrays.toString(listaVenta.toArray())+"\n");
+        System.out.println(Arrays.toString(idCantidadCompra.toArray()));
+        System.out.println("Factura: "+factura);
+        System.out.println("empleado: "+empleado);
+        System.out.println("total: "+total);
+        System.out.println("--------------------------------------------------------------");
         this.listaVenta = listaVenta;
         this.rootPane = rootPane;
         this.idCantidadCompra = idCantidadCompra;
         txtFactura.setText(factura);
         codEmpleado.setText(empleado);
         llenarComb.llenarComboBox(listaPago, combPago, SentenciasSQL.sqlPago);
-        //txtTotal.setText(MetodosJavaClass.quitarDecimal(Double.parseDouble(total)));
         dinero = Double.parseDouble(total);
         lblTotal.setText(MetodosJavaClass.quitarDecimal(Double.parseDouble(total)));
         ivaProcentaje();
     }
 
     @FXML
-    private void registrarFacturPago(ActionEvent event) {
+    private void registrarFacturPago() {
         if (cambio() >= 0) {
             //String url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\TicketVenta";
             if (MetodosJavaClass.txtVacios(datosArray())) {
@@ -160,6 +164,7 @@ public class FXMLPagoController implements Initializable {
         return (Math.rint(devolver * 100) / 100);
     }
 
+    //tambien se quitaria si el cliente se borra
     private ObservableList<TextField> datosArray() {
         ObservableList<TextField> listaDatos = FXCollections.observableArrayList();
         listaDatos.removeAll(listaDatos);
@@ -168,6 +173,7 @@ public class FXMLPagoController implements Initializable {
         return listaDatos;
     }
 
+    // Por quitar el cliente
     private Boolean existeCliente(String documento) {
         try {
             ResultSet dato = ConexionInventario.sSQL(SentenciasSQL.sqlDocumentoNombreCliente + " '" + documento + "'");
@@ -195,7 +201,7 @@ public class FXMLPagoController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventasControladorVistas/FXMLRegistrarVenta.fxml"));
             AnchorPane root = loader.load();
             FXMLRegistrarVentaController registrar = loader.getController();
-            registrar.recuperarEmpleado(codEmpleado.getText());
+            registrar.anularCrearNuevaVenta(codEmpleado.getText(), rootPane);
             rootPane.getChildren().setAll(root);
         } catch (IOException ex) {
             Logger.getLogger(FXMLPagoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -208,7 +214,7 @@ public class FXMLPagoController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventasControladorVistas/FXMLRegistrarVenta.fxml"));
             AnchorPane root = loader.load();
             FXMLRegistrarVentaController registrar = loader.getController();
-            registrar.recuperarRegistros(this.listaVenta, txtFactura.getText(), codEmpleado.getText(), rootPane);
+            registrar.registrarMasCompra(listaVenta, txtFactura.getText(), codEmpleado.getText(), rootPane);
             rootPane.getChildren().setAll(root);
         } catch (IOException ex) {
             Logger.getLogger(FXMLPagoController.class.getName()).log(Level.SEVERE, null, ex);

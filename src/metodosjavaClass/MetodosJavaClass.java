@@ -130,7 +130,6 @@ public class MetodosJavaClass {
     private static ObservableList<String> correoElectronico() {
         ObservableList<String> correo = FXCollections.observableArrayList();
         correo.remove(correo);
-
         correo.add("@hotmail.com");
         correo.add("@hotmail.es");
         correo.add("@yahoo.com");

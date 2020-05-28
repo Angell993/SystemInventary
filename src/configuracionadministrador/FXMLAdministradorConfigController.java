@@ -18,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -34,9 +33,9 @@ import static metodosjavaClass.VentanaRootPane.closeVentana;
 public class FXMLAdministradorConfigController implements Initializable {
 
     @FXML
-    private TextField txtUrl, txtUsuario, txtPass, txtDB, txtPuerto, txtCorreoEmpresa, txtCorreoPass;
+    private TextField txtUrl, txtUsuario, txtPass, txtDB, txtCorreoEmpresa, txtCorreoPass;
     @FXML
-    private Label lblUrl, lblUrl1, lblConexion, lblCorreo;
+    private Label lblConexion, lblCorreo;
     @FXML
     private Button siguiente;
     private Boolean verifica;
@@ -65,15 +64,13 @@ public class FXMLAdministradorConfigController implements Initializable {
 
     @FXML
     private void comprobarConexionDB() {
-            String server = lblUrl.getText() + txtUrl.getText() + lblUrl1.getText();
-            conexion = new ConexionDB(server, txtUsuario.getText(), txtPass.getText());
-            if (conexion.conectar() == null) {
-                lblConexion.setText("Conexión Fallida!!");
-            } else {
-                lblConexion.setText("Conexón OK");
-                fich.escribirObjeto(server, txtUsuario.getText(), txtPass.getText());
-                fich.leerObjetoDB();
-            }
+        conexion = new ConexionDB(txtUrl.getText(), txtUsuario.getText(), txtPass.getText());
+        if (conexion.conectar() == null) {
+            lblConexion.setText("Conexión Fallida!!");
+        } else {
+            lblConexion.setText("Conexón OK");
+            fich.escribirObjeto(txtUrl.getText(), txtUsuario.getText(), txtPass.getText());
+        }
     }
 
     @FXML
@@ -83,28 +80,19 @@ public class FXMLAdministradorConfigController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        lblUrl.setText("jdbc:mysql://");
-        lblUrl1.setText("?verifyServerCertificate=false&useSSL=true");
         txtUsuario.setText("root");
         txtPass.setText("root");
-        txtPuerto.setText("localhost:3306/");
         txtDB.setText("sistemainventario1");
-        txtUrl.setText(txtPuerto.getText() + txtDB.getText());
+        txtUrl.setText("jdbc:mysql://localhost:3306/sistemainventario1?verifyServerCertificate=false&useSSL=true");
         completarURL();
     }
 
     private void completarURL() {
         txtDB.textProperty().addListener((ov, oldValue, newValue) -> {
-            if (txtPuerto.getText().contains("localhost")) {
-                txtUrl.setText(txtPuerto.getText() + txtDB.getText());
+            if (txtUrl.getText().contains("jdbc:mysql://")) {
+                txtUrl.setText("jdbc:mysql://localhost:3306/" + txtDB.getText() + "?verifyServerCertificate=false&useSSL=true");
             }
-            txtUrl.setText(txtPuerto.getText() + "/" + txtDB.getText());
-        });
-        txtPuerto.textProperty().addListener((ov, oldValue, newValue) -> {
-            if (txtPuerto.getText().contains("localhost")) {
-                txtUrl.setText(txtPuerto.getText());
-            }
-            txtUrl.setText(txtPuerto.getText() + "/");
+            txtUrl.setText("jdbc:mysql://localhost:3306/" + txtDB.getText() + "?verifyServerCertificate=false&useSSL=true");
         });
     }
 
@@ -114,8 +102,8 @@ public class FXMLAdministradorConfigController implements Initializable {
                 MimeMessage mail = new MimeMessage(conexionServidorCorreo());
                 mail.setFrom(new InternetAddress(txtCorreoEmpresa.getText()));
                 mail.addRecipient(Message.RecipientType.TO, new InternetAddress(txtCorreoEmpresa.getText()));
-                mail.setSubject("Biembenido al Sistema de Inventario");
-                mail.setText("Verificación de  correo OK, Sistema de Inventario\n----------------------------------------\nConercial 4 Cantos S.L"
+                mail.setSubject("Bienvenido al Sistema de Inventario");
+                mail.setText("Verificación de  correo OK, Sistema de Inventario\n----------------------------------------\nComercial 4 Cantos S.L"
                         + "\nNo responder a este mensaje.", "UTF-8");
 
                 Transport transport = conexionServidorCorreo().getTransport("smtp");
@@ -135,17 +123,32 @@ public class FXMLAdministradorConfigController implements Initializable {
     }
 
     private Session conexionServidorCorreo() {
-        Properties propiedad = new Properties();
-        propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
-        propiedad.setProperty("mail.smtp.starttls.enable", "true");
-        propiedad.setProperty("mail.smtp.port", "587");
-        propiedad.setProperty("mail.smtp.auth", "true");
-        Session sesion = Session.getDefaultInstance(propiedad);
+        Session sesion = null;
+        Properties propiedad;
+        if (txtCorreoEmpresa.getText().contains("@gmail")) {
+            propiedad = new Properties();
+            propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
+            propiedad.setProperty("mail.smtp.starttls.enable", "true");
+            propiedad.setProperty("mail.smtp.port", "587");
+            propiedad.setProperty("mail.smtp.auth", "true");
+            sesion = Session.getDefaultInstance(propiedad);
+        } else if (txtCorreoEmpresa.getText().contains("@hotmail")) {
+            propiedad = new Properties();
+            if (txtCorreoEmpresa.getText().contains("@hotmail.es")) {
+            propiedad.setProperty("mail.smtp.host", "smtp.office365.es");
+            }else{
+                propiedad.setProperty("mail.smtp.host", "smtp.office365.com");
+            }
+            propiedad.setProperty("mail.smtp.starttls.enable", "true");
+            propiedad.setProperty("mail.smtp.port", "587");
+            propiedad.setProperty("mail.smtp.auth", "true");
+            sesion = Session.getDefaultInstance(propiedad);
+        }
         return sesion;
     }
 
     private Boolean comprobarCampos() {
-        if (!txtCorreoEmpresa.getText().isEmpty() && txtCorreoEmpresa.getText().contains("@gmail.")) {
+        if (!txtCorreoEmpresa.getText().isEmpty() && MetodosJavaClass.verificarEmail(txtCorreoEmpresa)) {
             return true;
         }
         Alertas.mensajeInformación("Correo", "No has ingredo un correo electrónico válido.");

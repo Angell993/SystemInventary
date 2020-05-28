@@ -89,12 +89,6 @@ public class FXMLRegistrarVentaController implements Initializable {
                 Parent root = loader.load();
                 FXMLPagoController pagar = loader.getController();
                 pagar.recibirInformacionPago(nFactura.getText(), codEmpleado, String.valueOf(sumarDineroTotal()), idCantidadComprada, anchorPane, listaArticulo);
-                /*System.out.println(nFactura.getText());
-                System.out.println(codEmpleado);
-                System.out.println(String.valueOf(sumarDineroTotal()));
-                System.out.println(idCantidadComprada);
-                System.out.println(Arrays.toString(listaArticulo.toArray()));*/
-                
                 //No se porque me da el error de NullPointerException
                 anchorPane.getChildren().setAll(root);
             } catch (IOException ex) {
@@ -318,37 +312,39 @@ public class FXMLRegistrarVentaController implements Initializable {
         }
         return idStock;
     }
-    
-    public void recuperarEmpleado(String empleado){
+
+    public void anularCrearNuevaVenta(String empleado, AnchorPane anchorPane) {
         this.codEmpleado = empleado;
+        this.anchorPane = anchorPane;
         transaction = con.conectar();
     }
-    
-    public void recuperarRegistros(ObservableList<Venta> listventa, String factura, String codEmpleado, AnchorPane rootPane){
-        System.out.println("Estoy recuperando datos: "+Arrays.toString(listventa.toArray()));
+
+    public void registrarMasCompra(ObservableList<Venta> listventa, String factura, String codEmpleado, AnchorPane rootPane) {
+        System.out.println("Estoy recuperando datos: " + Arrays.toString(listventa.toArray()));
         this.anchorPane = rootPane;
         this.codEmpleado = codEmpleado;
         transaction = con.conectar();
-        venta = new Venta();
         nFactura.setText(factura);
         for (int i = 0; i < listventa.size(); i++) {
+            venta = new Venta();
             total = listventa.get(i).getPrecioArticulo() * listventa.get(i).getCantidadCompra();
             venta.setNumeroFactura(nFactura.getText());
-            venta.setNumeroCompra(i);
+            venta.setNumeroCompra(i + 1);
             venta.setNombreArticulo(listventa.get(i).getNombreArticulo());
             venta.setCantidadCompra(listventa.get(i).getCantidadCompra());
             venta.setPrecioArticulo(listventa.get(i).getPrecioArticulo());
             venta.setTotalCompra(total);
             listaArticulo.add(venta);
             listaTotalCompra.add(total);
-        }
-        clmNumVenta.setCellValueFactory(new PropertyValueFactory<>("numeroCompra"));
-        clmNombre.setCellValueFactory(new PropertyValueFactory<>("nombreArticulo"));
-        clmCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidadCompra"));
-        clmPrecio.setCellValueFactory(new PropertyValueFactory<>("precioArticulo"));
-        clmTotal.setCellValueFactory(new PropertyValueFactory<>("totalCompra"));
+            clmNumVenta.setCellValueFactory(new PropertyValueFactory<>("numeroCompra"));
+            clmNombre.setCellValueFactory(new PropertyValueFactory<>("nombreArticulo"));
+            clmCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidadCompra"));
+            clmPrecio.setCellValueFactory(new PropertyValueFactory<>("precioArticulo"));
+            clmTotal.setCellValueFactory(new PropertyValueFactory<>("totalCompra"));
 
-        tblVenta.setItems(listaArticulo);
+            tblVenta.setItems(listaArticulo);
+        }
+
         sumarDineroTotal();
         cmbArticulo.getSelectionModel().select(-1);
         cmbCantidad.getSelectionModel().select(-1);
