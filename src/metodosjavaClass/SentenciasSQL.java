@@ -110,4 +110,10 @@ public class SentenciasSQL {
 
     public static String sqlTicket = "Select Nnm_factura from factura where id_factura = (select max(id_factura) from factura)";
 
+    /*Imprimir etiquetas */
+    public static String sqlCodebar = "SELECT codigo_barras from articulo";
+    ///Por implementar
+    public static String sqlEtiquetaCodeBar = "select codigo_barras, articulo.nombre, "
+            + " ((articulo.precio_venta * (tipo_articulo.IVA / 100)) + articulo.precio_venta ) as precio_iva "
+            + " from articulo inner join tipo_articulo on articulo.cod_tipo_articulo = tipo_articulo.id_tipoarticulo;";
 }

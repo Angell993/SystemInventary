@@ -62,6 +62,11 @@ public class MetodosJavaClass {
         int identificador = (int) (Math.random() * (99999999 - 10000000 + 1) + 10000000);
         return identificador;
     }
+    
+    public static int codeBar(){
+        int codigobarras = (int) (Math.random() * (999999999 - 100000000 + 1) + 100000000);
+        return codigobarras;
+    }
 
     public static Boolean txtVacios(ObservableList<TextField> datos) {
         int count = 0;

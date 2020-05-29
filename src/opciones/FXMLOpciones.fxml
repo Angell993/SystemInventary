@@ -26,17 +26,22 @@
          <children>
             <Button mnemonicParsing="false" onAction="#imprimirticket" prefHeight="88.0" prefWidth="209.0" text="Ticket">
                <font>
-                  <Font name="System Bold" size="35.0" />
+                  <Font name="System Bold" size="30.0" />
                </font>
             </Button>
             <Button mnemonicParsing="false" onAction="#factura" prefHeight="88.0" prefWidth="209.0" text="Factura" GridPane.columnIndex="1">
                <font>
-                  <Font name="System Bold" size="35.0" />
+                  <Font name="System Bold" size="30.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#correo" prefHeight="88.0" prefWidth="209.0" text="Correo" GridPane.rowIndex="1">
+            <Button mnemonicParsing="false" onAction="#correo" prefHeight="88.0" prefWidth="209.0" text="Correo" GridPane.rowIndex="2">
                <font>
-                  <Font name="System Bold" size="35.0" />
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#imprimirCodeBar" prefHeight="88.0" prefWidth="409.0" text="Generar Código de Barras" GridPane.columnSpan="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="30.0" />
                </font>
             </Button>
          </children>

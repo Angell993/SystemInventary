@@ -64,6 +64,11 @@ public class FXMLOpcionesController implements Initializable {
             Logger.getLogger(FXMLOpcionesController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    @FXML
+    private void imprimirCodeBar(){
+        visualizarInterfaz.mostarVentana("/opciones/FXMLGenerarCodeBar.fxml", rootPane);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

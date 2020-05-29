@@ -37,11 +37,11 @@
             <Label text="Proveedor" GridPane.rowIndex="6" />
             <Label text="Articulo" GridPane.rowIndex="5" />
             <TextField fx:id="txtNomArticulo" GridPane.columnIndex="1" />
-            <TextField fx:id="txtCodBarras" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtCodBarras" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="txtPrecioCosto" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="txtStock" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <ComboBox fx:id="cmbProveedor" prefHeight="47.0" prefWidth="250.0" promptText="Proveedor" stylesheets="@../estiloscss/estilocomboBoxcss.css" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <TextField fx:id="txtFecha" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <TextField fx:id="txtFecha" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <Label text="Precio Venta" GridPane.rowIndex="2" />
             <TextField fx:id="txtPrecioVenta" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <ComboBox fx:id="cmbArticulo" prefHeight="47.0" prefWidth="250.0" promptText="Articulo" stylesheets="@../estiloscss/estilocomboBoxcss.css" GridPane.columnIndex="1" GridPane.rowIndex="5" />

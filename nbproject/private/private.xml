@@ -5,9 +5,8 @@
         <group>
             <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/login/Login.java</file>
             <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/metodosjavaClass/SentenciasSQL.java</file>
-            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/ventasControladorVistas/FXMLRegistrarVentaController.java</file>
-            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/ventasControladorVistas/FXMLPagoController.java</file>
-            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/clasesjava/Item.java</file>
+            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/opciones/FXMLGenerarCodeBarController.java</file>
+            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSysten/src/opciones/CodigoBarras.java</file>
         </group>
     </open-files>
 </project-private>

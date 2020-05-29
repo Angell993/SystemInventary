@@ -2,8 +2,13 @@ package articuloControladorVistas;
 
 import clasesjava.Item;
 import conexionbasedatos.ConexionInventario;
+import empleadoControladoresVista.FXMLModificarEmpleadoController;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,7 +24,7 @@ import metodosjavaClass.SentenciasSQL;
 public class FXMLRegistrarArticuloController implements Initializable {
 
     @FXML
-    private TextField txtCodArticulo, txtNomArticulo, txtPrecioVenta, txtPrecioCosto;
+    private TextField txtNomArticulo, txtPrecioVenta, txtPrecioCosto;
     @FXML
     private TextField txtStock, txtFecha, txtCodBarras;
     @FXML
@@ -34,7 +39,6 @@ public class FXMLRegistrarArticuloController implements Initializable {
 
     @FXML
     private void ingresarArticulo(ActionEvent event) {
-        System.out.println(cmbProveedor.getSelectionModel().getSelectedItem().getDocProveedor());
         if (MetodosJavaClass.txtVacios(datosArray())) {
             if (MetodosJavaClass.isDouble(txtPrecioVenta.getText()) && MetodosJavaClass.isDouble(txtPrecioCosto.getText())) {
                 if (MetodosJavaClass.esNumero(txtCodBarras.getText())) {
@@ -69,6 +73,10 @@ public class FXMLRegistrarArticuloController implements Initializable {
         llenacomb.llenarComboBox(listaArticulo, cmbArticulo, SentenciasSQL.sqlArticulo);
         llenacomb.llenarComboProveedor(listaProveedor, cmbProveedor, SentenciasSQL.sqlProveedorComb);
         txtFecha.setText(Fecha.fecha());
+        txtCodBarras.setText(String.valueOf(MetodosJavaClass.codeBar()));
+        while (!existeCodeBar(Integer.parseInt(txtCodBarras.getText()))) {
+            txtCodBarras.setText(String.valueOf(MetodosJavaClass.codeBar()));
+        }
     }
 
     private ObservableList<TextField> datosArray() {
@@ -81,5 +89,20 @@ public class FXMLRegistrarArticuloController implements Initializable {
         listaDatos.add(txtCodBarras);
 
         return listaDatos;
+    }
+
+    private Boolean existeCodeBar(int code) {
+        try {
+            ResultSet dato = ConexionInventario.sSQL(SentenciasSQL.sqlCodebar);
+            while (dato.next()) {
+                if (dato.getInt(1) == code) {
+                    return false;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLModificarEmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return true;
     }
 }

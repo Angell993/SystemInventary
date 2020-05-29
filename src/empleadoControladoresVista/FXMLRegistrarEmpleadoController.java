@@ -120,9 +120,9 @@ public class FXMLRegistrarEmpleadoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        txtEmpleado.setText(String.valueOf(metodosJavaclass.identificadorEmpleado()));
+        txtEmpleado.setText(String.valueOf(MetodosJavaClass.identificadorEmpleado()));
         while (!existeEmpleado(Integer.parseInt(txtEmpleado.getText()))) {
-            txtEmpleado.setText(String.valueOf(metodosJavaclass.identificadorEmpleado()));
+            txtEmpleado.setText(String.valueOf(MetodosJavaClass.identificadorEmpleado()));
         }
         llenarComb.llenarComboBox(listaDocumento, cmbDocumento, SentenciasSQL.sqlDocumento);
         llenarComb.llenarComboBox(listaPuesto, cmbPuesto, SentenciasSQL.sqlPuesto);
