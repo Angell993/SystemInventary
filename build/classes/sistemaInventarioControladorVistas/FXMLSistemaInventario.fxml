@@ -49,7 +49,7 @@
                      </graphic></MenuItem>
                     </items>
                 </Menu>
-                <Menu fx:id="proveedor" mnemonicParsing="false" text="Proveedor">
+                <Menu fx:id="proveedor" mnemonicParsing="false" text="Proveedores">
                     <items>
                         <MenuItem mnemonicParsing="false" onAction="#registrarProveedor" text="Registar">
                      <graphic>
@@ -107,7 +107,7 @@
       <AnchorPane fx:id="rootPane" layoutY="110.0" prefHeight="761.0" prefWidth="1306.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0" />
       <AnchorPane layoutX="933.0" layoutY="60.0" prefHeight="48.0" prefWidth="373.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
          <children>
-            <Button layoutX="1.0" mnemonicParsing="false" onAction="#opciones" prefHeight="48.0" prefWidth="143.0" styleClass="calculadora" text="Opcion" textFill="#f2ecec">
+            <Button layoutX="1.0" mnemonicParsing="false" onAction="#opciones" prefHeight="48.0" prefWidth="143.0" styleClass="calculadora" text="Útiles" textFill="#f2ecec">
                <graphic>
                   <FontAwesomeIconView glyphName="COG" size="22" />
                </graphic>

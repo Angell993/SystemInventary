@@ -78,6 +78,7 @@ public class SentenciasSQL {
     public static String sqlCantidad = "Select `id_articulo`, `stock` from articulo where id_articulo = ";
     public static String sqlEliminarDetalleFactura = "DELETE from detalle_factura WHERE ";
     public static String sqlIdArticulo = "SELECT id_articulo from articulo where Nombre = ";
+    public static String sqlDocumentosClientes = "SELECT documento FROM cliente";
     public static String sqlDocumentoNombreCliente = "SELECT documento, Nombre from cliente where documento = ";
     public static String sqlConsultarActualizarDb = "Select id_articulo, stock from articulo where Nombre = ";
     public static String sqlConsultarStockArticulo = "Select stock from articulo where id_articulo = ";

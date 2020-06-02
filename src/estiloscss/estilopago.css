@@ -29,6 +29,21 @@
     -glyph-size: 22px;
 }
 
+.imprimir{
+    -fx-fill: -fx-primarytext;
+    -glyph-size: 50px;
+}
+
+.botoncruceta{
+    -fx-border-color: none;
+    -fx-backgorund: none;
+}
+
+.cruceta{
+	-fx-fill: red;
+	-glyph-size: 60px;
+}
+
 .button:hover .glyph-icon{
     -fx-fill: #F6F9F8; 
 }

@@ -71,17 +71,26 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#registrarFacturPago" prefHeight="74.0" prefWidth="170.0" text="Pagar">
+                  <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#registrarFacturaPago" prefHeight="74.0" prefWidth="170.0" text="Pagar">
                      <graphic>
                         <FontAwesomeIconView glyphName="CREDIT_CARD" />
                      </graphic>
                   </Button>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#regitrarMas" prefHeight="80.0" prefWidth="170.0" text="Registrar más" GridPane.rowIndex="1" />
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#registrarMas" prefHeight="80.0" prefWidth="170.0" text="Registrar más" GridPane.rowIndex="1" />
                   <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#anularTransaccion" prefHeight="72.0" prefWidth="169.0" text="Anular" GridPane.rowIndex="2">
                      <graphic>
                         <FontAwesomeIconView glyphName="TIMES" />
                      </graphic>
                   </Button>
+                  <Button fx:id="btnNoPrint" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" prefHeight="72.0" prefWidth="169.0" style="-fx-background-color: inherit; -fx-border-color: inherit;" visible="false" GridPane.rowIndex="3">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="TIMES" styleClass="cruceta" />
+                     </graphic>
+                  </Button>
+                  <Button fx:id="btnPrint" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onMousePressed="#impresionTicket" onMouseReleased="#impresionTicket" prefHeight="78.0" prefWidth="169.0" styleClass="imprimir" GridPane.rowIndex="3">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="PRINT" size="25.0" styleClass="imprimir" wrappingWidth="49.428571701049805" />
+                     </graphic></Button>
                </children>
             </GridPane>
          </children>
@@ -90,7 +99,7 @@
          <children>
             <Label layoutX="12.0" layoutY="171.0" text="Total sin IVA" />
             <Label fx:id="lblSinIva" layoutX="345.0" layoutY="171.0" prefHeight="32.0" prefWidth="123.0" textAlignment="RIGHT" />
-            <Label layoutX="37.0" layoutY="221.0" prefHeight="32.0" prefWidth="95.0" text="Total IVA" />
+            <Label layoutX="74.0" layoutY="221.0" prefHeight="32.0" prefWidth="58.0" text="Total" />
             <Label layoutX="78.0" layoutY="22.0" text="IVA" />
             <Label layoutX="51.0" layoutY="266.0" prefHeight="31.0" prefWidth="82.0" text="Importe" textAlignment="RIGHT" />
             <Label fx:id="lblImporte" layoutX="347.0" layoutY="266.0" prefHeight="32.0" prefWidth="123.0" textAlignment="RIGHT" />
@@ -98,7 +107,7 @@
             <Separator layoutX="14.0" layoutY="203.0" prefWidth="534.0" />
             <Separator layoutX="16.0" layoutY="259.0" prefWidth="534.0" />
             <Separator layoutX="16.0" layoutY="306.0" prefWidth="534.0" />
-            <Label fx:id="lblCambio" alignment="TOP_RIGHT" layoutX="24.0" layoutY="313.0" prefHeight="32.0" prefWidth="109.0" textAlignment="RIGHT" />
+            <Label fx:id="lblCambio" alignment="TOP_RIGHT" layoutX="11.0" layoutY="313.0" prefHeight="32.0" prefWidth="136.0" textAlignment="RIGHT" />
             <Label fx:id="lblAdevolver" layoutX="347.0" layoutY="313.0" prefHeight="32.0" prefWidth="123.0" style="-fx-background-color: #7FFBAB;" textAlignment="RIGHT" />
             <Label fx:id="lblIva" layoutX="92.0" layoutY="59.0" prefHeight="93.0" prefWidth="62.0" textAlignment="RIGHT" />
             <FontAwesomeIconView glyphName="EURO" layoutX="455.0" layoutY="196.0" />

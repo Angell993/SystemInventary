@@ -89,7 +89,6 @@ public class FXMLRegistrarVentaController implements Initializable {
                 Parent root = loader.load();
                 FXMLPagoController pagar = loader.getController();
                 pagar.recibirInformacionPago(nFactura.getText(), codEmpleado, String.valueOf(sumarDineroTotal()), idCantidadComprada, anchorPane, listaArticulo);
-                //No se porque me da el error de NullPointerException
                 anchorPane.getChildren().setAll(root);
             } catch (IOException ex) {
                 Logger.getLogger(FXMLSistemaInventarioController.class.getName()).log(Level.SEVERE, null, ex);
@@ -97,7 +96,6 @@ public class FXMLRegistrarVentaController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(FXMLRegistrarVentaController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @FXML
@@ -129,6 +127,7 @@ public class FXMLRegistrarVentaController implements Initializable {
         cmbArticulo.getSelectionModel().select(-1);
         cmbCantidad.getSelectionModel().select(-1);
         precioArticulo.setText("0,00");
+        llenarCmb.llenarComboBox(listaArticulos, cmbArticulo, SentenciasSQL.sqlArticulos);
     }
 
     @FXML
@@ -154,7 +153,7 @@ public class FXMLRegistrarVentaController implements Initializable {
     @FXML
     private void eliminarFilaVenta() {
         if (tblVenta.getSelectionModel().getSelectedIndex() <= -1) {
-            Alertas.mensajeInformación("Compra", "Añade una Compra.");
+            Alertas.mensajeInformación("Compra", "Añada una Compra");
         } else {
             if (listaTotalCompra.indexOf(-1) < 0) {
                 Venta vent = tblVenta.getSelectionModel().getSelectedItem();
@@ -242,11 +241,11 @@ public class FXMLRegistrarVentaController implements Initializable {
     private boolean comprobarCampos() {
 
         if (cmbArticulo.getSelectionModel().isSelected(-1)) {
-            Alertas.mensajeErrorPers(null, "Â¡Debe seleccionar un ArtÃ­culo!");
+            Alertas.mensajeErrorPers(null, "¡Debe seleccionar un Artículo!");
             return false;
         }
         if (cmbCantidad.getSelectionModel().isSelected(-1)) {
-            Alertas.mensajeErrorPers(null, "Â¡Debe seleccionar una cantidad mÃ­nima!");
+            Alertas.mensajeErrorPers(null, "¡Debe seleccionar una cantidad mínima!");
             return false;
         }
         return true;

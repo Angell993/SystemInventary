@@ -5,8 +5,6 @@ import clasesjava.Venta;
 import conexionbasedatos.ConexionDB;
 import conexionbasedatos.ConexionInventario;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -22,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -36,12 +35,16 @@ import reportesistemainventario.CrearInforme;
 
 public class FXMLPagoController implements Initializable {
 
-    @FXML  
+    @FXML
     private ComboBox<Item> combPago;
     @FXML
     private TextField txtDocumento, codEmpleado, fechaPago, txtFactura, txtImporte;
     @FXML
     private Label lblSinIva, lblIva, lblTotal, lblImporte, lblAdevolver, lblTotalIva, lblCambio, lblBase, lblTotalPorcent;
+    @FXML
+    Button btnPrint;
+    @FXML
+    Button btnNoPrint;
     private final LLenarCombos llenarComb = new LLenarCombos();
     private final VentanaRootPane visualizarInterfaz = new VentanaRootPane();
     private AnchorPane rootPane;
@@ -55,9 +58,10 @@ public class FXMLPagoController implements Initializable {
     private double dinero;
     private String sentencia;
     private double money;
+    private boolean ticket = true;
 
     @FXML
-    private void regitrarMas(ActionEvent event) {
+    private void registrarMas(ActionEvent event) {
         try {
             transaction.setAutoCommit(false);
             ConexionInventario.EjecutarSQL_TRANSACT(transaction, SentenciasSQL.sqlEliminarDetalleFactura + " cod_factura = '" + txtFactura.getText() + "'");
@@ -101,12 +105,12 @@ public class FXMLPagoController implements Initializable {
     /*Recibir Informacion desde la ventana de registrar Venta*/
     public void recibirInformacionPago(String factura, String empleado, String total, ObservableList<Item> idCantidadCompra,
             AnchorPane rootPane, ObservableList<Venta> listaVenta) {
-        System.out.println("------------------Informacion de la otra ventana---------------------");
-        System.out.println(Arrays.toString(listaVenta.toArray())+"\n");
+        System.out.println("------------------Información de la otra ventana---------------------");
+        System.out.println(Arrays.toString(listaVenta.toArray()) + "\n");
         System.out.println(Arrays.toString(idCantidadCompra.toArray()));
-        System.out.println("Factura: "+factura);
-        System.out.println("empleado: "+empleado);
-        System.out.println("total: "+total);
+        System.out.println("Factura: " + factura);
+        System.out.println("empleado: " + empleado);
+        System.out.println("total: " + total);
         System.out.println("--------------------------------------------------------------");
         this.listaVenta = listaVenta;
         this.rootPane = rootPane;
@@ -120,21 +124,42 @@ public class FXMLPagoController implements Initializable {
     }
 
     @FXML
-    private void registrarFacturPago() {
+    private void impresionTicket() {
+        btnPrint.setOnAction((event) -> {
+            if (btnPrint.isVisible()) {
+                btnPrint.setVisible(false);
+                btnNoPrint.setVisible(true);
+                ticket = false;
+            }
+        });
+        btnNoPrint.setOnAction((event) -> {
+            if (!btnPrint.isVisible()) {
+                btnPrint.setVisible(true);
+                btnNoPrint.setVisible(false);
+                ticket = true;
+            }
+        });
+
+    }
+
+    @FXML
+    private void registrarFacturaPago() {
         if (cambio() >= 0) {
-            //String url = "C:\\Users\\bruno\\JaspersoftWorkspace\\MyReports\\TicketVenta";
+            String url = "src/ticket&factura/TicketVenta";
             if (MetodosJavaClass.txtVacios(datosArray())) {
                 if (MetodosJavaClass.cmbSeleccionado(combPago)) {
-                    sentencia = SentenciasSQL.insertarFactura + "('" + txtFactura.getText() + "', '" + txtDocumento.getText()
+                    String doc = txtDocumento.getText();
+                    sentencia = SentenciasSQL.insertarFactura + "('" + txtFactura.getText() + "', '" + existeCliente(doc)
                             + "', " + Integer.parseInt(codEmpleado.getText()) + " ,'" + Fecha.fechaSQl()
                             + "', " + combPago.getSelectionModel().getSelectedItem().getId()
                             + " , " + MetodosJavaClass.quitarComa(lblTotal.getText()) + " )";
 
                     ConexionInventario.EjecutarSQL(sentencia);
                     Alertas.alertaPers("Cambio", "El cambio a recibir.", String.valueOf(cambio()));
-
-                    /*CrearInforme ventaTicket = new CrearInforme();
-                    ventaTicket.ticketVenta(txtFactura.getText(), url);*/
+                    if (ticket) {
+                        CrearInforme ventaTicket = new CrearInforme();
+                        ventaTicket.ticketVenta(txtFactura.getText(), url);
+                    }
                     cargarNuevaVentana();
                 }
             }
@@ -151,11 +176,11 @@ public class FXMLPagoController implements Initializable {
         double devolver = 0;
         try {
             if (Double.parseDouble(txtImporte.getText()) < MetodosJavaClass.quitarComa(lblTotal.getText())) {
-                lblCambio.setText("Falta");
+                lblCambio.setText("Por entregar");
                 lblCambio.getStyleClass().add("cambio");
                 devolver = MetodosJavaClass.quitarComa(lblTotal.getText()) - Double.parseDouble(txtImporte.getText());
             } else {
-                lblCambio.setText("Cambio");
+                lblCambio.setText("A retirar");
                 lblCambio.getStyleClass().add("dinero-completo");
                 devolver = Double.parseDouble(txtImporte.getText()) - MetodosJavaClass.quitarComa(lblTotal.getText());
             }
@@ -174,19 +199,18 @@ public class FXMLPagoController implements Initializable {
     }
 
     // Por quitar el cliente
-    private Boolean existeCliente(String documento) {
+    private String existeCliente(String documento) {
         try {
-            ResultSet dato = ConexionInventario.sSQL(SentenciasSQL.sqlDocumentoNombreCliente + " '" + documento + "'");
-            while (dato.next()) {
-                if (!dato.getString(1).equals(documento)) {
-                    Alertas.mensajeErrorPers("Cliente", "El Cliente no esta registrado.");
-                    return false;
+            ResultSet documentos = ConexionInventario.sSQL(SentenciasSQL.sqlDocumentosClientes);
+            while (documentos.next()) {
+                if (!documentos.getString(1).equals(documento) || documento.contentEquals("")) {
+                    documento = "00000000";
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(FXMLPagoController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return true;
+        return documento;
     }
 
     private void lblDinero() {
@@ -270,7 +294,7 @@ public class FXMLPagoController implements Initializable {
                 precio21 += (Math.rint(Double.parseDouble(listaIva.get(i).getDocProveedor()) * 100) / 100);
             }
         }
-            for (int i = 0; i < imprimirIva().size(); i++) {
+        for (int i = 0; i < imprimirIva().size(); i++) {
             iva.append(String.valueOf(imprimirIva().get(i))).append("%\n");
         }
         porcentaje.append(porcentaje4).append("€\n").append(porcentaje10).append("€\n").append(porcentaje21).append("€\n");
