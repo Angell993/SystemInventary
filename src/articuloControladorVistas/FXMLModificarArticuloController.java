@@ -53,11 +53,12 @@ public class FXMLModificarArticuloController implements Initializable {
     private void modificarArticulo(ActionEvent event) {
         if (MetodosJavaClass.txtVacios(datosArray())) {
             if (MetodosJavaClass.esNumero(txtCodBarras.getText())) {
-                sentencia = SentenciasSQL.sqlModificarArticulo + " nombre = '" + txtNomArticulo.getText() + "', precio_venta = " + Double.valueOf(txtPrecioVenta.getText())
+                sentencia = SentenciasSQL.sqlModificarArticulo + " nombre = '" +  MetodosJavaClass.obtenerId(SentenciasSQL.sqlCodigoBarrasID +"'"+ txtCodBarras.getText() +"'")
+                        + "', precio_venta = " + Double.valueOf(txtPrecioVenta.getText())
                         + " , precio_costo = " + Double.valueOf(txtPrecioCosto.getText()) + " , stock = " + Integer.parseInt(txtStock.getText())
                         + " , cod_tipo_articulo = " + cmbArticulo.getSelectionModel().getSelectedItem().getId()
                         + " , cod_proveedor = '" + cmbProveedor.getSelectionModel().getSelectedItem().getDocProveedor()
-                        + "' , fecha_ingreso = '" + txtFecha.getText() + "', codigo_barras = " + Integer.parseInt(txtCodBarras.getText())
+                        + "' , fecha_ingreso = '" + txtFecha.getText() + "', codigo_barras = " +  MetodosJavaClass.obtenerId(SentenciasSQL.sqlCodigoBarrasID +"'"+ txtCodBarras.getText()+"'")
                         + " WHERE id_articulo = " + idArticulo;
                 ConexionInventario.EjecutarSQL(sentencia);
                 actualizarTabla();
@@ -92,11 +93,15 @@ public class FXMLModificarArticuloController implements Initializable {
         cmbArticulo.getSelectionModel().select(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlTipoArticulo + "'" + articulo.getDescripcionArticulo() + "'"),
                 articulo.getDescripcionArticulo()));
         cmbProveedor.getSelectionModel().select(new Item(MetodosJavaClass.obtenerDocumentoProveedor(articulo.getNombreProveedor()), articulo.getNombreProveedor()));
-        llenarComb.llenarComboBox(listaArticulo, cmbArticulo, SentenciasSQL.sqlArticulo);
-        llenarComb.llenarComboProveedor(listaProveedor, cmbProveedor, SentenciasSQL.sqlProveedorComb);
+        
+        llenarComb.llenarComboBox(listaArticulo, cmbArticulo, SentenciasSQL.sqlTipArticulo);
+        llenarComb.llenarComboProveedor(listaProveedor, cmbProveedor, SentenciasSQL.sqlProveedorComb +
+                MetodosJavaClass.obtenerId(SentenciasSQL.sqlCodigoBarrasID +"'"+ txtCodBarras.getText()+"'"));
 
     }
 
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

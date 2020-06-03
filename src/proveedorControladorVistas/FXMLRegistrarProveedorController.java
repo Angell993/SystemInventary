@@ -28,17 +28,20 @@ public class FXMLRegistrarProveedorController implements Initializable {
     @FXML
     TextField txtComercio, txtTelefono, txtEmail, txtPais;
     @FXML
-    TextField txtDireccion, txtProducto;
+    TextField txtDireccion;
     @FXML
     private ComboBox<Item> cmbProvincia;
     @FXML
     private ComboBox<Item> cmbMunicipio;
     @FXML
     private ComboBox<Item> cmbDocumento;
+    @FXML
+    private ComboBox<Item> cmbArticulo;
 
     private ObservableList<Item> listaProvincias;
     private ObservableList<Item> listaCiudades;
     private ObservableList<Item> listaDocumento;
+    private ObservableList<Item> listaArticulo;
     private final MetodosJavaClass metodosJavaclass = new MetodosJavaClass();
     private final LLenarCombos llenarCmb = new LLenarCombos();
 
@@ -61,11 +64,11 @@ public class FXMLRegistrarProveedorController implements Initializable {
                     if (cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")) {
                         if (existeProveedor()) {
                             String sInsert = SentenciasSQL.ingresarProveedor + "( '" + txtDocumento.getText() + "', " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
-                                    + ", ' " + txtNombre.getText() + "', '" + txtApellido.getText() + "+', '" + txtComercio.getText() + "', '"
+                                    + ", ' " + txtNombre.getText() + "', '" + txtApellido.getText() + "', '" + txtComercio.getText() + "', '"
                                     + txtTelefono.getText() + "', '" + txtEmail.getText() + "', '" + txtPais.getText()
                                     + "', '" + cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion()
                                     + "', '" + cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion()
-                                    + "', '" + txtDireccion.getText() + "', '" + txtProducto.getText() + "')";
+                                    + "', '" + txtDireccion.getText() + "', " + cmbArticulo.getSelectionModel().getSelectedItem().getId() + ")";
 
                             ConexionInventario.EjecutarSQL(sInsert);
                             cancelar(event);
@@ -105,6 +108,7 @@ public class FXMLRegistrarProveedorController implements Initializable {
         txtPais.setText("España");
         llenarCmb.llenarComboBox(listaProvincias, cmbProvincia, SentenciasSQL.sqlProvincia);
         llenarCmb.llenarComboBox(listaDocumento, cmbDocumento, SentenciasSQL.sqlDocumento);
+        llenarCmb.llenarComboBox(listaArticulo, cmbArticulo, SentenciasSQL.sqlProductoProveedor);
     }
 
     private ObservableList<TextField> datosArray() {
@@ -117,7 +121,6 @@ public class FXMLRegistrarProveedorController implements Initializable {
         listaDatos.add(txtTelefono);
         listaDatos.add(txtEmail);
         listaDatos.add(txtDireccion);
-        listaDatos.add(txtProducto);
 
         return listaDatos;
     }

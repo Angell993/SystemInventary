@@ -2,13 +2,8 @@ package articuloControladorVistas;
 
 import clasesjava.Item;
 import conexionbasedatos.ConexionInventario;
-import empleadoControladoresVista.FXMLModificarEmpleadoController;
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,18 +19,19 @@ import metodosjavaClass.SentenciasSQL;
 public class FXMLRegistrarArticuloController implements Initializable {
 
     @FXML
-    private TextField txtNomArticulo, txtPrecioVenta, txtPrecioCosto;
+    private TextField txtPrecioVenta, txtPrecioCosto;
     @FXML
     private TextField txtStock, txtFecha, txtCodBarras;
     @FXML
     private ComboBox<Item> cmbArticulo;
     @FXML
+    private ComboBox<Item> cmbTipoArticulo;
+    @FXML
     private ComboBox<Item> cmbProveedor;
-    @FXML
+    private ObservableList<Item> listaTipoArticulo;
     private ObservableList<Item> listaArticulo;
-    @FXML
     private ObservableList<Item> listaProveedor;
-    private LLenarCombos llenacomb = new LLenarCombos();
+    private final LLenarCombos llenacomb = new LLenarCombos();
 
     @FXML
     private void ingresarArticulo(ActionEvent event) {
@@ -43,11 +39,14 @@ public class FXMLRegistrarArticuloController implements Initializable {
             if (MetodosJavaClass.isDouble(txtPrecioVenta.getText()) && MetodosJavaClass.isDouble(txtPrecioCosto.getText())) {
                 if (MetodosJavaClass.esNumero(txtCodBarras.getText())) {
                     if (MetodosJavaClass.cmbSeleccionado(cmbArticulo) && MetodosJavaClass.cmbSeleccionado(cmbProveedor)) {
-                        String sentencia = SentenciasSQL.ingresarArticulo + "('" + txtNomArticulo.getText() + "', " + Double.valueOf(txtPrecioVenta.getText())
+
+                        String sentencia = SentenciasSQL.ingresarArticulo + "('" + cmbArticulo.getSelectionModel().getSelectedItem().getDescripcion()
+                                + "', " + Double.valueOf(txtPrecioVenta.getText())
                                 + " , " + Double.valueOf(txtPrecioCosto.getText()) + " , " + txtStock.getText()
-                                + " , " + cmbArticulo.getSelectionModel().getSelectedItem().getId()
+                                + " , " + cmbTipoArticulo.getSelectionModel().getSelectedItem().getId()
                                 + " , '" + cmbProveedor.getSelectionModel().getSelectedItem().getDocProveedor()
-                                + "' , '" + Fecha.fechaSQl() + "', " + Integer.parseInt(txtCodBarras.getText()) + " )";
+                                + "' , '" + Fecha.fechaSQl() + "', " + cmbArticulo.getSelectionModel().getSelectedItem().getId() + " )";
+
                         ConexionInventario.EjecutarSQL(sentencia);
                         clearArticulo(event);
                     }
@@ -62,47 +61,36 @@ public class FXMLRegistrarArticuloController implements Initializable {
         for (int i = 0; i < datosArray().size(); i++) {
             datosArray().get(i).setText(null);
         }
-        cmbArticulo.getSelectionModel().select(-1);
+        cmbTipoArticulo.getSelectionModel().select(-1);
         cmbProveedor.getSelectionModel().select(-1);
-        ;
+        cmbArticulo.getSelectionModel().select(-1);
+    }
+
+    @FXML
+    private void articuloSeleccionado() {
+        if (!cmbArticulo.getSelectionModel().isSelected(-1)) {
+            llenacomb.llenarComboProveedor(listaProveedor, cmbProveedor, SentenciasSQL.sqlProveedorComb
+                    + cmbArticulo.getSelectionModel().getSelectedItem().getId());
+
+            txtCodBarras.setText(cmbArticulo.getSelectionModel().getSelectedItem().getDocProveedor());
+        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //codArticulo.setText(String.valueOf(metodosJavaclass.identificador()));
-        llenacomb.llenarComboBox(listaArticulo, cmbArticulo, SentenciasSQL.sqlArticulo);
-        llenacomb.llenarComboProveedor(listaProveedor, cmbProveedor, SentenciasSQL.sqlProveedorComb);
+        llenacomb.llenarComboBox(listaTipoArticulo, cmbTipoArticulo, SentenciasSQL.sqlTipArticulo);
+        llenacomb.articuloCodBar(listaArticulo, cmbArticulo, SentenciasSQL.sqlProducto);
         txtFecha.setText(Fecha.fecha());
-        txtCodBarras.setText(String.valueOf(MetodosJavaClass.codeBar()));
-        while (!existeCodeBar(Integer.parseInt(txtCodBarras.getText()))) {
-            txtCodBarras.setText(String.valueOf(MetodosJavaClass.codeBar()));
-        }
     }
 
     private ObservableList<TextField> datosArray() {
         ObservableList<TextField> listaDatos = FXCollections.observableArrayList();
         listaDatos.removeAll(listaDatos);
-        listaDatos.add(txtNomArticulo);
         listaDatos.add(txtPrecioVenta);
         listaDatos.add(txtPrecioCosto);
         listaDatos.add(txtStock);
         listaDatos.add(txtCodBarras);
 
         return listaDatos;
-    }
-
-    private Boolean existeCodeBar(int code) {
-        try {
-            ResultSet dato = ConexionInventario.sSQL(SentenciasSQL.sqlCodebar);
-            while (dato.next()) {
-                if (dato.getInt(1) == code) {
-                    return false;
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLModificarEmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return true;
     }
 }

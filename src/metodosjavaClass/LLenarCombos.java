@@ -1,11 +1,14 @@
 package metodosjavaClass;
 
+import articuloControladorVistas.FXMLRegistrarArticuloController;
 import clasesjava.Item;
 import conexionbasedatos.ConexionDB;
 import conexionbasedatos.ConexionEspania;
 import conexionbasedatos.ConexionInventario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ComboBox;
@@ -54,6 +57,19 @@ public class LLenarCombos {
             cargarDatos.setItems(listaItem);
         } catch (SQLException e) {
             Alertas.errorSQL("Error: ", e);
+        }
+    }
+    
+    public void articuloCodBar(ObservableList<Item> listaArticulo,ComboBox<Item> cmbArticulo, String sentencia) {
+        listaArticulo = FXCollections.observableArrayList();
+        try {
+            ResultSet datos = ConexionInventario.sSQL(sentencia);
+            while (datos.next()) {
+                listaArticulo.add(new Item(datos.getInt(1), datos.getString(2), datos.getString(3)));
+            }
+            cmbArticulo.setItems(listaArticulo);
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLRegistrarArticuloController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

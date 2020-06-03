@@ -75,7 +75,7 @@
             <Label text="Dirección" GridPane.rowIndex="4" />
             <TextField fx:id="txtDireccion" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label text="Productos" GridPane.rowIndex="5" />
-            <TextField fx:id="txtProducto" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ComboBox fx:id="cmbArticulo" prefHeight="42.0" prefWidth="267.0" promptText="Articulo" stylesheets="@../estiloscss/estilocomboBoxcss.css" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
       <GridPane layoutX="472.0" layoutY="613.0" prefHeight="50.0" prefWidth="363.0" stylesheets="@../estiloscss/buttonestilocss.css">

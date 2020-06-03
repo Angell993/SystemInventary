@@ -24,13 +24,13 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="138.0" text="Usuario:" />
-            <Label alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="142.0" text="Contraseña:" GridPane.rowIndex="1" />
-            <Label alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="145.0" text="Base de Datos:" GridPane.rowIndex="2" />
+            <Label alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="138.0" text="*Usuario:" />
+            <Label alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="142.0" text="*Contraseña:" GridPane.rowIndex="1" />
+            <Label alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="145.0" text="*Base de Datos:" GridPane.rowIndex="2" />
             <TextField fx:id="txtUsuario" GridPane.columnIndex="1" />
             <TextField fx:id="txtPass" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="txtDB" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label alignment="TOP_RIGHT" prefHeight="28.0" prefWidth="124.0" text="URL:" GridPane.rowIndex="3" />
+            <Label alignment="TOP_RIGHT" prefHeight="28.0" prefWidth="124.0" text="*URL:" GridPane.rowIndex="3" />
             <TextField fx:id="txtUrl" prefHeight="42.0" prefWidth="196.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
@@ -48,15 +48,16 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="158.0" text="Correo Empresa:" />
-            <Label alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="159.0" text="Contraseña:" GridPane.rowIndex="1" />
+            <Label alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="158.0" text="*Correo Empresa:" />
+            <Label alignment="CENTER_RIGHT" prefHeight="28.0" prefWidth="159.0" text="*Contraseña:" GridPane.rowIndex="1" />
             <TextField fx:id="txtCorreoEmpresa" GridPane.columnIndex="1" />
             <PasswordField fx:id="txtCorreoPass" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <Button layoutX="83.0" layoutY="679.0" mnemonicParsing="false" onAction="#comprobarConexionCorreo" text="Comprobar Correo" />
-      <Label fx:id="lblCorreo" layoutX="289.0" layoutY="680.0" prefHeight="39.0" prefWidth="246.0" />
+      <Label fx:id="lblCorreo" layoutX="289.0" layoutY="680.0" prefHeight="39.0" prefWidth="320.0" />
       <Separator layoutY="426.0" prefWidth="820.0" />
       <Button fx:id="siguiente" layoutX="635.0" layoutY="679.0" mnemonicParsing="false" onAction="#ingresarSistema" prefHeight="42.0" prefWidth="144.0" text="Siguiente" />
+      <Label layoutX="78.0" layoutY="746.0" prefHeight="28.0" prefWidth="297.0" text="Los campos son obligatorios (*)." textFill="#e40e0e" />
    </children>
 </AnchorPane>

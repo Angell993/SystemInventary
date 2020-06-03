@@ -20,7 +20,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
@@ -60,7 +59,7 @@ public class FXMLModificarEliminarArticuloController implements Initializable {
 
     private ObservableList<Articulo> llenarTabla(ObservableList<Articulo> articulosLista, String sWhere) {
         try {
-            String sSelect = SentenciasSQL.sqlConsultaArticulotabla + " where articulo.codigo_barras LIKE ('%" + sWhere + "%') order by articulo.id_articulo ";
+            String sSelect = SentenciasSQL.sqlConsultaArticulotabla + " where producto.codigo_barras LIKE ('%" + sWhere + "%') order by articulo.id_articulo; ";
             ResultSet rSet = ConexionInventario.sSQL(sSelect);
             while (rSet.next()) {
                 articulosLista.add(new Articulo(rSet.getInt(1), rSet.getString(2),

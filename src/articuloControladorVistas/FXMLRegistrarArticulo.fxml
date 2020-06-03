@@ -26,13 +26,13 @@
         </rowConstraints>
          <children>
             <Label text="Nombre Artículo" />
-            <TextField fx:id="txtNomArticulo" GridPane.columnIndex="1" />
             <Label text="Precio Venta" GridPane.rowIndex="1" />
             <TextField fx:id="txtPrecioVenta" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Precio Costo" GridPane.rowIndex="2" />
             <TextField fx:id="txtPrecioCosto" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="txtStock" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="Stock" GridPane.rowIndex="3" />
+            <ComboBox fx:id="cmbArticulo" onAction="#articuloSeleccionado" prefHeight="47.0" prefWidth="293.0" promptText="Articulo" stylesheets="@../estiloscss/estilocomboBoxcss.css" GridPane.columnIndex="1" />
          </children>
       </GridPane>
       <GridPane layoutX="734.0" layoutY="113.0" prefHeight="352.0" prefWidth="428.0" AnchorPane.leftAnchor="734.0" AnchorPane.rightAnchor="144.0" AnchorPane.topAnchor="113.0">
@@ -52,7 +52,7 @@
             <ComboBox fx:id="cmbProveedor" prefHeight="42.0" prefWidth="253.0" promptText="Proveedor" stylesheets="@../estiloscss/estilocomboBoxcss.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="Tipo Articulo" />
             <TextField fx:id="txtFecha" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ComboBox fx:id="cmbArticulo" prefHeight="42.0" prefWidth="253.0" promptText="Articulo" stylesheets="@../estiloscss/estilocomboBoxcss.css" GridPane.columnIndex="1" />
+            <ComboBox fx:id="cmbTipoArticulo" prefHeight="42.0" prefWidth="253.0" promptText="Tipo de Articulo" stylesheets="@../estiloscss/estilocomboBoxcss.css" GridPane.columnIndex="1" />
             <Label text="Codigo Barras" GridPane.rowIndex="3" />
             <TextField fx:id="txtCodBarras" disable="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>

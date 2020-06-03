@@ -17,7 +17,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javax.swing.JFileChooser;
-import metodosjavaClass.Alertas;
 import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.SentenciasSQL;
 
@@ -61,7 +60,6 @@ public class FXMLGenerarCodeBarController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //llenacomb.llenarComboBox(codebar, cmbArticulo, "Select codigo_barras, nombre from articulo");
         etiquetaCombo();
     }
     

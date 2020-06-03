@@ -15,6 +15,8 @@ public class SentenciasSQL {
     public static String sqlDocumentoId = "SELECT id_tipo_documento, Descripcion from tipo_de_documento where id_tipo_documento =  ";
     public static String sqlTipoArticulo = "SELECT id_tipoarticulo, descripcion_articulo from tipo_articulo WHERE descripcion_articulo = ";
     public static String sqlNomComercioProveedor = "SELECT No_documento, Nombre_comercial from proveedor  WHERE  Nombre_comercial = ";
+    public static String sqlCodigoBarrasID = "SELECT id_articulo from producto "
+            + "where codigo_barras= ";
 
     /*
     * Sentencias en la tabla cliente
@@ -36,21 +38,25 @@ public class SentenciasSQL {
     public static String sqlEliminarProveedor = "DELETE FROM proveedor WHERE ";
     public static String sqlConsultarDocumentoProveedor = "SELECT No_documento from proveedor";
     public static String sqlConsultaProveedorTabla = "SELECT id_proveedor,No_documento, cod_tipo_documento, Nombre, Apellido, Nombre_comercial, Telefono,"
-            + " email, Pais, Ciudad, Localidad, direccion, Productos from proveedor ";
+            + " email, Pais, Ciudad, Localidad, direccion, producto.descripcion from proveedor  inner join producto on proveedor.Productos = producto.id_articulo";
+    public static String sqlProductoProveedor = "SELECT id_articulo, descripcion from producto";
 
     /*
     *Sentecnias para registrar Articulos
      */
     //tipo de Articulo
     public static String ingresarTipoArticulo = "INSERT INTO tipo_articulo ( descripcion_articulo, IVA ) VALUES ";
+    public static String ingresarProducto = "INSERT INTO producto ( descripcion, codigo_barras ) VALUES ";
     public static String ingresarArticulo = "INSERT INTO articulo (nombre, precio_venta, precio_costo, stock, cod_tipo_articulo, cod_proveedor, fecha_ingreso, codigo_barras) VALUES ";
     public static String sqlConsultaArticulotabla = "SELECT articulo.id_articulo, articulo.Nombre, articulo.precio_venta, "
             + "articulo.precio_costo, articulo.stock, tipo_articulo.descripcion_articulo , proveedor.Nombre_comercial, "
-            + "articulo.fecha_ingreso, articulo.codigo_barras "
-            + "from articulo inner join proveedor  on articulo.cod_proveedor = proveedor.No_documento "
-            + "inner join tipo_articulo  on articulo.cod_tipo_articulo = tipo_articulo.id_tipoarticulo ";
-    public static String sqlArticulo = "SELECT * from tipo_articulo";
-    public static String sqlProveedorComb = "SELECT No_documento, Nombre_comercial from proveedor";
+            + "articulo.fecha_ingreso, producto.codigo_barras "
+            + " from articulo inner join proveedor  on articulo.cod_proveedor = proveedor.No_documento "
+            + " inner join tipo_articulo  on articulo.cod_tipo_articulo = tipo_articulo.id_tipoarticulo "
+            + " inner join producto on articulo.codigo_barras = producto.id_articulo ";
+    public static String sqlTipArticulo = "SELECT * from tipo_articulo";
+    public static String sqlProducto = "SELECT * from producto";
+    public static String sqlProveedorComb = "SELECT No_documento, Nombre_comercial from proveedor where Productos = ";
     public static String sqlModificarArticulo = "UPDATE articulo SET ";
     public static String sqlEliminarArticulo = "DELETE FROM articulo WHERE ";
 
@@ -112,9 +118,9 @@ public class SentenciasSQL {
     public static String sqlTicket = "Select Nnm_factura from factura where id_factura = (select max(id_factura) from factura)";
 
     /*Imprimir etiquetas */
-    public static String sqlCodebar = "SELECT codigo_barras from articulo";
-    ///Por implementar
-    public static String sqlEtiquetaCodeBar = "select codigo_barras, articulo.nombre, "
+    public static String sqlCodebar = "SELECT codigo_barras from producto";
+    public static String sqlEtiquetaCodeBar = "select producto.codigo_barras, articulo.nombre, "
             + " ((articulo.precio_venta * (tipo_articulo.IVA / 100)) + articulo.precio_venta ) as precio_iva "
-            + " from articulo inner join tipo_articulo on articulo.cod_tipo_articulo = tipo_articulo.id_tipoarticulo;";
+            + " from articulo inner join tipo_articulo on articulo.cod_tipo_articulo = tipo_articulo.id_tipoarticulo"
+            + " inner join producto on articulo.codigo_barras = producto.id_articulo;";
 }

@@ -30,17 +30,20 @@ public class FXMLModificarProveedorController implements Initializable {
     @FXML
     TextField txtComercio, txtTelefono, txtEmail, txtPais;
     @FXML
-    TextField txtDireccion, txtProducto;
+    TextField txtDireccion;
     @FXML
     private ComboBox<Item> cmbProvincia;
     @FXML
     private ComboBox<Item> cmbMunicipio;
     @FXML
     private ComboBox<Item> cmbDocumento;
+    @FXML
+    private ComboBox<Item> cmbArticulo;
 
     private ObservableList<Item> listaProvincias;
     private ObservableList<Item> listaCiudades;
     private ObservableList<Item> listaDocumento;
+    private ObservableList<Item> listaArticulo;
     private final LLenarCombos llenarCmb = new LLenarCombos();
     private final VentanaRootPane visualizarInterfaz = new VentanaRootPane();
     private AnchorPane rootPane;
@@ -69,7 +72,7 @@ public class FXMLModificarProveedorController implements Initializable {
         proveedor.setProvinciaProveedor(cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion());
         proveedor.setCiudadProveedor(cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion());
         proveedor.setDireccionProveedor(txtDireccion.getText());
-        proveedor.setProductosProveedor(txtProducto.getText());
+        proveedor.setProductosProveedor(cmbArticulo.getSelectionModel().getSelectedItem().getDescripcion());
     }
 
     @FXML
@@ -83,8 +86,9 @@ public class FXMLModificarProveedorController implements Initializable {
                                 + " Telefono = '" + txtTelefono.getText() + "', email = '" + txtEmail.getText() + "', Pais = '" + txtPais.getText()
                                 + "', Ciudad = '" + cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion()
                                 + "', Localidad = '" + cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion()
-                                + "', direccion = '" + txtDireccion.getText() + "', Productos = '" + txtProducto.getText()
-                                + "' where id_proveedor = " + id;
+                                + "', direccion = '" + txtDireccion.getText() 
+                                + "', Productos = " + cmbArticulo.getSelectionModel().getSelectedItem().getId()
+                                + " where id_proveedor = " + id;
                         ConexionInventario.EjecutarSQL(sentencia);
                         actualizartabla();
                         cerrarVentana(event);
@@ -124,16 +128,17 @@ public class FXMLModificarProveedorController implements Initializable {
         txtEmail.setText(proveedor.getEmailProveedor());
         txtPais.setText(proveedor.getPaisProveedor());
         txtDireccion.setText(proveedor.getDireccionProveedor());
-        txtProducto.setText(proveedor.getProductosProveedor());
 
         cmbDocumento.getSelectionModel().select(new Item(proveedor.getCod_tipo_doc(), MetodosJavaClass.obtenerTipoDoc(proveedor.getCod_tipo_doc())));
         cmbProvincia.getSelectionModel().select(new Item(proveedor.getProvinciaProveedor()));
-        cmbMunicipio.getSelectionModel().select(new Item(proveedor.getCiudadProveedor()));
+        cmbMunicipio.getSelectionModel().select(new Item(proveedor.getCiudadProveedor()));        
+        cmbArticulo.getSelectionModel().select(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlCodigoBarrasID+ "'' or descripcion ='"+proveedor.getProductosProveedor()+"'"),
+                proveedor.getProductosProveedor()));
+        
+        llenarCmb.llenarComboBox(listaArticulo, cmbArticulo, SentenciasSQL.sqlProductoProveedor);
         llenarCmb.llenarComboBox(listaDocumento, cmbDocumento, SentenciasSQL.sqlDocumento);
         llenarCmb.llenarComboBox(listaProvincias, cmbProvincia, SentenciasSQL.sqlProvincia);
         seleccionarID();
-        //llenarCmb.llenarComboBox(listaCiudades, cmbMunicipio, SentenciasSQL.sqlMunicipios);
-
     }
 
     @Override
@@ -156,7 +161,6 @@ public class FXMLModificarProveedorController implements Initializable {
         listaDatos.add(txtTelefono);
         listaDatos.add(txtEmail);
         listaDatos.add(txtDireccion);
-        listaDatos.add(txtProducto);
 
         return listaDatos;
     }
