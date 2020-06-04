@@ -33,6 +33,8 @@ public class FXMLDevolucionController implements Initializable {
                             + ", '" + txtMotivo.getText() + "', '" + Fecha.fechaSQl()
                             + "', " + Integer.parseInt(txtCantidad.getText()) + ", " + Integer.parseInt(txtEmpleado.getText()) + " )";
                     ConexionInventario.EjecutarSQL(sentencia);
+                    //sentencia = SentenciasSQL.retirarDevolucion +Integer.parseInt(txtArticulo.getText())+ " AND cod_factura = '"+txtFactura.getText()+"'";
+                    //ConexionInventario.EjecutarSQL(sentencia);
                     borrar();
                 }
             }

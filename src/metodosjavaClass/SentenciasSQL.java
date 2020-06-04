@@ -103,7 +103,7 @@ public class SentenciasSQL {
     public static String sqlDevolucion = "SELECT cod_detallefactura from devolucion";
     public static String sqlDevolucionFactura = "SELECT Nnm_factura from factura";
     public static String ingresarDevolucion = "INSERT INTO devolucion (cod_detallefactura, cod_detallearticulo, Motivo, Fecha_devolucion, cantidad,cod_empleado) VALUES ";
-
+    public static String retirarDevolucion = "DELETE FROM detalle_factura WHERE cod_articulo = ";
     /* Factura Sentencias*/
     public static String sqlConsulCliente = "SELECT Nombre, Apellidos from cliente where Documento = ";
     public static String sqlDistintasFactura = "Select distinct(factura.Nnm_factura), Fecha_facturacion "
