@@ -58,7 +58,7 @@ public class FXMLModificarEmpleadoController implements Initializable {
             if (MetodosJavaClass.verificarEmail(txtEmail)) {
                 if (!cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")
                         && !cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("PASAPORTE")) {
-                    if (Alertas.puestoConfirmacion()) {
+                    if (Alertas.puestoConfirmacion(cmbPuesto.getSelectionModel().getSelectedItem().getDescripcion())) {
                         if (existeEmpleado()) {
                             sentencia = SentenciasSQL.sqlModificarEmpleado + " codigoEmpleado = " + Integer.parseInt(txtEmpleado.getText())
                                     + ", cod_tipodocumento = " + cmbDocumento.getSelectionModel().getSelectedItem().getId()

@@ -69,11 +69,11 @@ public class Alertas {
         return action.get() != ButtonType.CANCEL;
     }
     
-    public static Boolean puestoConfirmacion() {
+    public static Boolean puestoConfirmacion(String puesto) {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setTitle("Puesto");
         alerta.setHeaderText(null);
-        alerta.setContentText("¿Estas seguro que deseas darle el puesto de Administrador Total?");
+        alerta.setContentText("¿Estas seguro que deseas darle el puesto de "+puesto+"?");
         Optional<ButtonType> action = alerta.showAndWait();
         return action.get() != ButtonType.CANCEL;
     }

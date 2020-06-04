@@ -53,7 +53,7 @@ public class FXMLRegistrarEmpleadoController implements Initializable {
                 if (!cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")
                         && !cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("PASAPORTE")) {
                     if (MetodosJavaClass.verificarEmail(txtEmail)) {
-                        if (Alertas.puestoConfirmacion()) {
+                        if (Alertas.puestoConfirmacion(cmbPuesto.getSelectionModel().getSelectedItem().getDescripcion())) {
                             String sentencia = SentenciasSQL.ingresarEmpleado + " (" + Integer.parseInt(txtEmpleado.getText()) + ", " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
                                     + " , '" + txtDocumento.getText() + "', '" + txtNombre.getText() + "', '" + txtApellido.getText() + "', '" + txtEmail.getText()
                                     + "', " + cmbPuesto.getSelectionModel().getSelectedItem().getId() + ")";
