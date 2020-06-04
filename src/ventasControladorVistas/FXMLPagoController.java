@@ -156,10 +156,10 @@ public class FXMLPagoController implements Initializable {
 
                     ConexionInventario.EjecutarSQL(sentencia);
                     Alertas.alertaPers("Cambio", "El cambio a recibir.", String.valueOf(cambio()));
-                    if (ticket) {
+                    /*if (ticket) {
                         CrearInforme ventaTicket = new CrearInforme();
                         ventaTicket.ticketVenta(txtFactura.getText(), url);
-                    }
+                    }*/
                     cargarNuevaVentana();
                 }
             }

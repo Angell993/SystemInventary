@@ -1,0 +1,11 @@
+/*estilo de cada botón*/
+.button{
+    -fx-text-fill: #FDFDFD;
+    -fx-background-color: #1CAAE4;
+    -fx-font-size: 21px;
+}
+.glyph-icon{
+    -fx-fill: #1B940B;
+    -glyph-size: 25px;
+    /*-glyph-color: green;#ebeae8*/
+}

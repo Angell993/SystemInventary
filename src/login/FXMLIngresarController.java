@@ -39,7 +39,8 @@ public class FXMLIngresarController implements Initializable {
     @FXML
     private TextField password;
     @FXML
-    private Button entrar;
+    private Button entrar, btnSalir;
+    private ConexionDB conectar;
 
     @FXML
     private void ingresarSistema(ActionEvent event) {
@@ -68,7 +69,7 @@ public class FXMLIngresarController implements Initializable {
 
     private void recuperarUser(ActionEvent event) {
         try {
-            ConexionDB conectar = new ConexionDB();
+            conectar = new ConexionDB();
             try (Connection conect = conectar.conectar()) {
                 conect.setAutoCommit(false);
                 String sql = "select * from login";
@@ -93,6 +94,7 @@ public class FXMLIngresarController implements Initializable {
                         error.setText("Contraseña o Usuario incorrecto!");
                     }
                 }
+                conectar.cerrarConexion();
             } catch (SQLException ex) {
                 Logger.getLogger(FXMLIngresarController.class
                         .getName()).log(Level.SEVERE, null, ex);
@@ -104,7 +106,6 @@ public class FXMLIngresarController implements Initializable {
 
     private void sistemaInventario(ActionEvent event) {
         try {
-
             System.out.println("[********** Bienvenido al Sistema **********]");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/sistemaInventarioControladorVistas/FXMLSistemaInventario.fxml"));
             Parent root = loader.load();
@@ -133,4 +134,13 @@ public class FXMLIngresarController implements Initializable {
         // TODO
     }
 
+    @FXML
+    private void desconectar(ActionEvent event) {
+        usuario.setText("0");
+        sistemaInventario(event);
+    }
+
+    public void desconectarConexionDB(boolean desconectar) {  
+        btnSalir.setVisible(desconectar);
+    }
 }

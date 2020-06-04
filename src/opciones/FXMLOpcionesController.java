@@ -12,23 +12,26 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import metodosjavaClass.SentenciasSQL;
 import metodosjavaClass.VentanaRootPane;
 import reportesistemainventario.CrearInforme;
 
 public class FXMLOpcionesController implements Initializable {
-
+    
     @FXML
     private AnchorPane rootPane;
+    @FXML
+    private Button btnConfig, btnTicket, btnFactura, btnCodeBar, btnCorreo;
     private final VentanaRootPane visualizarInterfaz = new VentanaRootPane();
-
+    
     @FXML
     private void factura() {
         String ruta = "/opciones/FXMLFactura.fxml";
         visualizarInterfaz.mostarVentana(ruta, rootPane);
     }
-
+    
     @FXML
     private void imprimirticket() {
         String idFact = null;
@@ -66,14 +69,38 @@ public class FXMLOpcionesController implements Initializable {
     }
     
     @FXML
-    private void imprimirCodeBar(){
+    private void imprimirCodeBar() {
         visualizarInterfaz.mostarVentana("/opciones/FXMLGenerarCodeBar.fxml", rootPane);
     }
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }
     
-
+    private void admin(int user) {
+        if (user == 2) {
+            btnConfig.setVisible(false);
+            btnFactura.setVisible(false);
+            btnCorreo.setVisible(false);
+            btnCodeBar.setVisible(false);
+        } else {
+            btnConfig.setVisible(true);
+            btnFactura.setVisible(true);
+            btnCorreo.setVisible(true);
+            btnCodeBar.setVisible(true);            
+        }
+        if (user == 0) {
+            btnTicket.setVisible(false);
+            btnConfig.setVisible(false);
+            btnFactura.setVisible(false);
+            btnCorreo.setVisible(false);
+            btnCodeBar.setVisible(false);
+        }
+    }
+    
+    public void numeroEmpleado(int empleado) {
+        admin(empleado);
+    }
+    
 }

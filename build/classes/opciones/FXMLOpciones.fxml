@@ -24,22 +24,22 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#imprimirticket" prefHeight="88.0" prefWidth="209.0" text="Ticket">
+            <Button fx:id="btnTicket" mnemonicParsing="false" onAction="#imprimirticket" prefHeight="88.0" prefWidth="209.0" text="Ticket">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#factura" prefHeight="88.0" prefWidth="209.0" text="Factura" GridPane.columnIndex="1">
+            <Button fx:id="btnFactura" mnemonicParsing="false" onAction="#factura" prefHeight="88.0" prefWidth="197.0" text="Factura" GridPane.columnIndex="1">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#correo" prefHeight="88.0" prefWidth="209.0" text="Correo" GridPane.rowIndex="2">
+            <Button fx:id="btnCorreo" mnemonicParsing="false" onAction="#correo" prefHeight="88.0" prefWidth="209.0" text="Correo" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#imprimirCodeBar" prefHeight="88.0" prefWidth="409.0" text="Generar Código de Barras" GridPane.columnSpan="2" GridPane.rowIndex="1">
+            <Button fx:id="btnCodeBar" mnemonicParsing="false" onAction="#imprimirCodeBar" prefHeight="88.0" prefWidth="409.0" text="Generar Código de Barras" GridPane.columnSpan="2" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
@@ -47,7 +47,7 @@
          </children>
       </GridPane>
       <AnchorPane fx:id="rootPane" layoutX="426.0" prefHeight="804.0" prefWidth="880.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="426.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <Button layoutY="686.0" mnemonicParsing="false" onAction="#configAdmin" prefHeight="35.0" prefWidth="75.0" style="-fx-background-color: none;">
+      <Button fx:id="btnConfig" layoutY="686.0" mnemonicParsing="false" onAction="#configAdmin" prefHeight="35.0" prefWidth="75.0" style="-fx-background-color: none;">
          <font>
             <Font name="System Bold" size="35.0" />
          </font>

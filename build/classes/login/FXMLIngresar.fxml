@@ -32,11 +32,12 @@
                     </children>
                 </GridPane>
                 <Label fx:id="error" alignment="CENTER" contentDisplay="CENTER" layoutX="91.0" layoutY="298.0" prefHeight="41.0" prefWidth="283.0" textAlignment="CENTER" textFill="#ee0707" />
-                <Button fx:id="entrar" contentDisplay="RIGHT" layoutX="145.0" layoutY="376.0" mnemonicParsing="false" onAction="#ingresarSistema" prefHeight="42.0" prefWidth="195.0" text="Entrar" textFill="#fcfcfc">
+                <Button fx:id="entrar" contentDisplay="RIGHT" layoutX="41.0" layoutY="376.0" mnemonicParsing="false" onAction="#ingresarSistema" prefHeight="44.0" prefWidth="155.0" text="Entrar" textFill="#fcfcfc">
                 </Button>
             <FontAwesomeIconView fill="#fcf8f8" glyphName="LOCK" layoutX="196.0" layoutY="121.0" size="125" wrappingWidth="105.4285717010498" />
             <FontAwesomeIconView fill="#fffdfd" glyphName="USER" layoutX="48.0" layoutY="208.0" size="50" wrappingWidth="42.428571701049805" />
             <FontAwesomeIconView fill="WHITE" glyphName="KEY" layoutX="48.0" layoutY="279.0" size="50" wrappingWidth="42.42857122421265" />
+            <Button fx:id="btnSalir" contentDisplay="RIGHT" layoutX="233.0" layoutY="376.0" mnemonicParsing="false" onAction="#desconectar" prefHeight="44.0" prefWidth="155.0" text="Salir" textFill="#fcfcfc" visible="false" />
             </children>
         </AnchorPane>
     </children>

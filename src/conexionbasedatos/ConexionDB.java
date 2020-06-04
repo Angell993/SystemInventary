@@ -64,10 +64,12 @@ public class ConexionDB {
     }
 
     public void cerrarConexion() {
-        try {
-            conexion.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE, null, ex);
+        if (conexion != null) { 
+            try {
+                conexion.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 

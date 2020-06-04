@@ -83,7 +83,6 @@ public class FXMLRegistrarVentaController implements Initializable {
             actualizarDatosDB();
             transaction.commit();
             transaction.close();
-            System.out.println("---------- Inicializando Forma de Pago ----------");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventasControladorVistas/FXMLPago.fxml"));
             try {
                 Parent root = loader.load();

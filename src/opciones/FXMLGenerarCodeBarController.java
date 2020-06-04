@@ -29,7 +29,7 @@ public class FXMLGenerarCodeBarController implements Initializable {
     @FXML
     private ComboBox<Item> cmbArticulo;
     private final LLenarCombos llenacomb = new LLenarCombos();
-    private CodigoBarras cb = new CodigoBarras();
+    private final CodigoBarras cb = new CodigoBarras();
     private File f;
     private ObservableList<Item> codebar;
 

@@ -74,7 +74,7 @@ public class FXMLDevolucionController implements Initializable {
             ResultSet codFactura = ConexionInventario.sSQL(SentenciasSQL.sqlDevolucion);
             while (codFactura.next()) {
                 if (txtFactura.getText().equals(codFactura.getString(1))) {
-                    Alertas.mensajeErrorPers("DEvolución", "El nº de Devolución " + txtFactura.getText() + " ya está registrado ");
+                    Alertas.mensajeErrorPers("Devolución", "El nº de Devolución " + txtFactura.getText() + " ya está registrado ");
                     return false;
                 }
             }
@@ -86,16 +86,17 @@ public class FXMLDevolucionController implements Initializable {
     
     private Boolean existeDevolucionFactura() {
         try {
-            ResultSet codFactura = ConexionInventario.sSQL(SentenciasSQL.sqlDevolucion);
+            ResultSet codFactura = ConexionInventario.sSQL(SentenciasSQL.sqlDevolucionFactura);
             while (codFactura.next()) {
-                if (!txtFactura.getText().equals(codFactura.getString(1))) {
-                    Alertas.mensajeErrorPers("Factura", "El nº de Factura " + txtFactura.getText() + " no existe");
-                    return false;
+                if (txtFactura.getText().equals(codFactura.getString(1))) {
+                    return true;
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(FXMLDevolucionController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return true;
+                    Alertas.mensajeErrorPers("Factura", "El nº de Factura " + txtFactura.getText() + " no existe");
+                    return false;
+        
     }
 }
