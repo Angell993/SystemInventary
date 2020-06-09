@@ -74,7 +74,7 @@ public class FXMLRegistrarProveedorController implements Initializable {
                             cancelar(event);
                         }
                     } else {
-                        Alertas.información("Tipo de Documento", "El Tipo de Documento no es válido.\n\tDebe ser CIF.");
+                        Alertas.mensajeInformación("Tipo de Documento", "El Tipo de Documento no es válido.\n\tDebe ser CIF.");
                     }
                 }
                 //}
@@ -98,7 +98,7 @@ public class FXMLRegistrarProveedorController implements Initializable {
             return true;
         } else {
             System.out.println("Este Documento no es valido!!!!! " + identificacionDocumento);
-            Alertas.mensajeErrorPers("ERROR", "Documento Inválido!!!");
+            Alertas.mensajeError("Documento Inválido!!!");
             return false;
         }
     }
@@ -130,7 +130,7 @@ public class FXMLRegistrarProveedorController implements Initializable {
             ResultSet dato = ConexionInventario.sSQL(SentenciasSQL.sqlConsultarDocumentoProveedor);
             while (dato.next()) {
                 if (dato.getString(1).equals(txtDocumento.getText())) {
-                    Alertas.mensajeErrorPers("Proveedor", "El Proveedor ya existe.");
+                    Alertas.mensajeError("El Proveedor ya existe.");
                     return false;
                 }
             }

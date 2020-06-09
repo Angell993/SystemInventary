@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -69,7 +68,9 @@ public class FXMLModificarEliminarClienteController implements Initializable {
     public ObservableList<Cliente> llenarTabla(ObservableList<Cliente> clienteLista, String sWhere) {
         clienteLista = FXCollections.observableArrayList();
         try {
-            ResultSet rSet = ConexionInventario.sSQL(SentenciasSQL.sqlClienteTabla+" where Documento LIKE ('%" + sWhere + "%') order by Nombre ;");
+            ResultSet rSet = ConexionInventario.sSQL(SentenciasSQL.sqlClienteTabla+" where Documento LIKE ('%" + sWhere + "%') "
+                    + " or Nombre LIKE ('%" + sWhere + "%')"
+                    + "order by Nombre ;");
             while (rSet.next()) {
 
                 clienteLista.add(new Cliente(rSet.getInt("id_Cliente"),rSet.getString("Documento"), rSet.getInt("cod_tipo_documento"), rSet.getString("Nombre"),
@@ -111,7 +112,7 @@ public class FXMLModificarEliminarClienteController implements Initializable {
             listaSelectClientes = FXCollections.observableArrayList();
             tblCliente.setItems(llenarTabla(listaSelectClientes, sWhere));
             if (tblCliente.getItems().isEmpty()) {
-                Alertas.mensajeErrorPers("Consulta errónea", "El cliente con el nº de documento " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un documento válido");
+                Alertas.mensajeError("El cliente con el nº de documento " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un documento válido");
                 fieldDocumento.deleteText(sWhere.length() - 1, sWhere.length());
             }
         } else {
@@ -154,4 +155,7 @@ public class FXMLModificarEliminarClienteController implements Initializable {
         this.rootPane = rootPane;
     }
 
+    public void informacionModificada(AnchorPane rootPane){
+        this.rootPane = rootPane;
+    }
 }

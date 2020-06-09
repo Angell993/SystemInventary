@@ -1,0 +1,125 @@
+* {
+    -fx-primary : #2A2E37;
+    -fx-secondary : #FFFF8D;
+    -fx-primarytext : #B2B2B2;
+    -fx-existe : #02B051;
+    -fx-noexiste : #50F473;
+    -fx-blue: #1976D2;
+    -fx-red: #FF0000;
+    -fx-color-1:#1976D2;
+}
+.root{
+    -fx-background-color: -fx-primary;
+}
+
+/*estilo de las cajas de texto*/
+.text-field
+{
+    -fx-text-fill: -fx-primarytext;
+    -fx-font-size : 19px;
+    -jfx-focus-color: -fx-secondary;
+    -fx-text-fill: derive(-fx-secondary, 20%);
+    -fx-background-color: -fx-primary;
+    -fx-border-color: white;
+    -fx-border-radius: 10px;
+}
+
+/*Estilo de label*/
+.top-line{
+    -fx-background-color: -fx-primary;
+    -fx-text-fill: -fx-secondary;
+    -fx-font-size: 21px;
+}
+
+.table-view{
+    -fx-background-color: derive(-fx-primary, 10%);
+    -fx-font-size: 20px; 
+    -fx-border-color: derive(-fx-secondary, -60%);
+}
+.table-view:focused{
+    -fx-background-color: derive(-fx-primary, 20%);
+}
+.table-row-cell {
+    -fx-cell-size: 40px;
+}
+/*Color hover cuando pasa por encima de la tabla*/
+.table-view .table-row-cell:hover .table-cell{
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: -fx-primary;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: -fx-primary;
+}
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+/*Color Top superior de la tabla*/
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+.table-view .table-cell{
+    -fx-text-fill: white;
+}
+.table-row-cell:focused, .table-cell:focused{
+    -fx-text-fill: -fx-primary;
+}
+
+.table-column{
+    -fx-alignment: CENTER;  
+}
+/*Color negro de cala fila*/
+.table-row-cell{
+    -fx-background-color: -fx-primary;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: transparent;
+}
+
+/*Color blanco de cada fila*/
+.table-row-cell:even{
+    -fx-background-color: derive(-fx-primary, 20%);
+}
+/*********************************************************/
+/*Color negro de cala fila*/
+/*.noexiste .table-row-cell{
+    -fx-background-color: -fx-noexiste;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: transparent;
+}*/
+
+/*Color blanco de cada fila*/
+/*.noexiste .table-row-cell:even{
+    -fx-background-color: derive(-fx-noexiste, 20%);
+}*/
+/***********************************************************/
+
+.table-row-cell:selected {
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: -fx-primary;
+    -fx-background-insets: 0;
+}
+.table-row-cell:selected .table-cell{
+    -fx-text-fill: -fx-primary;
+}
+/*.placeholder .label{
+    -fx-text-fill: white;
+}*/
+.table-view > .virtual-flow > .scroll-bar:vertical,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track-background, 
+.table-view > .virtual-flow > .scroll-bar:horizontal,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: transparent;
+}
+.table-view > .virtual-flow > .scroll-bar > .increment-button, 
+.table-view > .virtual-flow > .scroll-bar > .decrement-button {
+    -fx-text-fill: white;
+}
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb{
+    -fx-background-color: derive(-fx-primary, 60%);
+    -fx-border-color: transparent;
+    -fx-background-radius: 5em;
+}

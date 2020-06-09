@@ -40,7 +40,7 @@ public class FXMLOpcionesController implements Initializable {
             while (dato.next()) {
                 idFact = dato.getString(1);
             }
-            String url = "src/ticket&factura/TicketVenta";
+            String url = "src/ticket&factura/Ticket";
             CrearInforme ventaTicket = new CrearInforme();
             ventaTicket.ticketVenta(idFact, url);
         } catch (SQLException ex) {

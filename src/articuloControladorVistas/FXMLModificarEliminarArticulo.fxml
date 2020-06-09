@@ -11,15 +11,15 @@
 
 <AnchorPane id="AnchorPane" prefHeight="761.0" prefWidth="1306.0" stylesheets="@../estiloscss/estilolabeltextFieldcss.css" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="articuloControladorVistas.FXMLModificarEliminarArticuloController">
    <children>
-      <TableView fx:id="tblArticulo" layoutY="179.0" onMouseClicked="#modificarArticulo" prefHeight="584.0" prefWidth="1306.0" stylesheets="@../estiloscss/estilosTableView.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="177.0">
+      <TableView fx:id="tblArticulo" layoutY="179.0" onMouseClicked="#modificarArticulo" prefHeight="584.0" prefWidth="1306.0" stylesheets="@../estiloscss/estiloTablaVenta.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="177.0">
         <columns>
-          <TableColumn fx:id="clmNombre" prefWidth="184.00003051757812" text="Nombre" />
-            <TableColumn fx:id="clmCodigoBarras" prefWidth="187.0" text="Codigo Barras" />
-            <TableColumn fx:id="clmPrecioVenta" prefWidth="137.0" text="Precio Venta" />
-            <TableColumn fx:id="clmPrecioCosto" prefWidth="134.0" text="Precio Costo" />
-            <TableColumn fx:id="clmStock" prefWidth="150.0" text="Stock" />
-            <TableColumn fx:id="clmDescArticulo" minWidth="0.0" prefWidth="215.0" text="Tipo Articulo" />
-            <TableColumn fx:id="clmNombProveedor" prefWidth="293.0" text="Proveedor" />
+          <TableColumn fx:id="clmNombre" prefWidth="242.0" text="Nombre" />
+            <TableColumn fx:id="clmCodigoBarras" prefWidth="173.0" text="Codigo Barras" />
+            <TableColumn fx:id="clmPrecioVenta" prefWidth="151.0" text="Precio Venta" />
+            <TableColumn fx:id="clmPrecioCosto" prefWidth="136.0" text="Precio Costo" />
+            <TableColumn fx:id="clmStock" prefWidth="107.0" text="Stock" />
+            <TableColumn fx:id="clmDescArticulo" minWidth="0.0" prefWidth="240.0" text="Tipo Articulo" />
+            <TableColumn fx:id="clmNombProveedor" prefWidth="252.0" text="Proveedor" />
         </columns>
       </TableView>
       <TextField fx:id="fieldDocumento" layoutX="157.0" layoutY="91.0" onKeyReleased="#buscarArtículo" prefHeight="42.0" prefWidth="309.0" promptText="Codigo de Barras" AnchorPane.leftAnchor="157.0" AnchorPane.topAnchor="91.0" />

@@ -57,7 +57,7 @@ public class FXMLRegistroContraseñaController implements Initializable {
         String aux = datosArray().get(0).getText();
         for (int i = 1; i < datosArray().size(); i++) {
             if (!aux.equals(datosArray().get(i).getText())) {
-                Alertas.mensajeErrorPers("Contraseña", "Contraseñas no son iguales.");
+                Alertas.mensajeError("Contraseñas no son iguales.");
                 return false;
             }
         }

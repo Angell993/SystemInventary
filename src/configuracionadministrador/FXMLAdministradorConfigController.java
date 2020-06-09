@@ -82,8 +82,8 @@ public class FXMLAdministradorConfigController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         txtUsuario.setText("root");
         txtPass.setText("root");
-        txtDB.setText("sistemainventario1");
-        txtUrl.setText("jdbc:mysql://localhost:3306/sistemainventario1?verifyServerCertificate=false&useSSL=true");
+        txtDB.setText("sistemainventario");
+        txtUrl.setText("jdbc:mysql://localhost:3306/sistemainventario?verifyServerCertificate=false&useSSL=true");
         completarURL();
     }
 

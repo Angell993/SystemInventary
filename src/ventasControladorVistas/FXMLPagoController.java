@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +37,7 @@ public class FXMLPagoController implements Initializable {
     @FXML
     private ComboBox<Item> combPago;
     @FXML
-    private TextField txtDocumento, codEmpleado, fechaPago, txtFactura, txtImporte;
+    private TextField  codEmpleado, fechaPago, txtFactura, txtImporte;
     @FXML
     private Label lblSinIva, lblIva, lblTotal, lblImporte, lblAdevolver, lblTotalIva, lblCambio, lblBase, lblTotalPorcent;
     @FXML
@@ -54,7 +53,7 @@ public class FXMLPagoController implements Initializable {
     private ObservableList<Item> listaPago;
     private ObservableList<Venta> listaVenta = FXCollections.observableArrayList();
     private ObservableList<Item> listaIva;
-    private Venta venta = new Venta();
+    private final Venta venta = new Venta();
     private double dinero;
     private String sentencia;
     private double money;
@@ -105,13 +104,6 @@ public class FXMLPagoController implements Initializable {
     /*Recibir Informacion desde la ventana de registrar Venta*/
     public void recibirInformacionPago(String factura, String empleado, String total, ObservableList<Item> idCantidadCompra,
             AnchorPane rootPane, ObservableList<Venta> listaVenta) {
-        System.out.println("------------------Información de la otra ventana---------------------");
-        System.out.println(Arrays.toString(listaVenta.toArray()) + "\n");
-        System.out.println(Arrays.toString(idCantidadCompra.toArray()));
-        System.out.println("Factura: " + factura);
-        System.out.println("empleado: " + empleado);
-        System.out.println("total: " + total);
-        System.out.println("--------------------------------------------------------------");
         this.listaVenta = listaVenta;
         this.rootPane = rootPane;
         this.idCantidadCompra = idCantidadCompra;
@@ -145,24 +137,31 @@ public class FXMLPagoController implements Initializable {
     @FXML
     private void registrarFacturaPago() {
         if (cambio() >= 0) {
-            String url = "src/ticket&factura/TicketVenta";
-            if (MetodosJavaClass.txtVacios(datosArray())) {
+            String url = "src/ticket&factura/Ticket";
                 if (MetodosJavaClass.cmbSeleccionado(combPago)) {
-                    String doc = txtDocumento.getText();
-                    sentencia = SentenciasSQL.insertarFactura + "('" + txtFactura.getText() + "', '" + existeCliente(doc)
-                            + "', " + Integer.parseInt(codEmpleado.getText()) + " ,'" + Fecha.fechaSQl()
-                            + "', " + combPago.getSelectionModel().getSelectedItem().getId()
-                            + " , " + MetodosJavaClass.quitarComa(lblTotal.getText()) + " )";
+                    try {
+                        transaction.setAutoCommit(false);
+                        registrarCompraDetalle();
+                        actualizarDatosDB();
+                        transaction.commit();
+                        transaction.close();
+                        sentencia = SentenciasSQL.insertarFactura + "('" + txtFactura.getText()
+                                + "', " + Integer.parseInt(codEmpleado.getText()) + " ,'" + Fecha.fechaSQl()
+                                + "', " + combPago.getSelectionModel().getSelectedItem().getId()
+                                + " , " + MetodosJavaClass.quitarComa(lblTotal.getText()) + " )";
 
-                    ConexionInventario.EjecutarSQL(sentencia);
-                    Alertas.alertaPers("Cambio", "El cambio a recibir.", String.valueOf(cambio()));
-                    /*if (ticket) {
+                        ConexionInventario.EjecutarSQL(sentencia);
+                        Alertas.mensajeInformación("Cambio", "El cambio a recibir.\n"+String.valueOf(cambio()));
+                        //if (ticket) {
                         CrearInforme ventaTicket = new CrearInforme();
                         ventaTicket.ticketVenta(txtFactura.getText(), url);
-                    }*/
-                    cargarNuevaVentana();
+                        //}
+                        cargarNuevaVentana();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FXMLPagoController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
-            }
+            
         }
     }
 
@@ -170,6 +169,45 @@ public class FXMLPagoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         fechaPago.setText(Fecha.fecha());
         lblDinero();
+    }
+
+    private void registrarCompraDetalle() {
+        idCantidadCompra = FXCollections.observableArrayList();
+        String regCompra;
+        for (int i = 0; i < listaVenta.size(); i++) {
+            regCompra = SentenciasSQL.sqlRegCompra + " ('" + listaVenta.get(i).getNumeroCoFactura() + "', "
+                    + MetodosJavaClass.obtenerId(SentenciasSQL.sqlIdArticulo + " '" + listaVenta.get(i).getNombreArticulo() + "'")
+                    + ", " + listaVenta.get(i).getCantidadCompra()
+                    + "," + listaVenta.get(i).getTotalCompra() + " )";
+            ConexionInventario.EjecutarSQL_TRANSACT(transaction, regCompra);
+            idCantidadCompra.add(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlIdArticulo + " '" + listaVenta.get(i).getNombreArticulo() + "'"),
+                    String.valueOf(listaVenta.get(i).getCantidadCompra())));
+        }
+    }
+    
+    private void actualizarDatosDB() {
+        for (int i = 0; i < listaVenta.size(); i++) {
+            ObservableList<Item> datosStock = comprobarStockId(listaVenta.get(i).getNombreArticulo());
+            for (int j = 0; j < datosStock.size(); j++) {
+                int actualizarStock = Integer.parseInt(datosStock.get(j).getDescripcion()) - listaVenta.get(i).getCantidadCompra();
+                sentencia = SentenciasSQL.sqlActualizarArticuloDb + " stock = " + actualizarStock + " where id_articulo = " + datosStock.get(j).getId();
+                ConexionInventario.EjecutarSQL_TRANSACT(transaction, sentencia);
+                break;
+            }
+        }
+    }
+    
+    private ObservableList<Item> comprobarStockId(String articulo) {
+        ObservableList<Item> idStock = FXCollections.observableArrayList();
+        try {
+            ResultSet datos = ConexionInventario.sSQL_TRANSACT(transaction, SentenciasSQL.sqlConsultarActualizarDb + " '" + articulo + "'");
+            while (datos.next()) {
+                idStock.add(new Item(datos.getInt(1), String.valueOf(datos.getInt(2))));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FXMLRegistrarVentaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return idStock;
     }
 
     private double cambio() {
@@ -187,15 +225,6 @@ public class FXMLPagoController implements Initializable {
         } catch (NumberFormatException e) {
         }
         return (Math.rint(devolver * 100) / 100);
-    }
-
-    //tambien se quitaria si el cliente se borra
-    private ObservableList<TextField> datosArray() {
-        ObservableList<TextField> listaDatos = FXCollections.observableArrayList();
-        listaDatos.removeAll(listaDatos);
-        listaDatos.add(txtDocumento);
-
-        return listaDatos;
     }
 
     // Por quitar el cliente
@@ -234,7 +263,6 @@ public class FXMLPagoController implements Initializable {
 
     private void regresarAVenta() {
         try {
-            System.out.println("Estoy enviando datos: " + Arrays.toString(this.listaVenta.toArray()));
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventasControladorVistas/FXMLRegistrarVenta.fxml"));
             AnchorPane root = loader.load();
             FXMLRegistrarVentaController registrar = loader.getController();
@@ -256,9 +284,6 @@ public class FXMLPagoController implements Initializable {
                     String precioSinIva = String.valueOf((Math.rint(datos.getDouble(3) * 100) / 100) * (Double.parseDouble(idCantidadCompra.get(i).getDescripcion())));
                     listaIva.add(new Item(datos.getInt(1), porcentajeIva, precioSinIva));
                     sinIva += (Math.rint(datos.getDouble(3) * 100) / 100) * (Double.parseDouble(idCantidadCompra.get(i).getDescripcion()));
-                    System.out.println("IVA: " + datos.getInt(1));
-                    System.out.println("Porcentaje: " + porcentajeIva);
-                    System.out.println("PrecioTotal: " + precioSinIva);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(FXMLPagoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -307,7 +332,6 @@ public class FXMLPagoController implements Initializable {
 
     private ArrayList<Integer> imprimirIva() {
         ArrayList<Integer> iVa = new ArrayList<>();
-        iVa.remove(iVa);
         iVa.add(4);
         iVa.add(10);
         iVa.add(21);

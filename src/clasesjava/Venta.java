@@ -22,7 +22,8 @@ public class Venta {
     private DoubleProperty precioArticulo;
     private DoubleProperty totalCompra;
 
-    public Venta(String nombreArticulo, int cantidadCompra, Double precioArticulo, Double totalCompra) {
+    public Venta(String numeroFactura,String nombreArticulo, int cantidadCompra, Double precioArticulo, Double totalCompra) {
+        this.numeroFactura = new SimpleStringProperty(numeroFactura);
         this.nombreArticulo = new SimpleStringProperty(nombreArticulo);
         this.cantidadCompra = new SimpleIntegerProperty(cantidadCompra);
         this.precioArticulo = new SimpleDoubleProperty(precioArticulo);

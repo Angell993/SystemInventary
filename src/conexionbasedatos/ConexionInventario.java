@@ -1,5 +1,6 @@
 package conexionbasedatos;
 
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +9,7 @@ import metodosjavaClass.Alertas;
 
 public class ConexionInventario {
 
-    private static final ConexionDB conn = new ConexionDB();
+    private static ConexionDB conn = new ConexionDB();
     private static PreparedStatement preparedStatement = null;
     private static ResultSet datosRest = null;
 
@@ -17,13 +18,17 @@ public class ConexionInventario {
         try {
             preparedStatement = conn.conectar().prepareStatement(sentencia);
             int i = preparedStatement.executeUpdate();
-            if (!mensajeConsulta(i, sentencia)) {
-                Alertas.mensajeErrorPers(null, "Error al ejecutar la sentencia");
+            if(!mensajeConsulta(i, sentencia)){
+                Alertas.mensajeError("Error al ejecutar la sentencia.");
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Alertas.errorSQL("Error al ejecutar la sentencia todo bien", e);
+        } catch (SQLException  e) {
+            if (sentencia.contains("DELETE FROM proveedor")) {
+                Alertas.mensajeAdvertencia("Proveedor", "El proveedor no se puede eliminar,\nhace referencia a un articulo registrado en la tabla artículo.");
+            }else{
+                e.printStackTrace();
+                Alertas.errorSQL("Error al ejecutar la sentencia. ", e);                
+            }
+            
         }
     }
 
@@ -33,25 +38,19 @@ public class ConexionInventario {
             datosRest = preparedStatement.executeQuery();
 
         } catch (SQLException e) {
-            Alertas.errorSQL("Error al ejecutar la sentencia XD", e);
+            Alertas.errorSQL("Error al ejecutar la sentencia.", e);
         }
         return datosRest;
     }
 
     public static boolean EjecutarSQL_TRANSACT(Connection conTransat, String sentencia) {
-
         try {
             preparedStatement = conTransat.prepareStatement(sentencia);
-            System.out.println(sentencia);
             int i = preparedStatement.executeUpdate();
-
-            if (i > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return i > 0;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e);
+            Alertas.errorSQL("Error al ejecutar la sentencia.", e);
         }
         return false;
     }
@@ -61,7 +60,8 @@ public class ConexionInventario {
             preparedStatement = conTransat.prepareStatement(sentencia);
             datosRest = preparedStatement.executeQuery();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e);
+            Alertas.errorSQL("Error al ejecutar la sentencia.", e);
         }
         return datosRest;
     }
@@ -69,20 +69,20 @@ public class ConexionInventario {
     /*
     
      */
-    private static Boolean mensajeConsulta(int i, String sentencia) {
+    private static boolean mensajeConsulta(int i, String sentencia) {
         if (i > 0) {
             if (sentencia.startsWith("UPDATE")) {
-                Alertas.alertaPers("ACTUALIZACIÓN", "¡Ha modificado la Base de Datos!", "Se ha actualizado satisfactoriamente");
+                Alertas.mensajeConfirmacion("ACTUALIZACIÓN", "Se ha actualizado correctamente en la Base de Datos.");
                 conn.cerrarConexion();
                 return true;
             }
             if (sentencia.startsWith("DELETE")) {
-                Alertas.alertaPers("BORRADO", "¡Ha modificado la Base de Datos!", "Se ha eliminado de la Base de Datos");
+                Alertas.mensajeConfirmacion("BORRADO", "Se ha eliminado de la Base de Datos.");
                 conn.cerrarConexion();
                 return true;
             }
             if (sentencia.startsWith("INSERT")) {
-                Alertas.alertaPers("INSERCIÓN", "¡Ha modificado la Base de Datos!", "Se ha registrado correctamente en la Base de Datos");
+                Alertas.mensajeConfirmacion("INSERCIÓN", "Se ha registrado correctamente en la Base de Datos.");
                 conn.cerrarConexion();
                 return true;
             }

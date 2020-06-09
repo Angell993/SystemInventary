@@ -17,7 +17,7 @@ public class MetodosJavaClass {
             Double.parseDouble(numero);
             return true;
         } catch (NumberFormatException e) {
-            Alertas.mensajeErrorPers("No es un numero", "El valor ingresado no es un número. " + numero);
+            Alertas.mensajeError("El valor ingresado no es un número. " + numero);
         }
         return false;
     }
@@ -78,7 +78,7 @@ public class MetodosJavaClass {
         }
         //Con este If compruebo si el contador es menor al tamaño de la arry
         if (count < lengthDatos) {
-            Alertas.mensajeErrorPers("Texto Vacios", "Los campos están vacios ");
+            Alertas.mensajeError("Los campos están vacios ");
             return false;
         }
         return true;
@@ -86,7 +86,7 @@ public class MetodosJavaClass {
 
     public static Boolean cmbSeleccionado(ComboBox<Item> cmbSelecionado) {
         if (cmbSelecionado.getSelectionModel().isSelected(-1)) {
-            Alertas.mensajeErrorPers("Selecciona", "No has seleccionado una opción");
+            Alertas.mensajeError("No has seleccionado una opción");
             return false;
         }
         return true;
@@ -150,7 +150,7 @@ public class MetodosJavaClass {
                 return true;
             }
         }
-        Alertas.información("Email", "Correo electrónico incorrecto");
+        Alertas.mensajeInformación("Email", "Correo electrónico incorrecto");
         return false;
     }
 

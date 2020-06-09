@@ -29,17 +29,6 @@
     -fx-font-size: 21px;
 }
 
-.text-field
-{
-    -fx-text-fill: -fx-primarytext;
-    -fx-font-size : 19px;
-    -jfx-focus-color: -fx-secondary;
-    -fx-text-fill: derive(-fx-secondary, 20%);
-    -fx-background-color: -fx-primary;
-    -fx-border-color: white;
-    -fx-border-radius: 10px;
-}
-
 .table-view{
     -fx-background-color: derive(-fx-primary, 10%);
     -fx-font-size: 20px; 
@@ -51,6 +40,12 @@
 .table-row-cell {
     -fx-cell-size: 40px;
 }
+/*Color hover cuando pasa por encima de la tabla*/
+.table-view .table-row-cell:hover .table-cell{
+    -fx-background-color: -fx-secondary;
+    -fx-text-fill: -fx-primary;
+}
+
 .table-view .column-header-background{
     -fx-background-color: -fx-primary;
 }
@@ -58,6 +53,7 @@
     -fx-background-color: transparent;
     -fx-text-fill: white;
 }
+/*Color Top superior de la tabla*/
 .table-view .column-header {
     -fx-background-color: transparent;
 }
@@ -67,6 +63,7 @@
 .table-row-cell:focused, .table-cell:focused{
     -fx-text-fill: -fx-primary;
 }
+/*Color negro de cala fila*/
 .table-row-cell{
     -fx-background-color: -fx-primary;
     -fx-border-color: transparent;
@@ -75,8 +72,10 @@
 .table-column{
     -fx-alignment: CENTER;  
 }
+/*********************************************************/
+/*Color blanco de cada fila*/
 .table-row-cell:even{
-    -fx-background-color: derive(-fx-primary, 10%);
+    -fx-background-color: derive(-fx-primary, 15%);
 }
 .table-row-cell:selected {
     -fx-background-color: -fx-secondary;
@@ -86,9 +85,9 @@
 .table-row-cell:selected .table-cell{
     -fx-text-fill: -fx-primary;
 }
-.placeholder .label{
+/*.placeholder .label{
     -fx-text-fill: white;
-}
+}*/
 .table-view > .virtual-flow > .scroll-bar:vertical,
 .table-view > .virtual-flow > .scroll-bar:vertical > .track,
 .table-view > .virtual-flow > .scroll-bar:vertical > .track-background, 
@@ -107,13 +106,11 @@
     -fx-border-color: transparent;
     -fx-background-radius: 5em;
 }
+
 .table-view .filler{
     -fx-fill: -fx-primary;
     -fx-background-color: -fx-primary;
 }
-.table-context
-{
+.table-context{
     -fx-base: -fx-primary;
 }
-
-

@@ -66,20 +66,20 @@ public class CrearInforme {
     /*Si eno encuentra lo seleccionado del comboBox estos son los mensajes de error*/
     private void errorReport(int itemSeleccionado) {
         if (itemSeleccionado == 1) {
-            Alertas.mensajeErrorPers("No existe", "El Documento no existe en el Sistema.");
+            Alertas.mensajeError("El Documento no existe en el Sistema.");
         }
         if (itemSeleccionado == 2) {
-            Alertas.mensajeErrorPers("No existe", "El Nombre no existe en el Sistema.");
+            Alertas.mensajeError("El Nombre no existe en el Sistema.");
         }
         if (itemSeleccionado == 3) {
-            Alertas.mensajeErrorPers("No existe", "La fecha no etsá registrada en el Sistema.");
+            Alertas.mensajeError("La fecha no etsá registrada en el Sistema.");
         }
     }
 
     public void ticketVenta(String factura, String url) {
         Map parametro = new HashMap();
         try {
-            parametro.put("operacion", factura);
+            parametro.put("factura", factura);
             JasperPrint jasperPrint = JasperFillManager.fillReport(url + ".jasper", parametro,
                     con.conectar());
 

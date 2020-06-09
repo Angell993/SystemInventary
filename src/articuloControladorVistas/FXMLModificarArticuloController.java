@@ -13,12 +13,16 @@ import javafx.scene.control.TextField;
 import metodosjavaClass.MetodosJavaClass;
 import metodosjavaClass.SentenciasSQL;
 import clasesjava.Articulo;
-import clasesjava.Venta;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import metodosjavaClass.Alertas;
 import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.VentanaRootPane;
+import proveedorControladorVistas.FXMLModificarProveedorController;
 
 public class FXMLModificarArticuloController implements Initializable {
 
@@ -30,11 +34,11 @@ public class FXMLModificarArticuloController implements Initializable {
     private ComboBox<Item> cmbProveedor;
     private ObservableList<Item> listaArticulo;
     private ObservableList<Item> listaProveedor;
-    private LLenarCombos llenarComb = new LLenarCombos();
+    private final LLenarCombos llenarComb = new LLenarCombos();
     private final VentanaRootPane visualizarInterfaz = new VentanaRootPane();
     private Articulo articulo = new Articulo();
     private String sentencia;
-    private int idArticulo;
+    private int idArticulo, stock_minimo, stock_maximo;
     private AnchorPane rootPane;
 
     private void actualizarTabla() {
@@ -43,6 +47,7 @@ public class FXMLModificarArticuloController implements Initializable {
         articulo.setPrecioVenta(Float.valueOf(txtPrecioVenta.getText()));
         articulo.setPrecioCosto(Float.valueOf(txtPrecioCosto.getText()));
         articulo.setCantidadStock(Integer.parseInt(txtStock.getText()));
+        
         articulo.setDescripcionArticulo(cmbArticulo.getSelectionModel().getSelectedItem().getDescripcion());
         articulo.setNombreProveedor(cmbProveedor.getSelectionModel().getSelectedItem().getDescripcion());
         articulo.setFecha(txtFecha.getText());
@@ -56,6 +61,7 @@ public class FXMLModificarArticuloController implements Initializable {
                 sentencia = SentenciasSQL.sqlModificarArticulo + " nombre = '" +  MetodosJavaClass.obtenerId(SentenciasSQL.sqlCodigoBarrasID +"'"+ txtCodBarras.getText() +"'")
                         + "', precio_venta = " + Double.valueOf(txtPrecioVenta.getText())
                         + " , precio_costo = " + Double.valueOf(txtPrecioCosto.getText()) + " , stock = " + Integer.parseInt(txtStock.getText())
+                        +" , stock_minimo = "+ stock_minimo+", stock_maximo = "+stock_maximo
                         + " , cod_tipo_articulo = " + cmbArticulo.getSelectionModel().getSelectedItem().getId()
                         + " , cod_proveedor = '" + cmbProveedor.getSelectionModel().getSelectedItem().getDocProveedor()
                         + "' , fecha_ingreso = '" + txtFecha.getText() + "', codigo_barras = " +  MetodosJavaClass.obtenerId(SentenciasSQL.sqlCodigoBarrasID +"'"+ txtCodBarras.getText()+"'")
@@ -70,7 +76,7 @@ public class FXMLModificarArticuloController implements Initializable {
     @FXML
     private void eliminarArticulo(ActionEvent event) {
         if (MetodosJavaClass.txtVacios(datosArray())) {
-            if (Alertas.Confirmacion()) {
+            if (Alertas.ConfirmacionEleminarOModificar()) {
                 sentencia = SentenciasSQL.sqlEliminarArticulo + " id_articulo = " + idArticulo;
                 ConexionInventario.EjecutarSQL(sentencia);
                 recargarVentana();
@@ -88,6 +94,8 @@ public class FXMLModificarArticuloController implements Initializable {
         txtPrecioVenta.setText(String.valueOf(articulo.getPrecioVenta()));
         txtPrecioCosto.setText(String.valueOf(articulo.getPrecioCosto()));
         txtStock.setText(String.valueOf(articulo.getCantidadStock()));
+        stock_minimo = articulo.getStock_minimo();
+        stock_maximo = articulo.getStock_maximo();
         txtFecha.setText(articulo.getFecha());
 
         cmbArticulo.getSelectionModel().select(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlTipoArticulo + "'" + articulo.getDescripcionArticulo() + "'"),
@@ -127,8 +135,16 @@ public class FXMLModificarArticuloController implements Initializable {
     public Articulo getArticulo() {
         return articulo;
     }
-
+    
     private void recargarVentana() {
-        visualizarInterfaz.mostarVentana("/articuloControladorVistas/FXMLModificarEliminarArticulo.fxml", rootPane);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/articuloControladorVistas/FXMLModificarEliminarArticulo.fxml"));
+            AnchorPane root = loader.load();
+            FXMLModificarEliminarArticuloController info = loader.getController();
+            info.informacionModificada(rootPane);
+            rootPane.getChildren().setAll(root);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLModificarProveedorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

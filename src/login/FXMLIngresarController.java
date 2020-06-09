@@ -136,11 +136,17 @@ public class FXMLIngresarController implements Initializable {
 
     @FXML
     private void desconectar(ActionEvent event) {
-        usuario.setText("0");
-        sistemaInventario(event);
+        if (usuario.getText().isEmpty() && password.getText().isEmpty()) {
+            error.setText("Contraseña o Usuario incorrecto!");
+            usuario.getStyleClass().add("error-ingresar");
+            password.getStyleClass().add("error-ingresar");
+        } else {
+            usuario.setText("0");
+            sistemaInventario(event);
+        }
     }
 
-    public void desconectarConexionDB(boolean desconectar) {  
+    public void desconectarConexionDB(boolean desconectar) {
         btnSalir.setVisible(desconectar);
     }
 }

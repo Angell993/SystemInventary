@@ -2,7 +2,9 @@ package empleadoControladoresVista;
 
 import clasesjava.Empleado;
 import clasesjava.Item;
+import clienteControladorVistas.FXMLModificarEliminarClienteController;
 import conexionbasedatos.ConexionInventario;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -22,6 +25,7 @@ import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.MetodosJavaClass;
 import metodosjavaClass.SentenciasSQL;
 import metodosjavaClass.VentanaRootPane;
+import proveedorControladorVistas.FXMLModificarProveedorController;
 
 public class FXMLModificarEmpleadoController implements Initializable {
 
@@ -71,10 +75,10 @@ public class FXMLModificarEmpleadoController implements Initializable {
                             cerrarVentana(event);
                         }
                     } else {
-                        Alertas.información("Puesto", "Elige otro cargo para el empleado.");
+                        Alertas.mensajeInformación("Puesto", "Elige otro cargo para el empleado.");
                     }
                 } else {
-                    Alertas.información("Tipo de Documento", "El Tipo de Documento no es válido.\n\tNo puede ser CIF ni Pasaporte");
+                    Alertas.mensajeInformación("Tipo de Documento", "El Tipo de Documento no es válido.\n\tNo puede ser CIF ni Pasaporte");
                 }
             }
 
@@ -87,7 +91,7 @@ public class FXMLModificarEmpleadoController implements Initializable {
         if (MetodosJavaClass.txtVacios(datosArray())) {
             if (MetodosJavaClass.isDouble(txtEmpleado.getText())) {
                 if (existeEmpleado()) {
-                    if (Alertas.Confirmacion()) {
+                    if (Alertas.ConfirmacionEleminarOModificar()) {
                         sentencia = SentenciasSQL.sqlEliminarEmpleado + " codigoEmpleado = " + Integer.parseInt(txtEmpleado.getText());
                         ConexionInventario.EjecutarSQL(sentencia);
                         recargarVentana();
@@ -144,7 +148,7 @@ public class FXMLModificarEmpleadoController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(FXMLModificarEmpleadoController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Alertas.mensajeErrorPers("NO existe", "El Empleado que desea Modificar o"
+        Alertas.mensajeError("El Empleado que desea Modificar o"
                 + " Eliminar no existe");
         return false;
     }
@@ -158,8 +162,17 @@ public class FXMLModificarEmpleadoController implements Initializable {
         return empleado;
     }
 
+    
     private void recargarVentana() {
-        visualizarInterfaz.mostarVentana("/empleadoControladoresVista/FXMLModificarEliminarEmpleado.fxml", rootPane);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/empleadoControladoresVista/FXMLModificarEliminarEmpleado.fxml"));
+            AnchorPane root = loader.load();
+            FXMLModificarEliminarEmpleadoController info = loader.getController();
+            info.informacionModificada(rootPane);
+            rootPane.getChildren().setAll(root);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLModificarProveedorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

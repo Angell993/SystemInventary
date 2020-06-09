@@ -59,8 +59,8 @@ public class LLenarCombos {
             Alertas.errorSQL("Error: ", e);
         }
     }
-    
-    public void articuloCodBar(ObservableList<Item> listaArticulo,ComboBox<Item> cmbArticulo, String sentencia) {
+
+    public void articuloCodBar(ObservableList<Item> listaArticulo, ComboBox<Item> cmbArticulo, String sentencia) {
         listaArticulo = FXCollections.observableArrayList();
         try {
             ResultSet datos = ConexionInventario.sSQL(sentencia);
@@ -79,33 +79,25 @@ public class LLenarCombos {
         tablas.add(new Item(1, "Articulo"));
         tablas.add(new Item(2, "Cliente"));
         tablas.add(new Item(3, "Factura"));
-        tablas.add(new Item(4, "Detalle Factura"));
-        tablas.add(new Item(5, "Devolucion"));
-        tablas.add(new Item(6, "Empleado"));
-        tablas.add(new Item(7, "Proveedor"));
+        tablas.add(new Item(4, "Devolucion"));
+        tablas.add(new Item(5, "Empleado"));
+        tablas.add(new Item(6, "Proveedor"));
         cmbTabla.setItems(tablas);
     }
 
     public static void consultaDB(int idSelected, ComboBox<Item> cmbOpciones) {
         ObservableList<Item> opciones = FXCollections.observableArrayList();
         if (idSelected == 1) { // Opciones para Artículo
-            opciones.remove(opciones);
             opciones.add(new Item(1, "Nombre"));
             opciones.add(new Item(2, "Fecha"));
         }
         if (idSelected == 3 || idSelected == 5) { // Opciones para Factura y Devolución
-            opciones.remove(opciones);
             opciones.add(new Item(1, "Identificador"));
             opciones.add(new Item(2, "Fecha"));
         }
         if (idSelected == 2 || idSelected == 6 || idSelected == 7) { // Opciones para Cliente, Empleado y Proveedor
-            opciones.remove(opciones);
             opciones.add(new Item(1, "Documento o Identificador"));
             opciones.add(new Item(2, "Nombre"));
-        }
-        if (idSelected == 4) { // Opciones para DetalleFactura  
-            opciones.remove(opciones);
-            opciones.add(new Item(1, "Identificador"));
         }
         cmbOpciones.setItems(opciones);
     }

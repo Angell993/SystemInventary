@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import clasesjava.Articulo;
+import clasesjava.Item;
 import conexionbasedatos.ConexionInventario;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,17 +55,24 @@ public class FXMLModificarEliminarArticuloController implements Initializable {
 
     private ObservableList<Articulo> listaArticulos;
     private ObservableList<Articulo> listaSelectArticulo;
+    private ObservableList<Item> listaStock;
     private Articulo articulo;
     private AnchorPane rootPane;
 
     private ObservableList<Articulo> llenarTabla(ObservableList<Articulo> articulosLista, String sWhere) {
+        listaStock = FXCollections.observableArrayList();
+        int stock, minimo;
         try {
-            String sSelect = SentenciasSQL.sqlConsultaArticulotabla + " where producto.codigo_barras LIKE ('%" + sWhere + "%') order by articulo.id_articulo; ";
+            String sSelect = SentenciasSQL.sqlConsultaArticulotabla + " where producto.codigo_barras LIKE ('%" + sWhere + "%') "
+                    + " or articulo.Nombre LIKE ('%" + sWhere + "%') "
+                    + " order by articulo.id_articulo; ";
             ResultSet rSet = ConexionInventario.sSQL(sSelect);
-            while (rSet.next()) {
-                articulosLista.add(new Articulo(rSet.getInt(1), rSet.getString(2),
-                        rSet.getFloat(3), rSet.getFloat(4), rSet.getInt(5),
-                        rSet.getString(6), rSet.getString(7), rSet.getString(8), rSet.getInt(9)));
+            while (rSet.next()) { 
+                articulosLista.add(new Articulo(rSet.getInt("articulo.id_articulo"), rSet.getString("articulo.Nombre"), rSet.getFloat("articulo.precio_venta"),
+                        rSet.getFloat("articulo.precio_costo"), rSet.getInt("articulo.stock"), rSet.getInt("articulo.stock_minimo"), rSet.getInt("articulo.stock_maximo"),
+                        rSet.getString("tipo_articulo.descripcion_articulo"), rSet.getString("proveedor.Nombre_comercial"), rSet.getString("articulo.fecha_ingreso"), rSet.getInt("producto.codigo_barras")));
+                listaStock.add(new Item(rSet.getInt("articulo.stock"), String.valueOf(rSet.getInt("articulo.stock_minimo"))));
+
             }
             clmNombre.setCellValueFactory(new PropertyValueFactory<>("nombreArticulo"));
             clmCodigoBarras.setCellValueFactory(new PropertyValueFactory<>("codigoBarras"));
@@ -73,8 +81,9 @@ public class FXMLModificarEliminarArticuloController implements Initializable {
             clmStock.setCellValueFactory(new PropertyValueFactory<>("cantidadStock"));
             clmDescArticulo.setCellValueFactory(new PropertyValueFactory<>("descripcionArticulo"));
             clmNombProveedor.setCellValueFactory(new PropertyValueFactory<>("nombreProveedor"));
+
         } catch (SQLException e) {
-            Alertas.errorSQL("Consulta errónea", e);
+            Alertas.errorSQL("Consulta errónea XDXD", e);
         }
 
         return articulosLista;
@@ -124,14 +133,19 @@ public class FXMLModificarEliminarArticuloController implements Initializable {
             listaSelectArticulo = FXCollections.observableArrayList();
             tblArticulo.setItems(llenarTabla(listaSelectArticulo, sWhere));
             if (tblArticulo.getItems().isEmpty()) {
-                Alertas.mensajeErrorPers("Consulta errónea", "El artículo con el código de barras " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un código de barras válido");
+                Alertas.mensajeError("El artículo con el código de barras " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un código de barras válido");
                 fieldDocumento.deleteText(sWhere.length() - 1, sWhere.length());
             }
-        }else  
+        } else {
             tblArticulo.setItems(llenarTabla(listaArticulos, ""));
+        }
     }
 
-    public void recibirInformacion(AnchorPane rootPane){
+    public void recibirInformacion(AnchorPane rootPane) {
+        this.rootPane = rootPane;
+    }
+    
+    public void informacionModificada(AnchorPane rootPane){
         this.rootPane = rootPane;
     }
 }

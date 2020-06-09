@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="865.0" prefWidth="1306.0" stylesheets="@../estiloscss/SistemaInventarioCss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaInventarioControladorVistas.FXMLSistemaInventarioController">
+<AnchorPane id="AnchorPane" prefHeight="865.0" prefWidth="1303.0" stylesheets="@../estiloscss/SistemaInventarioCss.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaInventarioControladorVistas.FXMLSistemaInventarioController">
     <children>
         <MenuBar fx:id="menuBar" layoutY="60.0" prefHeight="48.0" prefWidth="933.0" stylesheets="@../estiloscss/SistemaInventarioCss.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="373.0" AnchorPane.topAnchor="60.0">
             <menus>
@@ -51,11 +51,11 @@
                      <graphic>
                         <FontAwesomeIconView glyphName="USER_PLUS" />
                      </graphic></MenuItem>
-                  <MenuItem mnemonicParsing="false" onAction="#registrarTipoArticulo" text="Productos">
+                  <MenuItem fx:id="productoProveed" mnemonicParsing="false" onAction="#registrarTipoArticulo" text="Productos">
                      <graphic>
                         <FontAwesomeIconView />
                      </graphic></MenuItem>
-                        <MenuItem mnemonicParsing="false" onAction="#modificarEliminarProveedor" text="Modificar / Eliminar">
+                        <MenuItem fx:id="modProveed" mnemonicParsing="false" onAction="#modificarEliminarProveedor" text="Modificar / Eliminar">
                      <graphic>
                         <FontAwesomeIconView glyphName="SEARCH" />
                      </graphic></MenuItem>

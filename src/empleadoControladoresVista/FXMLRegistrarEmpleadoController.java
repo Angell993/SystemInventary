@@ -62,11 +62,11 @@ public class FXMLRegistrarEmpleadoController implements Initializable {
                             registrarContrasenia(event);
                             txtEmpleado.setText(String.valueOf(metodosJavaclass.identificadorEmpleado()));
                         }else{
-                            Alertas.información("Puesto", "Elige otro cargo para el empleado.");
+                            Alertas.mensajeInformación("Puesto", "Elige otro cargo para el empleado.");
                         }                       
                     }
                 } else {
-                    Alertas.información("Tipo de Documento", "El Tipo de Documento no es válido.\n\tNo puede ser CIF ni Pasaporte.");
+                    Alertas.mensajeInformación("Tipo de Documento", "El Tipo de Documento no es válido.\n\tNo puede ser CIF ni Pasaporte.");
                 }
             }
         }
@@ -113,7 +113,7 @@ public class FXMLRegistrarEmpleadoController implements Initializable {
             return true;
         } else {
             System.out.println("Este Documento no es valido!!!!! " + identificacionDocumento);
-            Alertas.mensajeErrorPers("ERROR", "Documento Inválido!!!");
+            Alertas.mensajeError("Documento Inválido!!!");
             return false;
         }
     }

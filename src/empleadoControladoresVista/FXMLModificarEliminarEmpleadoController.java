@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -58,8 +57,9 @@ public class FXMLModificarEliminarEmpleadoController implements Initializable {
     private ObservableList<Empleado> llenarTablaEmpleados(ObservableList<Empleado> empleadoLista, String sWhere) {
         empleadoLista = FXCollections.observableArrayList();
         try {
-            String sSentencia = SentenciasSQL.sqlConsultaEmpleadoTabla + "WHERE CodigoEmpleado LIKE ('%" + sWhere + "%') "
-                    + "ORDER BY Id_empleado";
+            String sSentencia = SentenciasSQL.sqlConsultaEmpleadoTabla + "WHERE CodigoEmpleado LIKE ('%" + sWhere + "%')"
+                    + " or  Nombre LIKE ('%" + sWhere + "%')"
+                    + " ORDER BY Id_empleado";
             ResultSet rSet = ConexionInventario.sSQL(sSentencia);
             while (rSet.next()) {
                 empleadoLista.add(new Empleado(rSet.getInt("Id_empleado"), rSet.getInt("CodigoEmpleado"), rSet.getInt("cod_tipodocumento"),
@@ -121,7 +121,7 @@ public class FXMLModificarEliminarEmpleadoController implements Initializable {
             listaSelectEmpleado = FXCollections.observableArrayList();
             tblEmpleado.setItems(llenarTablaEmpleados(listaSelectEmpleado, sWhere));
             if (tblEmpleado.getItems().isEmpty()) {
-                Alertas.mensajeErrorPers("Consulta errónea", "El empleado con el nº de documento " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un documento válido");
+                Alertas.mensajeError("El empleado con el nº de documento " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un documento válido");
                 fieldDocumento.deleteText(sWhere.length() - 1, sWhere.length());
             }
         }else  
@@ -129,6 +129,10 @@ public class FXMLModificarEliminarEmpleadoController implements Initializable {
     }
     
     public void recibirInformacion(AnchorPane rootPane){
+        this.rootPane = rootPane;
+    }
+    
+    public void informacionModificada(AnchorPane rootPane){
         this.rootPane = rootPane;
     }
 }

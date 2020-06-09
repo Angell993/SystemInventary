@@ -65,9 +65,9 @@ public class FXMLRegistrarVentaController implements Initializable {
     private final ConexionDB con = new ConexionDB();
     private Connection transaction;
     private ObservableList<Venta> listaArticulo;
-    private ObservableList<Item> listaArticulos;
-    private ObservableList<Item> listaCantidad;
     private ObservableList<Double> listaTotalCompra;
+    private ObservableList<Item> listaCmbArticulo;
+    private ObservableList<Item> listaCantidad;
     private ObservableList<Item> idCantidadComprada;
     private String codEmpleado;
     private int n_Compra = 0;
@@ -77,23 +77,17 @@ public class FXMLRegistrarVentaController implements Initializable {
 
     @FXML
     private void realizarPago(ActionEvent event) {
+        System.out.println("voy entrar al pago");
+        System.out.println("Venta: "+Arrays.toString(listaArticulo.toArray()));        
+        System.out.println("IdCantidad: "+Arrays.toString(idCantidadComprada.toArray()));
         try {
-            transaction.setAutoCommit(false);
-            registrarCompra();
-            actualizarDatosDB();
-            transaction.commit();
-            transaction.close();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventasControladorVistas/FXMLPago.fxml"));
-            try {
-                Parent root = loader.load();
-                FXMLPagoController pagar = loader.getController();
-                pagar.recibirInformacionPago(nFactura.getText(), codEmpleado, String.valueOf(sumarDineroTotal()), idCantidadComprada, anchorPane, listaArticulo);
-                anchorPane.getChildren().setAll(root);
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLSistemaInventarioController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLRegistrarVentaController.class.getName()).log(Level.SEVERE, null, ex);
+            Parent root = loader.load();
+            FXMLPagoController pagar = loader.getController();
+            pagar.recibirInformacionPago(nFactura.getText(), codEmpleado, String.valueOf(sumarDineroTotal()), idCantidadComprada, anchorPane, listaArticulo);
+            anchorPane.getChildren().setAll(root);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLSistemaInventarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -115,6 +109,7 @@ public class FXMLRegistrarVentaController implements Initializable {
 
     @FXML
     private void añadirArticulo() {
+        
         clmNumVenta.setCellValueFactory(new PropertyValueFactory<>("numeroCompra"));
         clmNombre.setCellValueFactory(new PropertyValueFactory<>("nombreArticulo"));
         clmCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidadCompra"));
@@ -126,10 +121,9 @@ public class FXMLRegistrarVentaController implements Initializable {
         cmbArticulo.getSelectionModel().select(-1);
         cmbCantidad.getSelectionModel().select(-1);
         precioArticulo.setText("0,00");
-        llenarCmb.llenarComboBox(listaArticulos, cmbArticulo, SentenciasSQL.sqlArticulos);
+        llenarCmb.llenarComboBox(listaCmbArticulo, cmbArticulo, SentenciasSQL.sqlArticulos);
     }
 
-    @FXML
     private double sumarDineroTotal() {
         double sum = 0;
         for (int i = 0; i < listaTotalCompra.size(); i++) {
@@ -192,7 +186,7 @@ public class FXMLRegistrarVentaController implements Initializable {
         generarNFactura();
         listaArticulo = FXCollections.observableArrayList();
         listaTotalCompra = FXCollections.observableArrayList();
-        llenarCmb.llenarComboBox(listaArticulos, cmbArticulo, SentenciasSQL.sqlArticulos);
+        llenarCmb.llenarComboBox(listaCmbArticulo, cmbArticulo, SentenciasSQL.sqlArticulos);
         precioArticulo.setText("0,00");
     }
 
@@ -202,21 +196,7 @@ public class FXMLRegistrarVentaController implements Initializable {
             nFactura.setText(String.valueOf(MetodosJavaClass.identificador()));
         }
     }
-
-    private void registrarCompra() {
-        idCantidadComprada = FXCollections.observableArrayList();
-        String regCompra;
-        for (int i = 0; i < listaArticulo.size(); i++) {
-            regCompra = SentenciasSQL.sqlRegCompra + " ('" + listaArticulo.get(i).getNumeroCoFactura() + "', "
-                    + MetodosJavaClass.obtenerId(SentenciasSQL.sqlIdArticulo + " '" + listaArticulo.get(i).getNombreArticulo() + "'")
-                    + ", " + listaArticulo.get(i).getCantidadCompra()
-                    + "," + listaArticulo.get(i).getTotalCompra() + " )";
-            ConexionInventario.EjecutarSQL_TRANSACT(transaction, regCompra);
-            idCantidadComprada.add(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlIdArticulo + " '" + listaArticulo.get(i).getNombreArticulo() + "'"),
-                    String.valueOf(listaArticulo.get(i).getCantidadCompra())));
-        }
-    }
-
+    
     public void recibirCodEmpleado(String empleado, AnchorPane anchorPane) {
         codEmpleado = empleado;
         this.anchorPane = anchorPane;
@@ -240,11 +220,11 @@ public class FXMLRegistrarVentaController implements Initializable {
     private boolean comprobarCampos() {
 
         if (cmbArticulo.getSelectionModel().isSelected(-1)) {
-            Alertas.mensajeErrorPers(null, "¡Debe seleccionar un Artículo!");
+            Alertas.mensajeError("¡Debe seleccionar un Artículo!");
             return false;
         }
         if (cmbCantidad.getSelectionModel().isSelected(-1)) {
-            Alertas.mensajeErrorPers(null, "¡Debe seleccionar una cantidad mínima!");
+            Alertas.mensajeError("¡Debe seleccionar una cantidad mínima!");
             return false;
         }
         return true;
@@ -282,33 +262,15 @@ public class FXMLRegistrarVentaController implements Initializable {
             listaArticulo.add(venta);
 
             listaTotalCompra.add(total);
+            idCantidadConpraArray(nombreArt, cantidad);
         }
         return listaArticulo;
     }
 
-    private void actualizarDatosDB() {
-        for (int i = 0; i < listaArticulo.size(); i++) {
-            ObservableList<Item> datosStock = comprobarStockId(listaArticulo.get(i).getNombreArticulo());
-            for (int j = 0; j < datosStock.size(); j++) {
-                int actualizarStock = Integer.parseInt(datosStock.get(j).getDescripcion()) - listaArticulo.get(i).getCantidadCompra();
-                String sentencia = SentenciasSQL.sqlActualizarArticuloDb + " stock = " + actualizarStock + " where id_articulo = " + datosStock.get(j).getId();
-                ConexionInventario.EjecutarSQL_TRANSACT(transaction, sentencia);
-                break;
-            }
-        }
-    }
-
-    private ObservableList<Item> comprobarStockId(String articulo) {
-        ObservableList<Item> idStock = FXCollections.observableArrayList();
-        try {
-            ResultSet datos = ConexionInventario.sSQL_TRANSACT(transaction, SentenciasSQL.sqlConsultarActualizarDb + " '" + articulo + "'");
-            while (datos.next()) {
-                idStock.add(new Item(datos.getInt(1), String.valueOf(datos.getInt(2))));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLRegistrarVentaController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return idStock;
+    private void idCantidadConpraArray(String articulo, int cantidad){
+        idCantidadComprada = FXCollections.observableArrayList();
+            idCantidadComprada.add(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlIdArticulo + " '" + articulo + "'"),
+                    String.valueOf(cantidad)));
     }
 
     public void anularCrearNuevaVenta(String empleado, AnchorPane anchorPane) {
@@ -318,7 +280,6 @@ public class FXMLRegistrarVentaController implements Initializable {
     }
 
     public void registrarMasCompra(ObservableList<Venta> listventa, String factura, String codEmpleado, AnchorPane rootPane) {
-        System.out.println("Estoy recuperando datos: " + Arrays.toString(listventa.toArray()));
         this.anchorPane = rootPane;
         this.codEmpleado = codEmpleado;
         transaction = con.conectar();
@@ -327,7 +288,7 @@ public class FXMLRegistrarVentaController implements Initializable {
             venta = new Venta();
             total = listventa.get(i).getPrecioArticulo() * listventa.get(i).getCantidadCompra();
             venta.setNumeroFactura(nFactura.getText());
-            venta.setNumeroCompra(i + 1);
+            venta.setNumeroCompra(listventa.get(i).getNumeroCompra());
             venta.setNombreArticulo(listventa.get(i).getNombreArticulo());
             venta.setCantidadCompra(listventa.get(i).getCantidadCompra());
             venta.setPrecioArticulo(listventa.get(i).getPrecioArticulo());
@@ -341,6 +302,7 @@ public class FXMLRegistrarVentaController implements Initializable {
             clmTotal.setCellValueFactory(new PropertyValueFactory<>("totalCompra"));
 
             tblVenta.setItems(listaArticulo);
+            n_Compra = listventa.get(i).getNumeroCompra();
         }
 
         sumarDineroTotal();

@@ -3,6 +3,7 @@ package proveedorControladorVistas;
 import clasesjava.Item;
 import clasesjava.Proveedor;
 import conexionbasedatos.ConexionInventario;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -94,7 +96,7 @@ public class FXMLModificarProveedorController implements Initializable {
                         cerrarVentana(event);
                     }
                 } else {
-                    Alertas.información("Tipo de Documento", "El Tipo de Documento no es válido.\n\tDebe ser CIF");
+                    Alertas.mensajeInformación("Tipo de Documento", "El Tipo de Documento no es válido.\n\tDebe ser CIF");
                 }
             }
         }
@@ -105,7 +107,7 @@ public class FXMLModificarProveedorController implements Initializable {
     private void eliminarProveedor(ActionEvent event) {
         if (MetodosJavaClass.txtVacios(datosArray())) {
             if (existeProveedor()) {
-                if (Alertas.Confirmacion()) {
+                if (Alertas.ConfirmacionEleminarOModificar()) {
                     sentencia = SentenciasSQL.sqlEliminarProveedor + " id_proveedor = " + id;
                     ConexionInventario.EjecutarSQL(sentencia);
                     recargarVentana();
@@ -177,7 +179,7 @@ public class FXMLModificarProveedorController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(FXMLModificarProveedorController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Alertas.mensajeErrorPers("No Existe", "El Proveedor que deseas Modificar"
+        Alertas.mensajeError("El Proveedor que deseas Modificar"
                 + "o Eliminar no existe.");
         return false;
     }
@@ -187,7 +189,15 @@ public class FXMLModificarProveedorController implements Initializable {
     }
 
     private void recargarVentana() {
-        visualizarInterfaz.mostarVentana("/proveedorControladorVistas/FXMLModificarEliminarProveedor.fxml", rootPane);
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/proveedorControladorVistas/FXMLModificarEliminarProveedor.fxml"));
+            AnchorPane root = loader.load();
+            FXMLModificarEliminarProveedorController info = loader.getController();
+            info.informacionModificada(rootPane);
+            rootPane.getChildren().setAll(root);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLModificarProveedorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

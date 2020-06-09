@@ -79,7 +79,7 @@ public class FXMLRegistrarClienteController implements Initializable {
                         }
                         // }
                     }else{
-                        Alertas.información("Tipo de Documento", "El Tipo de Documento no es válido.\n\tNo puede ser CIF.");
+                        Alertas.mensajeInformación("Tipo de Documento", "El Tipo de Documento no es válido.\n\tNo puede ser CIF.");
                     }
                 }
             }
@@ -97,7 +97,7 @@ public class FXMLRegistrarClienteController implements Initializable {
         if (documento.isvalidoDocumentoIdentificacion(identificacionDocumento)) {
             return true;
         } else {
-            Alertas.mensajeErrorPers("ERROR", "Documento Inválido!!!");
+            Alertas.mensajeError( "Documento Inválido!!!");
             return false;
         }
     }
@@ -140,7 +140,7 @@ public class FXMLRegistrarClienteController implements Initializable {
             ResultSet dato = ConexionInventario.sSQL(SentenciasSQL.sqlConsultarDocumentoCliente);
             while (dato.next()) {
                 if (dato.getString(1).equals(txtDni.getText())) {
-                    Alertas.mensajeErrorPers("Cliente", "El Cliente, ya está registrado.");
+                    Alertas.mensajeError("El Cliente, ya está registrado.");
                     return false;
                 }
             }

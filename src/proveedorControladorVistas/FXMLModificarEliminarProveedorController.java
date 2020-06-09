@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -66,7 +65,9 @@ public class FXMLModificarEliminarProveedorController implements Initializable {
     private ObservableList<Proveedor> llenarTablaProveedores(ObservableList<Proveedor> provLsita, String sWhere) {
         provLsita = FXCollections.observableArrayList();
         try {
-            String sSentencia = SentenciasSQL.sqlConsultaProveedorTabla+ " WHERE No_documento LIKE ('%" + sWhere + "%') ORDER BY Nombre ";
+            String sSentencia = SentenciasSQL.sqlConsultaProveedorTabla+ " WHERE No_documento LIKE ('%" + sWhere + "%') "
+                    + " or Nombre LIKE ('%" + sWhere + "%') "
+                    + " ORDER BY Nombre ";
             ResultSet rSet = ConexionInventario.sSQL(sSentencia);
             while (rSet.next()) {
                 provLsita.add(new Proveedor(rSet.getInt(1),rSet.getString(2), rSet.getInt(3), rSet.getString(4), rSet.getString(5),
@@ -130,7 +131,7 @@ public class FXMLModificarEliminarProveedorController implements Initializable {
             listaSeleccionProveedores = FXCollections.observableArrayList();
             tblProveedor.setItems(llenarTablaProveedores(listaSeleccionProveedores, sWhere));
             if (tblProveedor.getItems().isEmpty()) {
-                Alertas.mensajeErrorPers("Consulta errónea", "El proveedor con el nº de documento " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un documento válido");
+                Alertas.mensajeError("El proveedor con el nº de documento " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un documento válido");
                 fieldDocumento.deleteText(sWhere.length() - 1, sWhere.length());
             }
         }else  
@@ -138,6 +139,10 @@ public class FXMLModificarEliminarProveedorController implements Initializable {
     }
     
     public void recibirInformacion(AnchorPane rootPane){
+        this.rootPane = rootPane;
+    }
+    
+    public void informacionModificada(AnchorPane rootPane){
         this.rootPane = rootPane;
     }
 }

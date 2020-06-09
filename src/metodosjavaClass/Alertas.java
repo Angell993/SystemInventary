@@ -1,6 +1,5 @@
 package metodosjavaClass;
 
-import static com.lowagie.tools.BuildTutorial.action;
 import java.sql.SQLException;
 import java.util.Optional;
 import javafx.scene.control.Alert;
@@ -12,7 +11,7 @@ public class Alertas {
     public static void mensajeError(String contenido) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("ERROR");
-        alert.setHeaderText("Operación errónea");
+        alert.setHeaderText(null);
         alert.setContentText(contenido);
         alert.showAndWait();
     }
@@ -25,42 +24,35 @@ public class Alertas {
         alert.showAndWait();
     }
 
-    public static void mensajeErrorPers(String header, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("ERROR");
-        alert.setHeaderText(header);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
-    }
 
     //      Alertas
-    public static void alertaPers(String titulo,String header, String mensaje) {
+    public static void mensajeAdvertencia(String titulo, String mensajeCuerpo) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle(titulo);
-        alert.setHeaderText(header);
-        alert.setContentText(mensaje);
+        alert.setHeaderText(null);
+        alert.setContentText(mensajeCuerpo);
         alert.showAndWait();
     }
     
     /*Mensajes de Informacion en el sistema*/
 
-    public static void mensajeConfirmacion(String aceptarTitulo, String mensajeConfirmacion) {
+    public static void mensajeConfirmacion(String titulo, String mensajeCuerpo) {
         Alert mensaje = new Alert(Alert.AlertType.CONFIRMATION);
-        mensaje.setTitle(aceptarTitulo);
+        mensaje.setTitle(titulo);
         mensaje.setHeaderText(null);
-        mensaje.setContentText(mensajeConfirmacion);
+        mensaje.setContentText(mensajeCuerpo);
         mensaje.show();
     }
 
-    public static void mensajeInformación(String aceptarTitulo, String mensajeConfirmacion) {
+    public static void mensajeInformación(String titulo, String mensajeCuerpo) {
         Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
-        mensaje.setTitle(aceptarTitulo);
+        mensaje.setTitle(titulo);
         mensaje.setHeaderText(null);
-        mensaje.setContentText(mensajeConfirmacion);
+        mensaje.setContentText(mensajeCuerpo);
         mensaje.show();
     }
 
-    public static Boolean Confirmacion() {
+    public static Boolean ConfirmacionEleminarOModificar() {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setTitle("Eliminar");
         alerta.setHeaderText(null);
@@ -78,10 +70,4 @@ public class Alertas {
         return action.get() != ButtonType.CANCEL;
     }
     
-     public static void información(String aceptarTitulo, String cuerpoMensaje) {
-        Alert mensaje = new Alert(Alert.AlertType.INFORMATION);
-        mensaje.setTitle(aceptarTitulo);
-        mensaje.setContentText(cuerpoMensaje);
-        mensaje.show();
-    }
 }

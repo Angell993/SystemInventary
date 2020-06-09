@@ -3,6 +3,7 @@ package clienteControladorVistas;
 import clasesjava.Cliente;
 import clasesjava.Item;
 import conexionbasedatos.ConexionInventario;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -23,6 +25,8 @@ import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.MetodosJavaClass;
 import metodosjavaClass.SentenciasSQL;
 import metodosjavaClass.VentanaRootPane;
+import proveedorControladorVistas.FXMLModificarEliminarProveedorController;
+import proveedorControladorVistas.FXMLModificarProveedorController;
 
 public class FXMLModificarClienteController implements Initializable {
 
@@ -109,7 +113,7 @@ public class FXMLModificarClienteController implements Initializable {
     private void eliminarCliente(ActionEvent event) {
         if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtCodigoPostal.getText()) && MetodosJavaClass.isDouble(numEmpleado.getText())) {
             //if (documentoValido(txtDni.getText())) {
-            if (Alertas.Confirmacion()) {
+            if (Alertas.ConfirmacionEleminarOModificar()) {
                 String eliminar = SentenciasSQL.sqlEliminarCliente + " id_Cliente = " + id;
                 ConexionInventario.EjecutarSQL(eliminar);
                 recargarVentana();
@@ -173,7 +177,7 @@ public class FXMLModificarClienteController implements Initializable {
         if (documento.isvalidoDocumentoIdentificacion(identificacionDocumento)) {
             return true;
         } else {
-            Alertas.mensajeErrorPers("ERROR", "Documento Inválido!!!");
+            Alertas.mensajeError("Documento Inválido!!!");
             return false;
         }
     }
@@ -189,7 +193,7 @@ public class FXMLModificarClienteController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(FXMLModificarClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        Alertas.mensajeErrorPers("Cliente ", "El cliente no existe");
+        Alertas.mensajeError("El cliente no existe");
         return false;
     }
 
@@ -197,7 +201,15 @@ public class FXMLModificarClienteController implements Initializable {
         return cliente;
     }
 
-    private void recargarVentana(){
-        visualizarInterfaz.mostarVentana("/clienteControladorVistas/FXMLModificarEliminarCliente.fxml", rootPane);
+    private void recargarVentana() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/clienteControladorVistas/FXMLModificarEliminarCliente.fxml"));
+            AnchorPane root = loader.load();
+            FXMLModificarEliminarClienteController info = loader.getController();
+            info.informacionModificada(rootPane);
+            rootPane.getChildren().setAll(root);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLModificarProveedorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

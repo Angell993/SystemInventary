@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/metodosjavaClass/VentanaRootPane.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>17</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSystem/src/estiloscss/BotonConexion.css</file>
-            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSystem/src/estiloscss/estiloLogin.css</file>
-            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSystem/src/conexionbasedatos/ConexionDB.java</file>
-            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSystem/src/proveedorControladorVistas/FXMLRegistrarProveedorController.java</file>
-            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSystem/src/sistemaInventarioControladorVistas/FXMLSistemaInventarioController.java</file>
-            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSystem/src/login/FXMLIngresarController.java</file>
+            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSystem/src/conexionbasedatos/ConexionInventario.java</file>
+            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSystem/src/reportesistemainventario/FXMLReporteSistemaInventarioController.java</file>
+            <file>file:/C:/Users/bruno/Documents/NetBeansProjects/InventarioSystem/src/metodosjavaClass/LLenarCombos.java</file>
         </group>
     </open-files>
 </project-private>
