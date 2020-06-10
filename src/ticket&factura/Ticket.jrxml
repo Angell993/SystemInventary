@@ -58,7 +58,7 @@ FROM sistemainventario.factura
 		<property name="com.jaspersoft.studio.field.label" value="articulo"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="articulo"/>
 	</field>
-	<field name="precio_venta" class="java.math.BigDecimal">
+	<field name="precio_venta" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.label" value="precio_venta"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="articulo"/>
 	</field>
@@ -70,6 +70,12 @@ FROM sistemainventario.factura
 		<property name="com.jaspersoft.studio.field.label" value="empleado"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="empleado"/>
 	</field>
+	<variable name="totalSinIVA" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{precio_venta}*$F{cantidad}]]></variableExpression>
+	</variable>
+	<variable name="precioIva" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{precio_venta}*$F{IVA}/100+$F{precio_venta}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -84,10 +90,6 @@ FROM sistemainventario.factura
 				</textElement>
 				<text><![CDATA[J&A  S.L.]]></text>
 			</staticText>
-			<image>
-				<reportElement x="110" y="0" width="50" height="40" uuid="3835193b-1966-49a0-b8f9-b795779c6e7d"/>
-				<imageExpression><![CDATA["iconoInventario.png"]]></imageExpression>
-			</image>
 			<staticText>
 				<reportElement x="0" y="63" width="132" height="14" uuid="e70f6bfd-a55c-41af-a08a-12ae3415d078">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -114,6 +116,10 @@ FROM sistemainventario.factura
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="110" y="0" width="40" height="40" uuid="c4af51a5-5eb6-4dec-b0ca-8844e45d9841"/>
+				<imageExpression><![CDATA["iconoInventario.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -192,7 +198,7 @@ FROM sistemainventario.factura
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="23" splitType="Stretch">
+		<band height="19" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="30" height="14" uuid="7dd7172c-4950-450e-a5b5-45e0effbf5a8">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5ef381c1-32ed-464b-8ea8-e55385211732"/>
@@ -213,27 +219,26 @@ FROM sistemainventario.factura
 				<textFieldExpression><![CDATA[$F{articulo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="120" y="0" width="77" height="14" uuid="9c6953ed-d3ae-4c9b-9535-ccd745fda04f">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f98ca48f-ca39-4078-99ee-c06c73f7baa7"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{precio_venta}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="197" y="0" width="61" height="14" uuid="dacd4594-99e9-4886-ac89-109e783e4e8f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f7639f8d-dcca-4408-964c-c9dfc8126e6f"/>
 				</reportElement>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="0" width="77" height="14" uuid="efb4016b-c667-4ccf-aa1d-3a952e2c092d"/>
+				<textFieldExpression><![CDATA[$V{precioIva}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="63" splitType="Stretch">
+		<band height="67" splitType="Stretch">
 			<staticText>
-				<reportElement x="160" y="10" width="39" height="14" uuid="429cd10a-e283-4e11-ba1b-1bb877692e63">
+				<reportElement x="141" y="24" width="59" height="14" uuid="429cd10a-e283-4e11-ba1b-1bb877692e63">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right"/>
-				<text><![CDATA[TOTAL: ]]></text>
+				<text><![CDATA[TOTAL IVA: ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="1" width="97" height="14" uuid="7c2b6fd8-77e6-40e5-9c69-bd67089aad37">
@@ -242,14 +247,14 @@ FROM sistemainventario.factura
 				<text><![CDATA[Detalle (€)]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="200" y="10" width="58" height="14" uuid="e80c39bf-4e54-4b31-98f5-722e36af8fd2"/>
+				<reportElement x="200" y="24" width="58" height="14" uuid="e80c39bf-4e54-4b31-98f5-722e36af8fd2"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{total_factura}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch">
+		<band height="56" splitType="Stretch">
 			<textField>
 				<reportElement x="70" y="0" width="100" height="13" uuid="58ae794f-a40b-47ca-8055-c4223245d61b"/>
 				<textElement textAlignment="Center"/>

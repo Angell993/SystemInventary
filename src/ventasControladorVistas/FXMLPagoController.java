@@ -227,21 +227,6 @@ public class FXMLPagoController implements Initializable {
         return (Math.rint(devolver * 100) / 100);
     }
 
-    // Por quitar el cliente
-    private String existeCliente(String documento) {
-        try {
-            ResultSet documentos = ConexionInventario.sSQL(SentenciasSQL.sqlDocumentosClientes);
-            while (documentos.next()) {
-                if (!documentos.getString(1).equals(documento) || documento.contentEquals("")) {
-                    documento = "00000000";
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(FXMLPagoController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return documento;
-    }
-
     private void lblDinero() {
         txtImporte.textProperty().addListener((ov, oldValue, newValue) -> {
             lblImporte.setText(txtImporte.getText());

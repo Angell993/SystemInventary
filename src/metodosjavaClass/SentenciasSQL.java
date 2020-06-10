@@ -108,8 +108,7 @@ public class SentenciasSQL {
             + " total_devolver, cod_empleado) VALUES ";
     public static String retirarDevolucion = "DELETE FROM detalle_factura WHERE cod_articulo = ";
     public static String verRegistroCodeBar = "SELECT  detalle_factura.cod_factura, articulo.nombre, detalle_factura.cantidad, ((articulo.precio_venta * (tipo_articulo.IVA / 100)) + articulo.precio_venta ) as precio_iva ,"
-            + " producto.codigo_barras "
-            + " FROM factura "
+            + " producto.codigo_barras  FROM factura "
             + " INNER JOIN detalle_factura ON factura.Nnm_factura = detalle_factura.cod_factura "
             + " INNER JOIN articulo ON 	detalle_factura.cod_articulo = articulo.id_articulo "
             + " INNER JOIN tipo_articulo on articulo.cod_tipo_articulo = tipo_articulo.id_tipoarticulo "
@@ -117,7 +116,7 @@ public class SentenciasSQL {
             + " where producto.codigo_barras = ";
 
     /* Factura Sentencias*/
-    public static String sqlConsulCliente = "SELECT Nombre, Apellidos from cliente where Documento = ";
+    public static String sqlConsulCliente = "SELECT Nombre, Apellidos, Documento from cliente where Documento = ";
     public static String sqlDistintasFactura = "Select distinct(factura.Nnm_factura), Fecha_facturacion "
             + "from factura where cod_cliente = ";
     public static String sqlFacturaImprimir = "SELECT  articulo.nombre, detalle_factura.cantidad, ((articulo.precio_venta * (tipo_articulo.IVA / 100)) + articulo.precio_venta ) as precio_iva , "

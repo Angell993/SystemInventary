@@ -77,9 +77,6 @@ public class FXMLRegistrarVentaController implements Initializable {
 
     @FXML
     private void realizarPago(ActionEvent event) {
-        System.out.println("voy entrar al pago");
-        System.out.println("Venta: "+Arrays.toString(listaArticulo.toArray()));        
-        System.out.println("IdCantidad: "+Arrays.toString(idCantidadComprada.toArray()));
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventasControladorVistas/FXMLPago.fxml"));
             Parent root = loader.load();
@@ -109,7 +106,7 @@ public class FXMLRegistrarVentaController implements Initializable {
 
     @FXML
     private void añadirArticulo() {
-        
+
         clmNumVenta.setCellValueFactory(new PropertyValueFactory<>("numeroCompra"));
         clmNombre.setCellValueFactory(new PropertyValueFactory<>("nombreArticulo"));
         clmCantidad.setCellValueFactory(new PropertyValueFactory<>("cantidadCompra"));
@@ -148,21 +145,7 @@ public class FXMLRegistrarVentaController implements Initializable {
         if (tblVenta.getSelectionModel().getSelectedIndex() <= -1) {
             Alertas.mensajeInformación("Compra", "Añada una Compra");
         } else {
-            if (listaTotalCompra.indexOf(-1) < 0) {
-                Venta vent = tblVenta.getSelectionModel().getSelectedItem();
-                listaArticulo.remove(vent);
-                listaTotalCompra.clear();
-                txtTotalCompra.setText("");
-                total = 0.00;
-                n_Compra = 1;
-                for (int i = 0; i < listaArticulo.size(); i++) {
-                    listaArticulo.get(i).setNumeroCompra(n_Compra);
-                    n_Compra++;
-                    System.out.println(n_Compra);
-                }
-                n_Compra -= 1;
-                tblVenta.refresh();
-            } else {
+            try {
                 Venta vent = tblVenta.getSelectionModel().getSelectedItem();
                 listaArticulo.remove(vent);
                 listaTotalCompra.remove(tblVenta.getSelectionModel().getSelectedIndex());
@@ -171,13 +154,14 @@ public class FXMLRegistrarVentaController implements Initializable {
                 for (int i = 0; i < listaArticulo.size(); i++) {
                     listaArticulo.get(i).setNumeroCompra(n_Compra);
                     n_Compra++;
-                    System.out.println(n_Compra);
                 }
                 n_Compra -= 1;
                 tblVenta.refresh();
+            } catch (java.lang.ArrayIndexOutOfBoundsException e) {
+                listaTotalCompra.clear();
+                txtTotalCompra.setText("");
             }
         }
-
     }
 
     @Override
@@ -196,7 +180,7 @@ public class FXMLRegistrarVentaController implements Initializable {
             nFactura.setText(String.valueOf(MetodosJavaClass.identificador()));
         }
     }
-    
+
     public void recibirCodEmpleado(String empleado, AnchorPane anchorPane) {
         codEmpleado = empleado;
         this.anchorPane = anchorPane;
@@ -267,10 +251,10 @@ public class FXMLRegistrarVentaController implements Initializable {
         return listaArticulo;
     }
 
-    private void idCantidadConpraArray(String articulo, int cantidad){
+    private void idCantidadConpraArray(String articulo, int cantidad) {
         idCantidadComprada = FXCollections.observableArrayList();
-            idCantidadComprada.add(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlIdArticulo + " '" + articulo + "'"),
-                    String.valueOf(cantidad)));
+        idCantidadComprada.add(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlIdArticulo + " '" + articulo + "'"),
+                String.valueOf(cantidad)));
     }
 
     public void anularCrearNuevaVenta(String empleado, AnchorPane anchorPane) {
