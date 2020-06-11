@@ -9,3 +9,8 @@
     -glyph-size: 25px;
     /*-glyph-color: green;#ebeae8*/
 }
+
+.desconexion .glyph-icon{
+    -fx-fill: red;
+    -glyph-size: 25px;
+}

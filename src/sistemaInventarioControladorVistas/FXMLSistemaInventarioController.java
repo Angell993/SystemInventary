@@ -223,6 +223,7 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
             fecha.setText(Fecha.fecha());
             permisosSistemas(codJefe);
             if (user == 0) {
+                btnConexion.getStyleClass().add("desconexion");
                 cliente.setVisible(false);
                 venta.setVisible(false);
                 articulo.setVisible(false);
@@ -230,6 +231,7 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
                 empleado.setVisible(false);
                 reporte.setVisible(false);
                 devolucion.setVisible(false);
+                conexionDB();
             }
         } catch (SQLException ex) {
             Logger.getLogger(FXMLSistemaInventarioController.class.getName()).log(Level.SEVERE, null, ex);
@@ -247,7 +249,7 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
             loader = new FXMLLoader(getClass().getResource("/login/FXMLIngresar.fxml"));
             root = loader.load();
             FXMLIngresarController login = loader.getController();
-            login.desconectarConexionDB(true);
+            login.desconectarConexionDB(true, numEmpleado);
             rootPane.getChildren().setAll(root);
         } catch (IOException ex) {
             Logger.getLogger(FXMLSistemaInventarioController.class.getName()).log(Level.SEVERE, null, ex);

@@ -9,10 +9,11 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" stylesheets="@../estiloscss/estiloLogin.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.FXMLIngresarController">
+<AnchorPane id="AnchorPane" prefHeight="456.0" prefWidth="723.0" stylesheets="@../estiloscss/estiloLogin.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="login.FXMLIngresarController">
      <children>
-        <AnchorPane fx:id="fondoLogin" layoutX="405.0" prefHeight="456.0" prefWidth="407.0">
+        <AnchorPane fx:id="fondoLogin" layoutX="407.0" prefHeight="456.0" prefWidth="405.0">
             <children>
                 
                 <GridPane layoutX="118.0" layoutY="151.0" prefHeight="147.0" prefWidth="249.0">
@@ -31,14 +32,44 @@
                         <PasswordField fx:id="password" onAction="#onEnter" promptText="Contraseña" GridPane.rowIndex="1" />
                     </children>
                 </GridPane>
-                <Label fx:id="error" alignment="CENTER" contentDisplay="CENTER" layoutX="91.0" layoutY="298.0" prefHeight="41.0" prefWidth="283.0" textAlignment="CENTER" textFill="#ee0707" />
-                <Button fx:id="entrar" contentDisplay="RIGHT" layoutX="41.0" layoutY="376.0" mnemonicParsing="false" onAction="#ingresarSistema" prefHeight="44.0" prefWidth="155.0" text="Entrar" textFill="#fcfcfc">
+            <FontAwesomeIconView fx:id="fontCandado" fill="#fcf8f8" glyphName="LOCK" layoutX="190.0" layoutY="115.0" size="125" styleClass="candado" wrappingWidth="105.4285717010498" />
+            <FontAwesomeIconView fx:id="fontUser" fill="#fffdfd" glyphName="USER" layoutX="46.0" layoutY="210.0" size="50" text="" wrappingWidth="42.428571701049805" />
+            <FontAwesomeIconView fx:id="fontLlave" fill="WHITE" glyphName="KEY" layoutX="46.0" layoutY="281.0" size="50" wrappingWidth="42.42857122421265" />
+                <Label fx:id="error" alignment="CENTER" contentDisplay="CENTER" layoutX="124.0" layoutY="310.0" prefHeight="41.0" prefWidth="283.0" textAlignment="CENTER" textFill="#ee0707" />
+                <Button fx:id="entrar" contentDisplay="RIGHT" layoutX="47.0" layoutY="383.0" mnemonicParsing="false" onAction="#ingresarSistema" prefHeight="44.0" prefWidth="155.0" text="Entrar" textFill="#fcfcfc">
                 </Button>
-            <FontAwesomeIconView fill="#fcf8f8" glyphName="LOCK" layoutX="196.0" layoutY="121.0" size="125" wrappingWidth="105.4285717010498" />
-            <FontAwesomeIconView fill="#fffdfd" glyphName="USER" layoutX="48.0" layoutY="208.0" size="50" wrappingWidth="42.428571701049805" />
-            <FontAwesomeIconView fill="WHITE" glyphName="KEY" layoutX="48.0" layoutY="279.0" size="50" wrappingWidth="42.42857122421265" />
-            <Button fx:id="btnSalir" contentDisplay="RIGHT" layoutX="233.0" layoutY="376.0" mnemonicParsing="false" onAction="#desconectar" prefHeight="44.0" prefWidth="155.0" text="Salir" textFill="#fcfcfc" visible="false" />
+            <Button fx:id="btnSalir" contentDisplay="RIGHT" layoutX="228.0" layoutY="380.0" mnemonicParsing="false" onAction="#desconectar" prefHeight="44.0" prefWidth="155.0" text="Salir" textFill="#fcfcfc" visible="false" />
             </children>
         </AnchorPane>
+      <Label fx:id="lbl1" layoutX="74.0" layoutY="30.0" text="SISTEMA DE INVENTARIO" textAlignment="JUSTIFY" textFill="#75f90c">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl2" layoutX="190.0" layoutY="80.0" text="VENTA" textFill="#75f90c">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl3" layoutX="30.0" layoutY="152.0" text="REALIZADO POR:" textFill="#f5f4f4">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl4" layoutX="21.0" layoutY="213.0" text="LOPEZ TADAY ANGEL BRUNO" textFill="#fffefe">
+         <font>
+            <Font name="Times New Roman" size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl5" layoutX="209.0" layoutY="266.0" text="&amp;" textFill="#f5f3f3">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl6" layoutX="52.0" layoutY="324.0" text="JUAN CARLOS" textFill="#f8f7f7">
+         <font>
+            <Font name="Times New Roman" size="28.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

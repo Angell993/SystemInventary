@@ -43,3 +43,13 @@
 .error-ingresar{
     -fx-border-color: -fx-red;
 }
+
+.candado .glyph-icon{
+    -fx-fill: #1B940B;
+    -glyph-size: 125px;
+}
+
+.userllave .glyph-icon{
+    -fx-fill: #1B940B;
+    -glyph-size: 50px;
+}

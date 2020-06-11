@@ -232,7 +232,7 @@ FROM sistemainventario.factura
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="63" splitType="Stretch">
+		<band height="67" splitType="Stretch">
 			<staticText>
 				<reportElement x="141" y="24" width="59" height="14" uuid="429cd10a-e283-4e11-ba1b-1bb877692e63">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -250,18 +250,6 @@ FROM sistemainventario.factura
 				<reportElement x="200" y="24" width="58" height="14" uuid="e80c39bf-4e54-4b31-98f5-722e36af8fd2"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{total_factura}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="120" y="10" width="80" height="14" uuid="f1f4c3ec-8def-4db6-ad3a-f1c5de183c33">
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Right"/>
-				<text><![CDATA[TOTAL SIN IVA:  ]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="200" y="10" width="58" height="14" uuid="56947bbd-1891-4520-a7db-07ef22014413"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$V{totalSinIVA}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>
