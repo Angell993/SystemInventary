@@ -37,6 +37,19 @@ public class ConexionDB {
         }
         return conexion;
     }
+    
+    public Connection conectarDiferenteDB() {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conexion = DriverManager.getConnection(getServer(), getUser(), getPass());
+        } catch (ClassNotFoundException ex) {
+            System.out.println("ERROR, no se puede conectar a la Data Base.\n" + ex.toString());
+            Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Alertas.mensajeInformación("Conexión", "Usuario, Contraseña o\nBase de Datos incorrectas");
+        }
+        return conexion;
+    }
 
     public Connection conectarEspania() {
         try {

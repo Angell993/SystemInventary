@@ -64,12 +64,21 @@ public class FXMLAdministradorConfigController implements Initializable {
 
     @FXML
     private void comprobarConexionDB() {
-        conexion = new ConexionDB(txtUrl.getText(), txtUsuario.getText(), txtPass.getText());
-        if (conexion.conectar() == null) {
-            lblConexion.setText("Conexión Fallida!!");
+        if (verifica) {
+            conexion = new ConexionDB(txtUrl.getText(), txtUsuario.getText(), txtPass.getText());
+            if (conexion.conectarDiferenteDB()== null) {
+                lblConexion.setText("Conexión Fallida!!");
+            }else{
+                lblConexion.setText("Conexón OK");
+            }
         } else {
-            lblConexion.setText("Conexón OK");
-            fich.escribirObjeto(txtUrl.getText(), txtUsuario.getText(), txtPass.getText());
+            conexion = new ConexionDB(txtUrl.getText(), txtUsuario.getText(), txtPass.getText());
+            if (conexion.conectar() == null) {
+                lblConexion.setText("Conexión Fallida!!");
+            } else {
+                lblConexion.setText("Conexón OK");
+                fich.escribirObjeto(txtUrl.getText(), txtUsuario.getText(), txtPass.getText());
+            }
         }
     }
 
@@ -135,8 +144,8 @@ public class FXMLAdministradorConfigController implements Initializable {
         } else if (txtCorreoEmpresa.getText().contains("@hotmail")) {
             propiedad = new Properties();
             if (txtCorreoEmpresa.getText().contains("@hotmail.es")) {
-            propiedad.setProperty("mail.smtp.host", "smtp.office365.es");
-            }else{
+                propiedad.setProperty("mail.smtp.host", "smtp.office365.es");
+            } else {
                 propiedad.setProperty("mail.smtp.host", "smtp.office365.com");
             }
             propiedad.setProperty("mail.smtp.starttls.enable", "true");

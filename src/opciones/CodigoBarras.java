@@ -10,6 +10,8 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.Barcode128;
 import com.itextpdf.text.pdf.PdfWriter;
 import conexionbasedatos.ConexionInventario;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -17,10 +19,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import metodosjavaClass.Alertas;
 import metodosjavaClass.MetodosJavaClass;
 import metodosjavaClass.SentenciasSQL;
+import net.sourceforge.barbecue.Barcode;
+import net.sourceforge.barbecue.BarcodeException;
+import net.sourceforge.barbecue.BarcodeFactory;
+import net.sourceforge.barbecue.output.OutputException;
 
 public class CodigoBarras {
 
@@ -71,6 +80,26 @@ public class CodigoBarras {
         }
     }
 
+   public ImageIcon crearCodeBar(String code) {
+        Barcode barcode = null;
+        try {
+            barcode = BarcodeFactory.createCode128A(code);
+        } catch (BarcodeException ex) {
+        }
+        barcode.setDrawingText(false);
+        barcode.setBarWidth(2);
+        barcode.setBarHeight(60);
+        BufferedImage image = new BufferedImage(300, 100, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = (Graphics2D) image.getGraphics();
+        
+        try {
+            barcode.draw(g, 5, 20);
+        } catch (OutputException ex) {
+        }
+        ImageIcon icon = new ImageIcon(image);
+        return icon;
+    }
+
     public void crearCodeBar(String code, String nombre, String precio) {
         try {
             if (guardarPdf()) {
@@ -94,7 +123,6 @@ public class CodigoBarras {
             Logger.getLogger(CodigoBarras.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     private Paragraph textoPrecio(String nombre) {
         Paragraph p = new Paragraph();
         p.setFont(estiloPrecio);
@@ -118,5 +146,4 @@ public class CodigoBarras {
         p.setAlignment(Element.ALIGN_LEFT);
         return p;
     }
-
 }

@@ -84,8 +84,7 @@ INSERT INTO `cliente` (`id_Cliente`,`Documento`,`cod_tipo_documento`,`Nombre`,`A
 (7,'0005', 1, 'Elvira', 'Orozco','3219843543','julian@bastard.com','España','A Coruña','Ares', 'Centro', 28011, 1),
 (8,'0006', 1, 'Kevin', 'Ayala','8354624','lololo@lalala.com','España','Álava','Murrio',  'Carrera 23 N 4B 23',28011,1),
 (9,'0007', 1, 'Angela', 'Hoyos','3217654300','lalalal@lololo.com','España','Alicante','Agost', 'Calle 4 N 23 34',28024, 1),
-(10,'0008', 2, 'Marcela', 'Gomez', '11548752','gmail@email.es','España','Badajoz','Aceuchal', 'Centro',28154, 1),
-(11,'00000000',1,'Cliente','Default','000000','default@default.def','default','default','default','Default',00000,1);
+(10,'0008', 2, 'Marcela', 'Gomez', '11548752','gmail@email.es','España','Badajoz','Aceuchal', 'Centro',28154, 1);
 
 
 
@@ -113,9 +112,9 @@ CREATE TABLE `detalle_factura` (
 --
 
 INSERT INTO `detalle_factura` (`id_Dtfactura`,`cod_factura`, `cod_articulo`, `cantidad`, `total`) VALUES
-(1,'9910966', 3, 1, '1500'),
-(2,'9910966', 4, 2, '2400'),
-(3,'9910966', 5, 1, '475');
+(1,'9910966', 3, 1, '181.5'),
+(2,'9910966', 4, 2, '290.4'),
+(3,'9910966', 5, 1, '605');
 
 -- --------------------------------------------------------
 
@@ -167,7 +166,7 @@ CREATE TABLE `factura` (
 --
 
 INSERT INTO `factura` (`id_factura`,`Nnm_factura`, `cod_empleado`, `Fecha_facturacion`, `cod_formapago`, `total_factura`) VALUES
-(1,'9910966', 1, '2013-01-13', 1, '4375');
+(1,'9910966', 1, '2013-01-13', 1, '1076.9');
 
 -- --------------------------------------------------------
 

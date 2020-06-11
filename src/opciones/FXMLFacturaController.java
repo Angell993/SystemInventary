@@ -1,11 +1,12 @@
 package opciones;
 
+import clasesjava.Cliente;
 import clasesjava.Venta;
-import clienteControladorVistas.FXMLRegistrarClienteController;
 import conexionbasedatos.ConexionInventario;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,21 +40,15 @@ public class FXMLFacturaController implements Initializable {
     @FXML
     private Label lblIdentidad;
     private ObservableList<Venta> listaVenta;
+    private ObservableList<Cliente> datosCliente;
     private ResultSet dato;
-
-    @FXML
-    private void Buscar(KeyEvent event) {
-        if (!txtDocumento.getText().isEmpty()) {
-
-        }
-    }
 
     @FXML
     private void imprimir() {
         if (!txtFactura.getText().isEmpty() && !txtDocumento.getText().isEmpty()) {
-            String url = "src/ticket&factura/RegistroFactura";
+            String url = "src/ticket&factura/FacturaCliente";
             CrearInforme ventaTicket = new CrearInforme();
-            ventaTicket.factura(txtFactura.getText(), url);
+            ventaTicket.factura(txtFactura.getText(), url, datosCliente);
         }
     }
 
@@ -109,20 +104,21 @@ public class FXMLFacturaController implements Initializable {
     }
 
     private void existeCliente(String cliente) {
+        datosCliente = FXCollections.observableArrayList();
         try {
             dato = ConexionInventario.sSQL(SentenciasSQL.sqlConsulCliente + " '" + cliente + "'");
             while (dato.next()) {
-                if (dato.getString(3).equals(cliente)) {
-                    String nombre = dato.getString(1);
-                    String apellido = dato.getString(2);
-                    lblIdentidad.setText(nombre + "  " + apellido);
+                if (dato.getString(1).equals(cliente)) {
+                    lblIdentidad.setText(dato.getString(2) + "  " + dato.getString(3));
+                   datosCliente.add( new Cliente(dato.getString(1),dato.getString(2),dato.getString(3),dato.getString(4),
+                            dato.getString(5),dato.getString(6),dato.getInt(7)));
                 } else {
                     txtDocumento.setText("");
                     lblIdentidad.setText("No existe el cliente");
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FXMLRegistrarClienteController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLFacturaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -136,7 +132,7 @@ public class FXMLFacturaController implements Initializable {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(FXMLRegistrarClienteController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FXMLFacturaController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }

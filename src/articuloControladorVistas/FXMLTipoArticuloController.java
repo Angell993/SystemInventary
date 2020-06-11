@@ -20,7 +20,7 @@ public class FXMLTipoArticuloController implements Initializable {
     @FXML
     private TextField txtIva, txtArticulo, txtNombreArticulo, txtCodbar;
     private String sentencia;
-
+    
     @FXML
     private void registrarTipoArticulo(ActionEvent event) {
         /*if ((!txtArticulo.getText().isEmpty() && !txtIva.getText().isEmpty())) {

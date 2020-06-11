@@ -36,17 +36,15 @@
             <TableColumn fx:id="clmTotal" prefWidth="226.0" text="Total" />
         </columns>
       </TableView>
-      <GridPane layoutX="564.0" layoutY="210.0" prefHeight="42.0" prefWidth="270.0" stylesheets="@../estiloscss/buttonestilocss.css">
+      <GridPane layoutX="640.0" layoutY="212.0" prefHeight="42.0" prefWidth="137.0" stylesheets="@../estiloscss/buttonestilocss.css">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.0" minWidth="10.0" prefWidth="139.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="10.0" prefWidth="131.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#Buscar" prefHeight="42.0" prefWidth="110.0" text="Buscar" />
-            <Button mnemonicParsing="false" onAction="#imprimir" text="Imprimir " GridPane.columnIndex="1" />
+            <Button mnemonicParsing="false" onAction="#imprimir" prefHeight="46.0" prefWidth="136.0" text="Imprimir " />
          </children>
       </GridPane>
       <Label fx:id="lblIdentidad" layoutX="252.0" layoutY="217.0" prefHeight="31.0" prefWidth="225.0" />

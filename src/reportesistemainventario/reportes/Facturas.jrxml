@@ -67,7 +67,7 @@ FROM sistemainventario.factura
 			<staticText>
 				<reportElement style="Title" x="270" y="0" width="249" height="62" uuid="bc1ce1da-8232-46ea-be55-cec4abb986dd"/>
 				<textElement verticalAlignment="Middle"/>
-				<text><![CDATA[Facturas]]></text>
+				<text><![CDATA[Ventas]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -107,7 +107,7 @@ FROM sistemainventario.factura
 				<textElement>
 					<font size="13"/>
 				</textElement>
-				<text><![CDATA[Fecha Factura]]></text>
+				<text><![CDATA[Fecha ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="480" y="0" width="160" height="15" forecolor="#736343" uuid="8de7be4b-cd87-454b-80ff-400e3854a717">
@@ -151,7 +151,7 @@ FROM sistemainventario.factura
 					</textElement>
 					<textFieldExpression><![CDATA[$F{Descripcion_formapago}]]></textFieldExpression>
 				</textField>
-				<textField textAdjust="StretchHeight" pattern="M/d/yy">
+				<textField textAdjust="StretchHeight" pattern="d/M/yy">
 					<reportElement style="Detail" x="320" y="0" width="160" height="15" uuid="1ade1abc-ba0c-4bca-af9b-fc5f86d67d2d">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b84ebf4-4811-4a3d-abc0-18305d271828"/>
 					</reportElement>

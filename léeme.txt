@@ -1,3 +1,0 @@
-**Los reportes solo funciona el primer combo el segundo no
-**Lo de devolucón valta hacer la actualización el la db y hacer un pequeño control
-  cuando se vaya devolviendo cada articulo.

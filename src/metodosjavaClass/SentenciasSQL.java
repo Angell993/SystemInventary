@@ -116,7 +116,7 @@ public class SentenciasSQL {
             + " where producto.codigo_barras = ";
 
     /* Factura Sentencias*/
-    public static String sqlConsulCliente = "SELECT Nombre, Apellidos, Documento from cliente where Documento = ";
+    public static String sqlConsulCliente = "SELECT Documento, Nombre, Apellidos, telefono, ciudad, direccion, CodigoPostal from cliente where Documento = ";
     public static String sqlDistintasFactura = "Select distinct(factura.Nnm_factura), Fecha_facturacion "
             + "from factura where cod_cliente = ";
     public static String sqlFacturaImprimir = "SELECT  articulo.nombre, detalle_factura.cantidad, ((articulo.precio_venta * (tipo_articulo.IVA / 100)) + articulo.precio_venta ) as precio_iva , "

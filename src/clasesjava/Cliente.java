@@ -26,6 +26,17 @@ public class Cliente {
 
     public Cliente() {
     }
+    
+    public Cliente(String documento, String nombreCliente, String apellidoCliente, String telefonoCliente, String ciudadCliente,
+            String direccionCliente, int codigoPostalCliente) {
+        this.documento = new SimpleStringProperty(documento);
+        this.nombreCliente = new SimpleStringProperty(nombreCliente);
+        this.apellidoCliente = new SimpleStringProperty(apellidoCliente);
+        this.telefonoCliente = new SimpleStringProperty(telefonoCliente);
+        this.ciudadCliente = new SimpleStringProperty(ciudadCliente);
+        this.direccionCliente = new SimpleStringProperty(direccionCliente);
+        this.codigoPostalCliente = new SimpleIntegerProperty(codigoPostalCliente);
+    }
 
     public Cliente(int idCliente, String documento, int idTipoDoc, String nombreCliente, String apellidoCliente,
             String telefonoCliente, String paisCliente, String provinciaCliente, String ciudadCliente,
@@ -201,12 +212,11 @@ public class Cliente {
         return numeroEmpleado;
     }
 
-    
     @Override
     public String toString() {
-        return "Cliente{" + "documento=" + documento + ", idTipoDoc=" + idTipoDoc + ", nombreCliente=" + nombreCliente + ", apellidoCliente=" + apellidoCliente + ", telefonoCliente=" + telefonoCliente + ", paisCliente=" + paisCliente + ", provinciaCliente=" + provinciaCliente + ", ciudadCliente=" + ciudadCliente + ", direccionCliente=" + direccionCliente + ", codigoPostalCliente=" + codigoPostalCliente + ", emailCliente=" + emailCliente + ", numeroEmpleado=" + numeroEmpleado + '}';
+        return "Cliente{" + "idCliente=" + idCliente + ", documento=" + documento + ", idTipoDoc=" + idTipoDoc + ", nombreCliente=" + nombreCliente + ", apellidoCliente=" + apellidoCliente + ", telefonoCliente=" + telefonoCliente + ", paisCliente=" + paisCliente + ", provinciaCliente=" + provinciaCliente + ", ciudadCliente=" + ciudadCliente + ", direccionCliente=" + direccionCliente + ", codigoPostalCliente=" + codigoPostalCliente + ", emailCliente=" + emailCliente + ", numeroEmpleado=" + numeroEmpleado + '}';
     }
 
-
+    
 
 }

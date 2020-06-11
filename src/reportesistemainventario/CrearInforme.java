@@ -1,8 +1,10 @@
 package reportesistemainventario;
 
+import clasesjava.Cliente;
 import conexionbasedatos.ConexionDB;
 import java.util.HashMap;
 import java.util.Map;
+import javafx.collections.ObservableList;
 import javax.swing.JFrame;
 import metodosjavaClass.Alertas;
 import metodosjavaClass.MetodosJavaClass;
@@ -94,12 +96,21 @@ public class CrearInforme {
         }
     }
 
-    public void factura(String factura, String url) {
+    public void factura(String factura, String url, ObservableList<Cliente> datosCliente) {
         Map parametro = new HashMap();
         try {
             parametro.put("operacion", factura);
-            JasperPrint jasperPrint = JasperFillManager.fillReport(url + ".jasper", parametro,
-                    con.conectar());
+            JasperPrint jasperPrint = null;
+            for (int i = 0; i < datosCliente.size(); i++) {
+                parametro.put("nombre", (datosCliente.get(i).getNombreCliente()+" "+datosCliente.get(i).getApellidoCliente()));
+                parametro.put("direccion", datosCliente.get(i).getDireccionCliente());
+                parametro.put("ciudad", datosCliente.get(i).getCiudadCliente());
+                parametro.put("cp", datosCliente.get(i).getCodigoPostalCliente());
+                parametro.put("telefono", datosCliente.get(i).getTelefonoCliente());
+                parametro.put("documento", datosCliente.get(i).getDocumento());   
+            jasperPrint = JasperFillManager.fillReport(url + ".jasper", parametro,
+                    con.conectar());             
+            }
 
             JRViewer viewer = new JRViewer(jasperPrint);
             JFrame frame = new JFrame("Sistema de Reporte");
