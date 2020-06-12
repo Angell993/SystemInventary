@@ -18,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -51,6 +52,7 @@ public class FXMLAdministradorConfigController implements Initializable {
                 Stage stage = new Stage();
                 Scene scene_page = new Scene(root);
                 stage.setTitle("INVENTARIO");
+                stage.getIcons().add(new Image(getClass().getResource("/imagenes/iconoInventario.png").toExternalForm()));
                 Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene_page);
                 stage.show();
@@ -66,9 +68,9 @@ public class FXMLAdministradorConfigController implements Initializable {
     private void comprobarConexionDB() {
         if (verifica) {
             conexion = new ConexionDB(txtUrl.getText(), txtUsuario.getText(), txtPass.getText());
-            if (conexion.conectarDiferenteDB()== null) {
+            if (conexion.conectarDiferenteDB() == null) {
                 lblConexion.setText("Conexión Fallida!!");
-            }else{
+            } else {
                 lblConexion.setText("Conexón OK");
             }
         } else {
