@@ -61,12 +61,12 @@
             <Font name="Times New Roman" size="28.0" />
          </font>
       </Label>
-      <Label fx:id="lbl5" layoutX="209.0" layoutY="266.0" text="&amp;" textFill="#f5f3f3">
+      <Label fx:id="lbl5" layoutX="176.0" layoutY="260.0" text="JM&amp;AL" textFill="#f5f3f3">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <Label fx:id="lbl6" layoutX="52.0" layoutY="324.0" text="JUAN CARLOS" textFill="#f8f7f7">
+      <Label fx:id="lbl6" layoutX="12.0" layoutY="321.0" text="JUAN CARLOS OTERO MARTÍNEZ" textFill="#f8f7f7">
          <font>
             <Font name="Times New Roman" size="28.0" />
          </font>

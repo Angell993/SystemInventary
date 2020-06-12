@@ -38,13 +38,13 @@ public class FXMLAdministradorConfigController implements Initializable {
     private Label lblConexion, lblCorreo;
     @FXML
     private Button siguiente;
-    private Boolean verifica;
+    private Boolean verifica = false;
     private ConexionDB conexion;
     private final Fichero fich = new Fichero();
 
     @FXML
     private void ingresarSistema(ActionEvent event) {
-        if (lblConexion.getText().contains("OK") || lblCorreo.getText().contains("OK")) {
+        if (lblConexion.getText().contains("OK")) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/login/FXMLIngresar.fxml"));
             try {
                 Parent root = loader.load();
@@ -127,7 +127,6 @@ public class FXMLAdministradorConfigController implements Initializable {
             Logger.getLogger(FXMLCorreoController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (MessagingException ex) {
             Alertas.mensajeInformación("Correo", "No has ingredo un correo electrónico válido o contraseña incorrecta.");
-            //Logger.getLogger(FXMLCorreoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

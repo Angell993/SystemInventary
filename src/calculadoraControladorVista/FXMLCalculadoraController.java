@@ -6,14 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import metodosjavaClass.OperadoresLogicos;
 import static metodosjavaClass.VentanaRootPane.closeVentana;
-
 
 public class FXMLCalculadoraController implements Initializable {
 
@@ -26,7 +24,7 @@ public class FXMLCalculadoraController implements Initializable {
     private char operador;
     private double operador1 = 0, operador2 = 0;
     private final OperadoresLogicos op = new OperadoresLogicos();
-    
+
     // botones de números de calculadora
     @FXML
     Button btn1;
@@ -68,7 +66,6 @@ public class FXMLCalculadoraController implements Initializable {
     Button btnCerrar;
 
     /*Aumentar celdas GridPane*/
-    
     @FXML
     GridPane calcGridPane;
     //TextFaild total
@@ -198,7 +195,7 @@ public class FXMLCalculadoraController implements Initializable {
             } else {
                 operador1 = Double.parseDouble(respuesta);
                 total.setText("");
-                 operador = 'm';
+                operador = 'm';
             }
         } catch (Exception e) {
             textoVacio();
@@ -225,7 +222,7 @@ public class FXMLCalculadoraController implements Initializable {
             operador = 'd';
         }
     }
-    
+
     @FXML
     private void clic_borrar(ActionEvent event) {
         this.operador1 = 0;
@@ -253,32 +250,32 @@ public class FXMLCalculadoraController implements Initializable {
     private void operacionesLogicas() {
         switch (operador) {
             case 's':
-                operador2 = Double.parseDouble(pantallaDigito);                
+                operador2 = Double.parseDouble(pantallaDigito);
                 op.setOperando2(operador2);
-                total.setText(op.suma());                
+                total.setText(op.suma());
                 System.out.println(op.toString());
                 break;
             case 'r':
-                operador2 = Double.parseDouble(pantallaDigito);                
+                operador2 = Double.parseDouble(pantallaDigito);
                 op.setOperando2(operador2);
-                total.setText(op.resta());       
+                total.setText(op.resta());
                 System.out.println(op.toString());
                 break;
             case 'm':
-                operador2 = Double.parseDouble(pantallaDigito);                
+                operador2 = Double.parseDouble(pantallaDigito);
                 op.setOperando2(operador2);
                 total.setText(op.multiplicacion());
                 System.out.println(op.toString());
                 break;
             case 'd':
-                operador2 = Double.parseDouble(pantallaDigito);                
+                operador2 = Double.parseDouble(pantallaDigito);
                 op.setOperando2(operador2);
                 total.setText(op.division());
                 System.out.println(op.toString());
                 break;
         }
     }
-    
+
     private void textoVacio() {
         pantallaDigito = "0";
         operador1 = Double.parseDouble(pantallaDigito);
@@ -290,12 +287,12 @@ public class FXMLCalculadoraController implements Initializable {
         try {
             Double.parseDouble(numero);
         } catch (NumberFormatException e) {
-            System.out.println("El valor ingresado no es número");
             return false;
         }
         return true;
     }
-            @FXML
+
+    @FXML
     private void capturarTeclas() {
         calcGridPane.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
             if ((e.getCode() == KeyCode.NUMPAD0) || (e.getCode() == KeyCode.DIGIT0)) {
@@ -350,7 +347,7 @@ public class FXMLCalculadoraController implements Initializable {
                 btnComa.fire();
             }
             if (e.getCode() == KeyCode.ESCAPE) {
-               btnCerrar.fire();
+                btnCerrar.fire();
             }
         });
 

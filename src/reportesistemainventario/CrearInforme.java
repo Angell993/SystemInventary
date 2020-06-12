@@ -7,7 +7,6 @@ import java.util.Map;
 import javafx.collections.ObservableList;
 import javax.swing.JFrame;
 import metodosjavaClass.Alertas;
-import metodosjavaClass.MetodosJavaClass;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -28,55 +27,10 @@ public class CrearInforme {
             frame.pack();
             frame.setVisible(true);
         } catch (JRException e) {
-            System.out.println(e.toString() + e);
+            Alertas.mensajeInformación("Reporte", "El reporte no existe.");
         }
     }
 
-    public void generarReporteConsulta(String url, String consulta, int itemSeleccionado) {
-
-        Map parametro = new HashMap();
-        if (itemSeleccionado == 1) {
-            if (MetodosJavaClass.esNumero(consulta)) {
-                parametro.put("Identificador", consulta);
-            }else{
-            parametro.put("Documento", consulta);
-            }
-        }
-        if (itemSeleccionado == 2) {
-            parametro.put("Nombre", consulta);
-        }
-        if (itemSeleccionado == 3) {
-            parametro.put("Fecha", consulta + "%");
-        }
-
-        try {
-            JasperPrint jasperPrint = JasperFillManager.fillReport(url + ".jasper", parametro,
-                    con.conectar());
-
-            JRViewer viewer = new JRViewer(jasperPrint);
-            JFrame frame = new JFrame("Sistema de Reporte");
-            frame.getContentPane().add(viewer);
-            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            frame.pack();
-            frame.setVisible(true);
-
-        } catch (JRException | NullPointerException e) {
-            errorReport(itemSeleccionado);
-        }
-    }
-
-    /*Si eno encuentra lo seleccionado del comboBox estos son los mensajes de error*/
-    private void errorReport(int itemSeleccionado) {
-        if (itemSeleccionado == 1) {
-            Alertas.mensajeError("El Documento no existe en el Sistema.");
-        }
-        if (itemSeleccionado == 2) {
-            Alertas.mensajeError("El Nombre no existe en el Sistema.");
-        }
-        if (itemSeleccionado == 3) {
-            Alertas.mensajeError("La fecha no etsá registrada en el Sistema.");
-        }
-    }
 
     public void ticketVenta(String factura, String url) {
         Map parametro = new HashMap();
@@ -86,13 +40,13 @@ public class CrearInforme {
                     con.conectar());
 
             JRViewer viewer = new JRViewer(jasperPrint);
-            JFrame frame = new JFrame("Sistema de Reporte");
+            JFrame frame = new JFrame("Ticket");
             frame.getContentPane().add(viewer);
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             frame.pack();
             frame.setVisible(true);
         } catch (JRException e) {
-            System.out.println(e.toString() + e);
+            Alertas.mensajeInformación("Ticket", "El ticket no existe.");
         }
     }
 
@@ -113,13 +67,13 @@ public class CrearInforme {
             }
 
             JRViewer viewer = new JRViewer(jasperPrint);
-            JFrame frame = new JFrame("Sistema de Reporte");
+            JFrame frame = new JFrame("Factura");
             frame.getContentPane().add(viewer);
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
             frame.pack();
             frame.setVisible(true);
         } catch (JRException e) {
-            System.out.println(e.toString() + e);
+            Alertas.mensajeInformación("Factura", "El número de factura no existe.");
         }
     }
     
