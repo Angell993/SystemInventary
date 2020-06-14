@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
- *@author Lopez Taday, Angel Bruno & Otero Martínez, Juan Carlos.
+ *@author Lopez Taday, Angel Bruno y Otero Martínez, Juan Carlos.
  */
 
 public class Login extends Application {
