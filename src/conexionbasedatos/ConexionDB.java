@@ -24,26 +24,48 @@ public class ConexionDB {
         this.pass = pass;
     }
 
-    public Connection conectar() {
+    /*public Connection conectarPrueba() {
+        Alertas.mensajeError("Estoy en el metodo conectarPrueba");
         try {
             extraerDatos();
             Class.forName("com.mysql.jdbc.Driver");
-            conexion = DriverManager.getConnection(getServer(), getUser(), getPass());
+            conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/sistemainventario?verifyServerCertificate=false&useSSL=true",
+                    "root", "saladino");
         } catch (ClassNotFoundException ex) {
-            System.out.println("ERROR, no se puede conectar a la Data Base.\n" + ex.toString());
             Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
+            Alertas.mensajeConfirmacion("URL", getServer());
+            Alertas.mensajeConfirmacion("User", getUser());
+            Alertas.mensajeConfirmacion("Pass", getUser());
+            Alertas.errorSQL("Conexion", ex);
+            Alertas.mensajeInformación("Conexión", "Usuario, Contraseña o\nBase de Datos incorrectas");
+        }
+        return conexion;
+    }*/
+
+    public Connection conectar() {
+        try {
+            if (extraerDatos()) {
+                Class.forName("com.mysql.jdbc.Driver");
+                conexion = DriverManager.getConnection(getServer(), getUser(), getPass());
+            } else {
+                Class.forName("com.mysql.jdbc.Driver");
+                conexion = DriverManager.getConnection(getServer(), getUser(), getPass());
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) { 
+            Alertas.errorSQL("Conexion", ex);
             Alertas.mensajeInformación("Conexión", "Usuario, Contraseña o\nBase de Datos incorrectas");
         }
         return conexion;
     }
-    
+
     public Connection conectarDiferenteDB() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conexion = DriverManager.getConnection(getServer(), getUser(), getPass());
         } catch (ClassNotFoundException ex) {
-            System.out.println("ERROR, no se puede conectar a la Data Base.\n" + ex.toString());
             Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Alertas.mensajeInformación("Conexión", "Usuario, Contraseña o\nBase de Datos incorrectas");
@@ -55,29 +77,27 @@ public class ConexionDB {
         try {
             extraerDatos();
             Class.forName("com.mysql.jdbc.Driver");
-            conexion = DriverManager.getConnection(espaniadb, getUser(), getPass());
-        } catch (ClassNotFoundException ex) {
-            System.out.println("ERROR, no se puede conectar a la Data Base.\n" + ex.toString());
-            Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            System.out.println(ex.toString());
+            conexion = DriverManager.getConnection(espaniadb, user, pass);
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ConexionDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return conexion;
     }
 
-    private void extraerDatos() {
-        File file = new File("src/configuracionadministrador/configDB.dat");
+    private boolean extraerDatos() {
+        File file = new File("./configDB.dat");
         if (file.exists()) {
-            Fichero f = new Fichero();
-            setServer(f.leerObjetoDB().getServer());
-            setUser(f.leerObjetoDB().getUsuario());
-            setPass(f.leerObjetoDB().getPass());
+            Fichero datosDB = new Fichero();
+            setServer(datosDB.leerObjetoDB().getServer());
+            setUser(datosDB.leerObjetoDB().getUsuario());
+            setPass(datosDB.leerObjetoDB().getPass());
+            return true;
         }
+        return false;
     }
 
     public void cerrarConexion() {
-        if (conexion != null) { 
+        if (conexion != null) {
             try {
                 conexion.close();
             } catch (SQLException ex) {

@@ -2,13 +2,13 @@
 <jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="InventarioSystem.jnlp">
   <information>
     <title>InventarioSystem</title>
-    <vendor>bruno</vendor>
+    <vendor>Angel Lopez & Juan  Carlos Otero</vendor>
     <description>null</description>
     <offline-allowed/>
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="InventarioSystem.jar" size="2687819" download="eager" />
+    <jar href="InventarioSystem.jar" size="483413" download="eager" />
     <jar href="lib\com.lowagie.text-2.1.7.jar" size="1782376" download="eager" />
     <jar href="lib\commons-beanutils-1.8.3.jar" size="232019" download="eager" />
     <jar href="lib\commons-digester-2.1.jar" size="196768" download="eager" />

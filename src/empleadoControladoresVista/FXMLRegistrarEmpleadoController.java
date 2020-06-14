@@ -48,7 +48,7 @@ public class FXMLRegistrarEmpleadoController implements Initializable {
 
     @FXML
     private void registrarEmpleado(ActionEvent event) {
-        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtEmpleado.getText())) {
+        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtEmpleado.getText(), "Empleado")) {
             if (MetodosJavaClass.cmbSeleccionado(cmbPuesto) && MetodosJavaClass.cmbSeleccionado(cmbDocumento)) {
                 if (!cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")
                         && !cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("PASAPORTE")) {

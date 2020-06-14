@@ -82,8 +82,8 @@ public class SentenciasSQL {
     public static String sqlConsultarFactura = "SELECT cod_factura from detalle_factura ";
     public static String sqlRegCompra = "INSERT INTO detalle_factura (cod_factura, cod_articulo, cantidad, total) VALUES ";
     public static String insertarFactura = "INSERT INTO factura (Nnm_factura, cod_empleado, Fecha_facturacion, cod_formapago, total_factura) VALUES ";
-    public static String sqlArticulos = "SELECT `id_articulo`, `nombre` FROM `articulo` order by `id_articulo`;";
-    public static String sqlCantidad = "Select `id_articulo`, `stock` from articulo where id_articulo = ";
+    public static String sqlArticulos = "SELECT id_articulo, nombre FROM articulo order by id_articulo;";
+    public static String sqlCantidad = "Select id_articulo, stock from articulo where id_articulo = ";
     public static String sqlEliminarDetalleFactura = "DELETE from detalle_factura WHERE ";
     public static String sqlIdArticulo = "SELECT id_articulo from articulo where Nombre = ";
     public static String sqlDocumentosClientes = "SELECT documento FROM cliente";
@@ -106,21 +106,22 @@ public class SentenciasSQL {
     public static String sqlExisteCodeBar = "SELECT codigo_barras from  producto where codigo_barras = ";
     public static String ingresarDevolucion = "INSERT INTO devolucion (cod_detallefactura, cod_detallearticulo, Motivo, Fecha_devolucion, cantidad,"
             + " total_devolver, cod_empleado) VALUES ";
+    public static String actualizarDevolucion = "UPDATE articulo SET ";
     public static String retirarDevolucion = "DELETE FROM detalle_factura WHERE cod_articulo = ";
-    public static String verRegistroCodeBar = "SELECT  detalle_factura.cod_factura, articulo.nombre, detalle_factura.cantidad, ((articulo.precio_venta * (tipo_articulo.IVA / 100)) + articulo.precio_venta ) as precio_iva ,"
+    public static String verRegistroCodeBar = "SELECT  detalle_factura.cod_factura, articulo.nombre, sum(detalle_factura.cantidad), ((articulo.precio_venta * (tipo_articulo.IVA / 100)) + articulo.precio_venta ) as precio_iva ,"
             + " producto.codigo_barras  FROM factura "
             + " INNER JOIN detalle_factura ON factura.Nnm_factura = detalle_factura.cod_factura "
             + " INNER JOIN articulo ON 	detalle_factura.cod_articulo = articulo.id_articulo "
             + " INNER JOIN tipo_articulo on articulo.cod_tipo_articulo = tipo_articulo.id_tipoarticulo "
             + " INNER JOIN producto on articulo.codigo_barras = producto.id_articulo "
             + " where producto.codigo_barras = ";
-
+    
     /* Factura Sentencias*/
     public static String sqlConsulCliente = "SELECT Documento, Nombre, Apellidos, telefono, ciudad, direccion, CodigoPostal from cliente where Documento = ";
     public static String sqlDistintasFactura = "Select distinct(factura.Nnm_factura), Fecha_facturacion "
             + "from factura where cod_cliente = ";
-    public static String sqlFacturaImprimir = "SELECT  articulo.nombre, detalle_factura.cantidad, ((articulo.precio_venta * (tipo_articulo.IVA / 100)) + articulo.precio_venta ) as precio_iva , "
-            + "detalle_factura.total, factura.total_factura"
+    public static String sqlFacturaImprimir = "SELECT  articulo.nombre, sum(detalle_factura.cantidad), ((articulo.precio_venta * (tipo_articulo.IVA / 100)) + articulo.precio_venta ) as precio_iva , "
+            + "sum(detalle_factura.total), factura.total_factura"
             + " FROM factura "
             + " INNER JOIN detalle_factura ON factura.Nnm_factura = detalle_factura.cod_factura "
             + " INNER JOIN articulo ON 	detalle_factura.cod_articulo = articulo.id_articulo "

@@ -40,7 +40,7 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
 
     //Label mostrar el nombre del empleado en el label
     @FXML
-    private Button btnConexion;
+    private Button btnConexion, btnRecurso;
     @FXML
     private MenuBar menuBar;
     @FXML
@@ -179,11 +179,13 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
     @FXML
     private void opciones() {
         try {
-            loader = new FXMLLoader(getClass().getResource("/opciones/FXMLOpciones.fxml"));
-            root = loader.load();
-            FXMLOpcionesController opcion = loader.getController();
-            opcion.numeroEmpleado(numEmpleado);
-            rootPane.getChildren().setAll(root);
+            if (numEmpleado != 0) {
+                loader = new FXMLLoader(getClass().getResource("/opciones/FXMLOpciones.fxml"));
+                root = loader.load();
+                FXMLOpcionesController opcion = loader.getController();
+                opcion.numeroEmpleado(numEmpleado);
+                rootPane.getChildren().setAll(root);
+            }
         } catch (IOException ex) {
             Logger.getLogger(FXMLSistemaInventarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -196,11 +198,11 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
             reporte.setVisible(false);
             empleado.setVisible(false);
             cliente.setVisible(false);
-            artiRegistro.setVisible(false);            
+            artiRegistro.setVisible(false);
             registrarVentas();
         }
         if (codEmpleado == 1) {
-            registrarVentas();            
+            registrarVentas();
         }
 
     }

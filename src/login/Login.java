@@ -16,7 +16,7 @@ public class Login extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        File f = new File("src/configuracionadministrador/configDB.dat");
+        File f = new File("./configDB.dat");
         if (f.exists()) {
             Parent root = FXMLLoader.load(getClass().getResource("/login/FXMLIngresar.fxml"));
 

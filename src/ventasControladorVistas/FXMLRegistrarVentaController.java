@@ -23,7 +23,6 @@ import conexionbasedatos.ConexionDB;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Connection;
-import java.util.Arrays;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -78,11 +77,15 @@ public class FXMLRegistrarVentaController implements Initializable {
     @FXML
     private void realizarPago(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventasControladorVistas/FXMLPago.fxml"));
-            Parent root = loader.load();
-            FXMLPagoController pagar = loader.getController();
-            pagar.recibirInformacionPago(nFactura.getText(), codEmpleado, String.valueOf(sumarDineroTotal()), idCantidadComprada, anchorPane, listaArticulo);
-            anchorPane.getChildren().setAll(root);
+            if (listaArticulo.isEmpty()) {
+                Alertas.mensajeAdvertencia("Artículo", "Debes Ingresar un artículo.");
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventasControladorVistas/FXMLPago.fxml"));
+                Parent root = loader.load();
+                FXMLPagoController pagar = loader.getController();
+                pagar.recibirInformacionPago(nFactura.getText(), codEmpleado, String.valueOf(sumarDineroTotal()), idCantidadComprada, anchorPane, listaArticulo);
+                anchorPane.getChildren().setAll(root);
+            }
         } catch (IOException ex) {
             Logger.getLogger(FXMLSistemaInventarioController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -253,8 +256,8 @@ public class FXMLRegistrarVentaController implements Initializable {
 
     private void idCantidadConpraArray(String articulo, int cantidad) {
         idCantidadComprada = FXCollections.observableArrayList();
-        idCantidadComprada.add(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlIdArticulo + " '" + articulo + "'"),
-                String.valueOf(cantidad)));
+            idCantidadComprada.add(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlIdArticulo + " '" + articulo + "'"),
+                    String.valueOf(cantidad)));
     }
 
     public void anularCrearNuevaVenta(String empleado, AnchorPane anchorPane) {

@@ -2,6 +2,7 @@ package devolucioncontrollervista;
 
 import clasesjava.Item;
 import clasesjava.Venta;
+import conexionbasedatos.ConexionDB;
 import conexionbasedatos.ConexionInventario;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -58,10 +59,14 @@ public class FXMLDevolucionController implements Initializable {
     private Venta venta;
     private ObservableList<Venta> listaArticulo;
     private ObservableList<Item> opciones;
+    private ObservableList<Item> cantidadId;
     private ObservableList<Item> cantidadCodeBar;
     private ObservableList<Item> listaMotivo;
     private ObservableList<Double> listaTotalCompra;
     private ObservableList<Venta> listaVenta;
+    private ResultSet dato;
+    private ConexionDB con = new ConexionDB();
+    private String sentencia;
     private int empleado, n_Compra = 1;
     private double total;
 
@@ -73,57 +78,105 @@ public class FXMLDevolucionController implements Initializable {
     @FXML
     private void registrarDevolucion() {
         //Con este if compruebo en la base de datos si ya esta registrado la devolucion
-        if (MetodosJavaClass.txtVacios(datosArray())) {
-            if (existeDevolucionFactura()) {
-                if (cmbDevolucion.getSelectionModel().getSelectedItem().getId() == 1) {
-                    for (int i = 0; i < listaVenta.size(); i++) {
-                        String sentencia = SentenciasSQL.ingresarDevolucion + "('" + listaVenta.get(i).getNumeroCoFactura()
-                                + "', " + MetodosJavaClass.obtenerId("SELECT id_articulo from articulo where nombre= '" + listaVenta.get(i).getNombreArticulo() + "'")
-                                + ", '" + txtMotivo.getText() + "', '" + Fecha.fechaSQl()
-                                + "', " + listaVenta.get(i).getCantidadCompra()
-                                + " , " + listaVenta.get(i).getTotalCompra()
-                                + ", " + empleado + " )";
-                        ConexionInventario.EjecutarSQL(sentencia);
+        try {
+            if (MetodosJavaClass.txtVacios(datosArray())) {
+                if (existeDevolucionFactura()) {
+                    if (cmbDevolucion.getSelectionModel().getSelectedItem().getId() == 1) {
+                        for (int i = 0; i < listaVenta.size(); i++) {
+                            sentencia = SentenciasSQL.ingresarDevolucion + "('" + listaVenta.get(i).getNumeroCoFactura()
+                                    + "', " + MetodosJavaClass.obtenerId(SentenciasSQL.sqlIdArticulo + " '" + listaVenta.get(i).getNombreArticulo() + "'")
+                                    + ", '" + txtMotivo.getText() + "', '" + Fecha.fechaSQl()
+                                    + "', " + listaVenta.get(i).getCantidadCompra()
+                                    + " , " + listaVenta.get(i).getTotalCompra()
+                                    + ", " + empleado + " )";
+                            ConexionInventario.EjecutarSQL_TRANSACT(con.conectar(), sentencia);
+                        }
                         Alertas.mensajeInformación("cambio", "A devolver es: \n"
-                                + sumarDineroTotal());
+                                + txtTotal.getText());
                         imprimirTicket();
                         listaVenta.clear();
                         tblVenta.setItems(listaVenta);
-                    }
-                } else {
-                    for (int i = 0; i < listaArticulo.size(); i++) {
-                        String sentencia = SentenciasSQL.ingresarDevolucion + "('" + listaArticulo.get(i).getNumeroCoFactura()
-                                + "', " + MetodosJavaClass.obtenerId("SELECT id_articulo from articulo where nombre= '" + listaArticulo.get(i).getNombreArticulo() + "'")
-                                + ", '" + opciones.get(i).getDescripcion() + "', '" + Fecha.fechaSQl()
-                                + "', " + listaArticulo.get(i).getCantidadCompra()
-                                + " , " + listaArticulo.get(i).getTotalCompra()
-                                + ", " + empleado + " )";
-                        ConexionInventario.EjecutarSQL(sentencia);
+                    } else {
+                        for (int i = 0; i < listaArticulo.size(); i++) {
+                            sentencia = SentenciasSQL.ingresarDevolucion + "('" + listaArticulo.get(i).getNumeroCoFactura()
+                                    + "', " + idArticulo(listaArticulo.get(i).getNombreArticulo())
+                                    + ", '" + opciones.get(i).getDescripcion() + "', '" + Fecha.fechaSQl()
+                                    + "', " + listaArticulo.get(i).getCantidadCompra()
+                                    + " , " + listaArticulo.get(i).getTotalCompra()
+                                    + ", " + empleado + " )";
+                            ConexionInventario.EjecutarSQL_TRANSACT(con.conectar(), sentencia);
+                        }
                         Alertas.mensajeInformación("cambio", "A devolver es: \n"
                                 + sumarDineroTotal());
                         imprimirTicket();
                         listaArticulo.clear();
                         tblVenta.setItems(listaArticulo);
                     }
+                    borrar();
                 }
-                borrar();
             }
+        } catch (NullPointerException e) {
+            Alertas.mensajeInformación("Devolución", "Debes seleccionar una opcion.");
+        }
+    }
+
+    private int idArticulo(String nombre) {
+        return MetodosJavaClass.obtenerId(SentenciasSQL.sqlIdArticulo + "'" + nombre + "'");
+    }
+
+    private ObservableList<Item> cantidaId() {
+        cantidadId = FXCollections.observableArrayList();
+        if (cmbDevolucion.getSelectionModel().getSelectedItem().getId() == 2) {
+            for (int i = 0; i < listaArticulo.size(); i++) {
+                dato = ConexionInventario.sSQL(SentenciasSQL.sqlCantidad + idArticulo(listaArticulo.get(i).getNombreArticulo()));
+                try {
+                    while (dato.next()) {
+                        cantidadId.add(new Item(dato.getInt(1), dato.getString(2)));
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(FXMLDevolucionController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            return cantidadId;
+        } else {
+            for (int i = 0; i < listaVenta.size(); i++) {
+                dato = ConexionInventario.sSQL(SentenciasSQL.sqlCantidad + idArticulo(listaVenta.get(i).getNombreArticulo()));
+                try {
+                    while (dato.next()) {
+                        cantidadId.add(new Item(dato.getInt(1), dato.getString(2)));
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(FXMLDevolucionController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            return cantidadId;
         }
     }
 
     @FXML
     private void añadirArticulo() {
-        if (MetodosJavaClass.txtVacios(datosArray())) {
-            añadirRegistroTbl();
+        try {
+            if (MetodosJavaClass.txtVacios(datosArray())) {
+                añadirRegistroTbl();
+                txtArticulo.setText(null);
+                txtCantidad.setText(null);
+                txtMotivo.setText(null);
+            }
+        } catch (NullPointerException e) {
+            Alertas.mensajeInformación("Devolución", "Debes ingresar un artiuclo y número de factura.");
         }
     }
 
     @FXML
     private void borrar() {
-        for (int i = 0; i < datosArray().size(); i++) {
-            datosArray().get(i).setText(null);
+        try {
+            for (int i = 0; i < datosArray().size(); i++) {
+                datosArray().get(i).setText(null);
+            }
+            txtTotal.setText(null);
+        } catch (NullPointerException e) {
+
         }
-        txtTotal.setText(null);
     }
 
     @FXML
@@ -142,6 +195,7 @@ public class FXMLDevolucionController implements Initializable {
             btnEliminar.setVisible(false);
             listaArticulo.clear();
             txtTotal.setText(null);
+            txtFactura.setText(null);
             tblVenta.setItems(listaArticulo);
             nFactura();
         }
@@ -267,8 +321,6 @@ public class FXMLDevolucionController implements Initializable {
                     listaTotalCompra.add(total);
                     listaMotivo.add(new Item(i + 1, txtMotivo.getText()));
                 }
-
-                System.out.println(Arrays.toString(cantidadCodeBar.toArray()));
                 añadirCeldasTbl();
                 tblVenta.setItems(listaArticulo);
                 sumarDineroTotal();
@@ -283,7 +335,7 @@ public class FXMLDevolucionController implements Initializable {
         cantidadCodeBar = FXCollections.observableArrayList();
         try {
             codFactura = ConexionInventario.sSQL(SentenciasSQL.verRegistroCodeBar + "'" + codeBar + "' and detalle_factura.cod_factura = "
-                    + "'" + factura + "'");
+                    + "'" + factura + "' group by detalle_factura.cod_articulo;");
             while (codFactura.next()) {
                 if (codFactura.getString("producto.codigo_barras").equals(codeBar)) {
                     if (cantidad <= codFactura.getInt(3) && cantidad > 0) {

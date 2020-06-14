@@ -58,7 +58,7 @@ public class FXMLModificarEmpleadoController implements Initializable {
 
     @FXML
     private void modificarEmpleado(ActionEvent event) {
-        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtEmpleado.getText())) {
+        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtEmpleado.getText(), "Empleado")) {
             if (MetodosJavaClass.verificarEmail(txtEmail)) {
                 if (!cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")
                         && !cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("PASAPORTE")) {
@@ -89,7 +89,7 @@ public class FXMLModificarEmpleadoController implements Initializable {
     @FXML
     private void eliminarEmpleado(ActionEvent event) {
         if (MetodosJavaClass.txtVacios(datosArray())) {
-            if (MetodosJavaClass.isDouble(txtEmpleado.getText())) {
+            if (MetodosJavaClass.isDouble(txtEmpleado.getText(), "Empleado")) {
                 if (existeEmpleado()) {
                     if (Alertas.ConfirmacionEleminarOModificar()) {
                         sentencia = SentenciasSQL.sqlEliminarEmpleado + " codigoEmpleado = " + Integer.parseInt(txtEmpleado.getText());

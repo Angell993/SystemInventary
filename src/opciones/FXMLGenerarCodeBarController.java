@@ -52,9 +52,9 @@ public class FXMLGenerarCodeBarController implements Initializable {
     @FXML
     private void guadarCodeB() {
         if (!cmbArticulo.getSelectionModel().isSelected(-1)) {
-            /*cb.crearCodeBar(String.valueOf(cmbArticulo.getSelectionModel().getSelectedItem().getId()),
+            cb.crearCodeBar(String.valueOf(cmbArticulo.getSelectionModel().getSelectedItem().getId()),
                     cmbArticulo.getSelectionModel().getSelectedItem().getDescripcion(),
-                    cmbArticulo.getSelectionModel().getSelectedItem().getDocProveedor());*/
+                    cmbArticulo.getSelectionModel().getSelectedItem().getDocProveedor());
         }
     }
 

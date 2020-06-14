@@ -57,9 +57,10 @@ public class FXMLModificarEliminarEmpleadoController implements Initializable {
     private ObservableList<Empleado> llenarTablaEmpleados(ObservableList<Empleado> empleadoLista, String sWhere) {
         empleadoLista = FXCollections.observableArrayList();
         try {
-            String sSentencia = SentenciasSQL.sqlConsultaEmpleadoTabla + "WHERE CodigoEmpleado LIKE ('%" + sWhere + "%')"
+            String sSentencia = SentenciasSQL.sqlConsultaEmpleadoTabla + "WHERE CodigoEmpleado LIKE ('%" + sWhere + "%') "
+                    + " or DNI_NIE LIKE ('%" + sWhere + "%')"
                     + " or  Nombre LIKE ('%" + sWhere + "%')"
-                    + " ORDER BY Id_empleado";
+                    + " ORDER BY Id_empleado;";
             ResultSet rSet = ConexionInventario.sSQL(sSentencia);
             while (rSet.next()) {
                 empleadoLista.add(new Empleado(rSet.getInt("Id_empleado"), rSet.getInt("CodigoEmpleado"), rSet.getInt("cod_tipodocumento"),
@@ -96,7 +97,7 @@ public class FXMLModificarEliminarEmpleadoController implements Initializable {
                 Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene_page);
                 stage.showAndWait();
-                
+
                 Empleado emp = enviarDatos.getEmpleado();
                 if (emp != null) {
                     tblEmpleado.refresh();
@@ -124,15 +125,16 @@ public class FXMLModificarEliminarEmpleadoController implements Initializable {
                 Alertas.mensajeError("El empleado con el nº de documento " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un documento válido");
                 fieldDocumento.deleteText(sWhere.length() - 1, sWhere.length());
             }
-        }else  
+        } else {
             tblEmpleado.setItems(llenarTablaEmpleados(listaEmpleados, ""));
+        }
     }
-    
-    public void recibirInformacion(AnchorPane rootPane){
+
+    public void recibirInformacion(AnchorPane rootPane) {
         this.rootPane = rootPane;
     }
-    
-    public void informacionModificada(AnchorPane rootPane){
+
+    public void informacionModificada(AnchorPane rootPane) {
         this.rootPane = rootPane;
     }
 }

@@ -61,7 +61,7 @@ public class FXMLRegistrarClienteController implements Initializable {
 
     @FXML
     private void registrarCliente(ActionEvent event) {
-        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtCodigoPostal.getText()) && MetodosJavaClass.isDouble(txtEmpleado.getText())) {
+        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtCodigoPostal.getText(), "CP")) {
             if (MetodosJavaClass.cmbSeleccionado(cmbDocumento) && MetodosJavaClass.cmbSeleccionado(cmbProvincia) && MetodosJavaClass.cmbSeleccionado(cmbMunicipio)) {
                 if (MetodosJavaClass.verificarEmail(txtEmail)) {
                     if (!cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")) {

@@ -13,41 +13,37 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Fichero {
-    private final String rutaDB = "src/configuracionadministrador/configDB.dat";   
-    private final String rutaCorreo = "src/configuracionadministrador/configCorreo.dat";
+
+    private final String rutaDB = "./configDB.dat";
+    private final String rutaCorreo = "./configCorreo.dat";
 
     private File creacionVerificacionFichero(String ruta) {
         File fichero = new File(ruta);
-        if (!fichero.exists()) {
-            try {
-                fichero.createNewFile();
-                return fichero;
-            } catch (IOException ex) {
-                Logger.getLogger(Fichero.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try {
+            fichero.createNewFile();
+        } catch (IOException ex) {
+            Logger.getLogger(Fichero.class.getName()).log(Level.SEVERE, null, ex);
         }
         return fichero;
     }
 
     public void escribirObjeto(String server, String user, String pass) {
-        ConfigDB config = new ConfigDB();
-        
-        try {
-            try (ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(creacionVerificacionFichero(rutaDB), true))) {
-                config.setServer(server);
-                config.setUsuario(user);
-                config.setPass(pass);
-                objOut.writeObject(config);            }
+        ConfigDB config;
+        try (ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(creacionVerificacionFichero(rutaDB), true))) {
+            config = new ConfigDB(server, user, pass);
+            objOut.writeObject(config);
+            objOut.close();
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Fichero.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(Fichero.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }  
-    
+    }
+
     public void escribirObjeto(String correoEmpresa, String constrasenia) {
         ConfigCorreo configC = new ConfigCorreo();
-         try {
+        try {
             try (ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(creacionVerificacionFichero(rutaCorreo), true))) {
                 configC.setCorreo(correoEmpresa);
                 configC.setContrasenia(constrasenia);
@@ -61,9 +57,9 @@ public class Fichero {
     }
 
     public ConfigDB leerObjetoDB() {
-        ConfigDB config = null;
+        ConfigDB config = new ConfigDB();
         try {
-            try (ObjectInputStream objetInput = new ObjectInputStream(new FileInputStream(creacionVerificacionFichero(rutaDB).toString()))) {
+            try (ObjectInputStream objetInput = new ObjectInputStream(new FileInputStream(rutaDB))) {
                 config = (ConfigDB) objetInput.readObject();
             } catch (StreamCorruptedException | EOFException ex) {
             }
@@ -74,16 +70,16 @@ public class Fichero {
     }
 
     public ConfigCorreo leerObjetoCorreo() {
-        ConfigCorreo correoConfig = null;
+        ConfigCorreo correoConfig = new ConfigCorreo();
         try {
             try (ObjectInputStream objetInpu = new ObjectInputStream(new FileInputStream(creacionVerificacionFichero(rutaCorreo).toString()))) {
                 correoConfig = (ConfigCorreo) objetInpu.readObject();
             } catch (StreamCorruptedException | EOFException ex) {
             }
-        } catch (IOException | ClassNotFoundException  ex) {
+        } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Fichero.class.getName()).log(Level.SEVERE, null, ex);
         }
         return correoConfig;
     }
-    
+
 }

@@ -12,12 +12,12 @@ import javafx.scene.control.TextField;
 public class MetodosJavaClass {
 
     /*Verificar si es número*/
-    public static Boolean isDouble(String numero) {
+    public static Boolean isDouble(String numero, String verificar) {
         try {
             Double.parseDouble(numero);
             return true;
         } catch (NumberFormatException e) {
-            Alertas.mensajeError("El valor ingresado no es un número. " + numero);
+            Alertas.mensajeError("El valor ingresado no es un número. " + verificar);
         }
         return false;
     }
@@ -76,7 +76,7 @@ public class MetodosJavaClass {
                 count++;
             }
         }
-        //Con este If compruebo si el contador es menor al tamaño de la arry
+        //Con este If compruebo si el contador es menor al tamaño de la array
         if (count < lengthDatos) {
             Alertas.mensajeError("Los campos están vacios ");
             return false;

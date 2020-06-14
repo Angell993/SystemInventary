@@ -42,7 +42,7 @@ public class FXMLRegistrarArticuloController implements Initializable {
     private void ingresarArticulo(ActionEvent event) {
         int stock_minimo = 5, stock_maximo = 30;
         if (MetodosJavaClass.txtVacios(datosArray())) {
-            if (MetodosJavaClass.isDouble(txtPrecioVenta.getText()) && MetodosJavaClass.isDouble(txtPrecioCosto.getText())) {
+            if (MetodosJavaClass.isDouble(txtPrecioVenta.getText(), "Precio Venta") && MetodosJavaClass.isDouble(txtPrecioCosto.getText(), "Precio Costo")) {
                 if (MetodosJavaClass.esNumero(txtCodBarras.getText())) {
                     if (MetodosJavaClass.cmbSeleccionado(cmbArticulo) && MetodosJavaClass.cmbSeleccionado(cmbProveedor)) {
                         if (Integer.parseInt(txtStock.getText()) > stock_minimo) {

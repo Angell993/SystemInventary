@@ -32,7 +32,6 @@ public class Fecha {
 
     public static String fechaSQl() {
         pantalla = (annio + "-" + mes+"-"+dia);
-        System.out.println(pantalla);
         return pantalla;
     }
 

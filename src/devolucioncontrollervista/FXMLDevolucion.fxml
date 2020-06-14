@@ -48,7 +48,7 @@
          <children>
             <Button mnemonicParsing="false" onAction="#borrar" prefHeight="46.0" prefWidth="121.0" text="Cancelar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Button mnemonicParsing="false" onAction="#registrarDevolucion" text="Devolver" GridPane.rowIndex="2" />
-            <Button fx:id="btnAniadir" mnemonicParsing="false" onAction="#añadirArticulo" prefHeight="46.0" prefWidth="117.0" text="Añadir" GridPane.rowIndex="1" />
+            <Button fx:id="btnAniadir" mnemonicParsing="false" onAction="#añadirArticulo" prefHeight="46.0" prefWidth="117.0" text="Modificar" GridPane.rowIndex="1" />
             <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" prefHeight="46.0" prefWidth="127.0" text="Eliminar" GridPane.columnIndex="1" GridPane.rowIndex="1" />
            
          </children>

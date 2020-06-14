@@ -39,19 +39,19 @@ public class FXMLAdministradorConfigController implements Initializable {
     private Label lblConexion, lblCorreo;
     @FXML
     private Button siguiente;
-    private Boolean verifica = false;
+    private Boolean verifica = false, conexionAcess = false;
     private ConexionDB conexion;
     private final Fichero fich = new Fichero();
 
     @FXML
     private void ingresarSistema(ActionEvent event) {
-        if (lblConexion.getText().contains("OK")) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login/FXMLIngresar.fxml"));
+        if (conexionAcess) {
             try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/login/FXMLIngresar.fxml"));
                 Parent root = loader.load();
                 Stage stage = new Stage();
                 Scene scene_page = new Scene(root);
-                stage.setTitle("INVENTARIO");
+                stage.setTitle("INVENTARIO & VENTA");
                 stage.getIcons().add(new Image(getClass().getResource("/imagenes/iconoInventario.png").toExternalForm()));
                 Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(scene_page);
@@ -74,12 +74,17 @@ public class FXMLAdministradorConfigController implements Initializable {
                 lblConexion.setText("Conexón OK");
             }
         } else {
-            conexion = new ConexionDB(txtUrl.getText(), txtUsuario.getText(), txtPass.getText());
-            if (conexion.conectar() == null) {
-                lblConexion.setText("Conexión Fallida!!");
-            } else {
-                lblConexion.setText("Conexón OK");
-                fich.escribirObjeto(txtUrl.getText(), txtUsuario.getText(), txtPass.getText());
+            if (!txtUrl.getText().isEmpty() && !txtUsuario.getText().isEmpty() && !txtPass.getText().isEmpty()) {
+                conexion = new ConexionDB(txtUrl.getText(), txtUsuario.getText(), txtPass.getText());
+                if (conexion.conectar() == null) {
+                    lblConexion.setText("Conexión Fallida!!");
+                } else {
+                    lblConexion.setText("Conexón OK");
+                    fich.escribirObjeto(txtUrl.getText(), txtUsuario.getText(), txtPass.getText());
+                    conexionAcess = true;
+                }
+            }else{
+                Alertas.mensajeAdvertencia("Campos", "Los campos están vacios.");
             }
         }
     }
@@ -114,7 +119,7 @@ public class FXMLAdministradorConfigController implements Initializable {
                 mail.setFrom(new InternetAddress(txtCorreoEmpresa.getText()));
                 mail.addRecipient(Message.RecipientType.TO, new InternetAddress(txtCorreoEmpresa.getText()));
                 mail.setSubject("Bienvenido al Sistema de Inventario");
-                mail.setText("Verificación de  correo OK, Sistema de Inventario\n----------------------------------------\nComercial 4 Cantos S.L"
+                mail.setText("Verificación de  correo OK, Sistema de Inventario\n----------------------------------------\nJ&A S.L"
                         + "\nNo responder a este mensaje.", "UTF-8");
 
                 Transport transport = conexionServidorCorreo().getTransport("smtp");

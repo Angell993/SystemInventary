@@ -35,11 +35,11 @@ public class FXMLCorreoController implements Initializable {
     private TextArea txtACuerpo;
     private File f = null;
     private  String contrasenia;
-    private final String pieDeMensaje = "\n-------------------------------------------------------------------- \nComercial 4 Cantos S.L";
+    private final String pieDeMensaje = "\n-------------------------------------------------------------------- \nJO&AL S.L";
     private final String aviso = "\nNo responda a este mensaje.";
 
     private void extraerCorreo(){
-        File file = new File("src/configuracionadministrador/configCorreo.dat");
+        File file = new File("./configCorreo.dat");
         if (file.exists()) {
             Fichero fich = new Fichero();
             txtPropietario.setText(fich.leerObjetoCorreo().getCorreo());

@@ -37,10 +37,5 @@ public class ConfigDB implements Serializable{
     public void setPass(String pass) {
         this.pass = pass;
     }
-
-    @Override
-    public String toString() {
-        return "Configuración Data Base\n" + "server=" + server + "\nusuario=" + usuario + "\npass=" + pass ;
-    }
     
 }

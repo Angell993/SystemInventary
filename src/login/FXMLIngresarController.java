@@ -5,7 +5,6 @@ import conexionbasedatos.ConexionInventario;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -44,6 +43,7 @@ public class FXMLIngresarController implements Initializable {
     @FXML
     private Button entrar, btnSalir;
     private ConexionDB conectar;
+    private boolean desconectar = false;
     private ResultSet datos;
     private int empleado;
 
@@ -61,7 +61,7 @@ public class FXMLIngresarController implements Initializable {
             password.getStyleClass().add("error-ingresar");
         } else {
 
-            recuperarUser(event);
+            ingresarSystem(event);
         }
 
     }
@@ -69,17 +69,14 @@ public class FXMLIngresarController implements Initializable {
     @FXML
     public void onEnter(ActionEvent ae) {
         entrar.fire();
-
     }
 
-    private void recuperarUser(ActionEvent event) {
+    private void ingresarSystem(ActionEvent event) {
         try {
             conectar = new ConexionDB();
-            try (Connection conect = conectar.conectar()) {
-                conect.setAutoCommit(false);
-                String sql = "select * from login";
-                datos = ConexionInventario.sSQL(sql);
-
+            String sql = "select * from login";
+            datos = ConexionInventario.sSQL(sql);
+            try {
                 while (datos.next()) {
                     int id = datos.getInt("id_Empleado");
                     String pass = datos.getString("password");
@@ -99,10 +96,8 @@ public class FXMLIngresarController implements Initializable {
                         error.setText("Contraseña o Usuario incorrecto!");
                     }
                 }
-                conectar.cerrarConexion();
             } catch (SQLException ex) {
-                Logger.getLogger(FXMLIngresarController.class
-                        .getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FXMLIngresarController.class.getName()).log(Level.SEVERE, null, ex);
             }
         } catch (NumberFormatException e) {
             error.setText("Contraseña o Usuario incorrecto!");
@@ -111,7 +106,6 @@ public class FXMLIngresarController implements Initializable {
 
     private void sistemaInventario(ActionEvent event) {
         try {
-            System.out.println("[********** Bienvenido al Sistema **********]");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/sistemaInventarioControladorVistas/FXMLSistemaInventario.fxml"));
             Parent root = loader.load();
             //Hacemos una instancia del controlador del Sistema de Inventario o el controlador que deseamos enviar el parametro.
@@ -120,7 +114,7 @@ public class FXMLIngresarController implements Initializable {
 
             Stage stage = new Stage();
             Scene scene_page = new Scene(root);
-            stage.setTitle("INVENTARIO");
+            stage.setTitle("INVENTARIO & VENTA");
             stage.getIcons().add(new Image(getClass().getResource("/imagenes/iconoInventario.png").toExternalForm()));
             Stage mystage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene_page);
@@ -141,19 +135,24 @@ public class FXMLIngresarController implements Initializable {
 
     @FXML
     private void desconectar(ActionEvent event) {
-        if (usuario.getText().isEmpty() && password.getText().isEmpty()) {
-            error.setText("Contraseña o Usuario incorrecto!");
-            usuario.getStyleClass().add("error-ingresar");
-            password.getStyleClass().add("error-ingresar");
-        } else {
-            if (desconectarDB()) {
-                usuario.setText("0");
-                sistemaInventario(event);
+        if (desconectar) {
+            if (usuario.getText().isEmpty() && password.getText().isEmpty()) {
+                error.setText("Contraseña o Usuario incorrecto!");
+                usuario.getStyleClass().add("error-ingresar");
+                password.getStyleClass().add("error-ingresar");
+            } else {
+                if (desconectarDB()) {
+                    usuario.setText("0");
+                    sistemaInventario(event);
+                }
             }
+        }else{
+            closeVentana(event);            
         }
     }
 
     public void desconectarConexionDB(boolean desconectar, int empleado) {
+        this.desconectar = desconectar;
         lbl1.setVisible(false);
         lbl2.setVisible(false);
         lbl2.setVisible(false);
@@ -161,10 +160,10 @@ public class FXMLIngresarController implements Initializable {
         lbl4.setVisible(false);
         lbl5.setVisible(false);
         lbl6.setVisible(false);
-        fontCandado.getStyleClass().add("candado");        
+        fontCandado.getStyleClass().add("candado");
         fontUser.getStyleClass().add("userllave");
         fontLlave.getStyleClass().add("userllave");
-        
+
         btnSalir.setVisible(desconectar);
         this.empleado = empleado;
     }
@@ -172,8 +171,7 @@ public class FXMLIngresarController implements Initializable {
     private boolean desconectarDB() {
         try {
             conectar = new ConexionDB();
-            try (Connection conect = conectar.conectar()) {
-                conect.setAutoCommit(false);
+            try {
                 if (empleado == Integer.valueOf(usuario.getText())) {
                     String sql = "select * from login where id_empleado=  " + empleado;
                     datos = ConexionInventario.sSQL(sql);

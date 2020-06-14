@@ -35,10 +35,10 @@
             <FontAwesomeIconView fx:id="fontCandado" fill="#fcf8f8" glyphName="LOCK" layoutX="190.0" layoutY="115.0" size="125" styleClass="candado" wrappingWidth="105.4285717010498" />
             <FontAwesomeIconView fx:id="fontUser" fill="#fffdfd" glyphName="USER" layoutX="46.0" layoutY="210.0" size="50" text="" wrappingWidth="42.428571701049805" />
             <FontAwesomeIconView fx:id="fontLlave" fill="WHITE" glyphName="KEY" layoutX="46.0" layoutY="281.0" size="50" wrappingWidth="42.42857122421265" />
-                <Label fx:id="error" alignment="CENTER" contentDisplay="CENTER" layoutX="124.0" layoutY="310.0" prefHeight="41.0" prefWidth="283.0" textAlignment="CENTER" textFill="#ee0707" />
+                <Label fx:id="error" alignment="CENTER" contentDisplay="CENTER" layoutX="88.0" layoutY="309.0" prefHeight="41.0" prefWidth="283.0" textAlignment="CENTER" textFill="#ee0707" />
                 <Button fx:id="entrar" contentDisplay="RIGHT" layoutX="47.0" layoutY="383.0" mnemonicParsing="false" onAction="#ingresarSistema" prefHeight="44.0" prefWidth="155.0" text="Entrar" textFill="#fcfcfc">
                 </Button>
-            <Button fx:id="btnSalir" contentDisplay="RIGHT" layoutX="228.0" layoutY="380.0" mnemonicParsing="false" onAction="#desconectar" prefHeight="44.0" prefWidth="155.0" text="Salir" textFill="#fcfcfc" visible="false" />
+            <Button fx:id="btnSalir" contentDisplay="RIGHT" layoutX="228.0" layoutY="380.0" mnemonicParsing="false" onAction="#desconectar" prefHeight="44.0" prefWidth="155.0" text="Salir" textFill="#fcfcfc" />
             </children>
         </AnchorPane>
       <Label fx:id="lbl1" layoutX="74.0" layoutY="30.0" text="SISTEMA DE INVENTARIO" textAlignment="JUSTIFY" textFill="#75f90c">
@@ -66,7 +66,7 @@
             <Font size="28.0" />
          </font>
       </Label>
-      <Label fx:id="lbl6" layoutX="12.0" layoutY="321.0" text="JUAN CARLOS OTERO MARTÍNEZ" textFill="#f8f7f7">
+      <Label fx:id="lbl6" layoutX="12.0" layoutY="321.0" text="OTERO MARTÍNEZ JUAN CARLOS" textFill="#f8f7f7">
          <font>
             <Font name="Times New Roman" size="28.0" />
          </font>

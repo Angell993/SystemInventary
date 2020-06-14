@@ -68,12 +68,12 @@ public class FXMLModificarEliminarClienteController implements Initializable {
     public ObservableList<Cliente> llenarTabla(ObservableList<Cliente> clienteLista, String sWhere) {
         clienteLista = FXCollections.observableArrayList();
         try {
-            ResultSet rSet = ConexionInventario.sSQL(SentenciasSQL.sqlClienteTabla+" where Documento LIKE ('%" + sWhere + "%') "
+            ResultSet rSet = ConexionInventario.sSQL(SentenciasSQL.sqlClienteTabla + " where Documento LIKE ('%" + sWhere + "%') "
                     + " or Nombre LIKE ('%" + sWhere + "%')"
                     + "order by Nombre ;");
             while (rSet.next()) {
 
-                clienteLista.add(new Cliente(rSet.getInt("id_Cliente"),rSet.getString("Documento"), rSet.getInt("cod_tipo_documento"), rSet.getString("Nombre"),
+                clienteLista.add(new Cliente(rSet.getInt("id_Cliente"), rSet.getString("Documento"), rSet.getInt("cod_tipo_documento"), rSet.getString("Nombre"),
                         rSet.getString("Apellidos"), rSet.getString("Telefono"),
                         rSet.getString("Pais"), rSet.getString("Ciudad"),
                         rSet.getString("Localidad"), rSet.getString("Direccion"),
@@ -104,8 +104,7 @@ public class FXMLModificarEliminarClienteController implements Initializable {
         tblCliente.setItems(llenarTabla(listaClientes, ""));
     }
 
-
-    @FXML
+    
     public void buscarCliente(KeyEvent event) {
         String sWhere = fieldDocumento.getText();
         if (fieldDocumento.getText() != null && !fieldDocumento.getText().contentEquals("")) {
@@ -117,6 +116,22 @@ public class FXMLModificarEliminarClienteController implements Initializable {
             }
         } else {
             tblCliente.setItems(llenarTabla(listaClientes, ""));
+        }
+    }
+
+    @FXML
+    private void clienteBuscar() {
+        if (!fieldDocumento.getText().isEmpty()) {
+            if (fieldDocumento.getText() != null && !fieldDocumento.getText().contentEquals("")) {
+                listaSelectClientes = FXCollections.observableArrayList();
+                tblCliente.setItems(llenarTabla(listaSelectClientes, fieldDocumento.getText()));
+                if (tblCliente.getItems().isEmpty()) {
+                    Alertas.mensajeError("El cliente con el nº de documento " + fieldDocumento.getText() + " no existe.\nPor favor, introduzca un documento válido");
+                    fieldDocumento.deleteText(fieldDocumento.getText().length() - 1, fieldDocumento.getText().length());
+                }
+            } else {
+                tblCliente.setItems(llenarTabla(listaClientes, ""));
+            }
         }
     }
 
@@ -141,8 +156,8 @@ public class FXMLModificarEliminarClienteController implements Initializable {
                 Cliente aux = enviarDatos.getCliente();
                 if (aux != null) {
                     this.tblCliente.refresh();
-                }else{
-                   this.tblCliente.refresh(); 
+                } else {
+                    this.tblCliente.refresh();
                 }
             } catch (IOException e) {
                 Alertas.mensajeError(e.getLocalizedMessage());
@@ -151,11 +166,11 @@ public class FXMLModificarEliminarClienteController implements Initializable {
 
     }
 
-    public void recibirInformacion(AnchorPane rootPane){
+    public void recibirInformacion(AnchorPane rootPane) {
         this.rootPane = rootPane;
     }
 
-    public void informacionModificada(AnchorPane rootPane){
+    public void informacionModificada(AnchorPane rootPane) {
         this.rootPane = rootPane;
     }
 }
