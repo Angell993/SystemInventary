@@ -16,12 +16,12 @@ import javafx.scene.control.ComboBox;
 public class LLenarCombos {
 
     private final ConexionDB conn = new ConexionDB();
+    private ResultSet datos;
 
     /*Cargo una clase Item, que con esto me permite añadir datos a cualquier ComboBox*/
     public void llenarComboBox(ObservableList<Item> listaItem, ComboBox<Item> cargarDatos, String sentencia) {
         listaItem = FXCollections.observableArrayList();
         //Este es un try con recursos que me permite cerrar la conexion cuando ya se termine el ResulSet
-        ResultSet datos = null;
         try {
             if (sentencia.contains("provincia")) {
                 datos = ConexionEspania.sSQL(sentencia);
@@ -50,7 +50,8 @@ public class LLenarCombos {
     public void llenarComboProveedor(ObservableList<Item> listaItem, ComboBox<Item> cargarDatos, String sentencia) {
         listaItem = FXCollections.observableArrayList();
         //Este es un try con recursos que me permite cerrar la conexion cuando ya se termine el ResulSet
-        try (ResultSet datos = ConexionInventario.sSQL(sentencia)) {
+        try {
+            datos = ConexionInventario.sSQL(sentencia);
             while (datos.next()) {
                 listaItem.add(new Item(datos.getString(1), datos.getString(2)));
             }
@@ -63,7 +64,7 @@ public class LLenarCombos {
     public void articuloCodBar(ObservableList<Item> listaArticulo, ComboBox<Item> cmbArticulo, String sentencia) {
         listaArticulo = FXCollections.observableArrayList();
         try {
-            ResultSet datos = ConexionInventario.sSQL(sentencia);
+            datos = ConexionInventario.sSQL(sentencia);
             while (datos.next()) {
                 listaArticulo.add(new Item(datos.getInt(1), datos.getString(2), datos.getString(3)));
             }

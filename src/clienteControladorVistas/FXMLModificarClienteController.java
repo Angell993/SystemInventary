@@ -20,12 +20,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import metodosjavaClass.Alertas;
-import metodosjavaClass.CalcularDocumentoIdentidadCIF;
+import clasesjava.CalcularDocumentoIdentidadCIF;
 import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.MetodosJavaClass;
 import metodosjavaClass.SentenciasSQL;
 import metodosjavaClass.VentanaRootPane;
-import proveedorControladorVistas.FXMLModificarEliminarProveedorController;
 import proveedorControladorVistas.FXMLModificarProveedorController;
 
 public class FXMLModificarClienteController implements Initializable {
@@ -88,30 +87,30 @@ public class FXMLModificarClienteController implements Initializable {
 
     @FXML
     private void modificarRegistro(ActionEvent event) {
-        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtCodigoPostal.getText(), "CP") && MetodosJavaClass.isDouble(numEmpleado.getText(),"Empleado")) {
-            //if (documentoValido(txtDni.getText())) {
-            String modificar = SentenciasSQL.sqlModificarCliente + " Documento ='" + txtDni.getText() + "' ,"
-                    + " cod_tipo_documento = " + cmbDocumento.getSelectionModel().getSelectedItem().getId() + " ,"
-                    + " Nombre = '" + txtNombre.getText() + "' ,"
-                    + " Apellidos = '" + txtApellido.getText() + "',"
-                    + " Telefono = '" + txtTelefono.getText() + "' ,"
-                    + " email = '" + txtEmail.getText() + "' ,"
-                    + " Pais = '" + txtPais.getText() + "' ,"
-                    + " Ciudad  = '" + cmbProv.getSelectionModel().getSelectedItem().getDescripcion() + "' ,"
-                    + " Localidad = '" + cmbMun.getSelectionModel().getSelectedItem().getDescripcion() + "' ,"
-                    + " Direccion = '" + txtDireccion.getText() + "' ,"
-                    + " CodigoPostal = " + Integer.valueOf(txtCodigoPostal.getText()) + " ,"
-                    + " Empleado = " + Integer.valueOf(numEmpleado.getText()) + " WHERE id_Cliente = " + id;
-            ConexionInventario.EjecutarSQL(modificar);
-            actualizarTablaModificada();
-            cerrarVentana(event);
-            //}            
+        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtCodigoPostal.getText(), "CP") && MetodosJavaClass.isDouble(numEmpleado.getText(), "Empleado")) {
+            if (documentoValido(txtDni.getText())) {
+                String modificar = SentenciasSQL.sqlModificarCliente + " Documento ='" + txtDni.getText() + "' ,"
+                        + " cod_tipo_documento = " + cmbDocumento.getSelectionModel().getSelectedItem().getId() + " ,"
+                        + " Nombre = '" + txtNombre.getText() + "' ,"
+                        + " Apellidos = '" + txtApellido.getText() + "',"
+                        + " Telefono = '" + txtTelefono.getText() + "' ,"
+                        + " email = '" + txtEmail.getText() + "' ,"
+                        + " Pais = '" + txtPais.getText() + "' ,"
+                        + " Ciudad  = '" + cmbProv.getSelectionModel().getSelectedItem().getDescripcion() + "' ,"
+                        + " Localidad = '" + cmbMun.getSelectionModel().getSelectedItem().getDescripcion() + "' ,"
+                        + " Direccion = '" + txtDireccion.getText() + "' ,"
+                        + " CodigoPostal = " + Integer.valueOf(txtCodigoPostal.getText()) + " ,"
+                        + " Empleado = " + Integer.valueOf(numEmpleado.getText()) + " WHERE id_Cliente = " + id;
+                ConexionInventario.EjecutarSQL(modificar);
+                actualizarTablaModificada();
+                cerrarVentana(event);
+            }
         }
     }
 
     @FXML
     private void eliminarCliente(ActionEvent event) {
-        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtCodigoPostal.getText(), "CP") && MetodosJavaClass.isDouble(numEmpleado.getText(),"Empleado")) {
+        if (MetodosJavaClass.txtVacios(datosArray()) && MetodosJavaClass.isDouble(txtCodigoPostal.getText(), "CP") && MetodosJavaClass.isDouble(numEmpleado.getText(), "Empleado")) {
             //if (documentoValido(txtDni.getText())) {
             if (Alertas.ConfirmacionEleminarOModificar()) {
                 String eliminar = SentenciasSQL.sqlEliminarCliente + " id_Cliente = " + id;

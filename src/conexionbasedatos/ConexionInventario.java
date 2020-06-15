@@ -71,17 +71,17 @@ public class ConexionInventario {
     private static boolean mensajeConsulta(int i, String sentencia) {
         if (i > 0) {
             if (sentencia.startsWith("UPDATE")) {
-                Alertas.mensajeConfirmacion("ACTUALIZACIÓN", "Se ha actualizado correctamente en la Base de Datos.");
+                Alertas.mensajeConfirmacion("ACTUALIZACIÓN", "Se ha actualizado correctamente.");
                 conn.cerrarConexion();
                 return true;
             }
             if (sentencia.startsWith("DELETE")) {
-                Alertas.mensajeConfirmacion("BORRADO", "Se ha eliminado de la Base de Datos.");
+                Alertas.mensajeConfirmacion("Eleiminar", "Se ha eliminado correctamente.");
                 conn.cerrarConexion();
                 return true;
             }
             if (sentencia.startsWith("INSERT")) {
-                Alertas.mensajeConfirmacion("INSERCIÓN", "Se ha registrado correctamente en la Base de Datos.");
+                Alertas.mensajeConfirmacion("Registro", "Se ha registrado correctamente.");
                 conn.cerrarConexion();
                 return true;
             }

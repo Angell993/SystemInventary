@@ -2,7 +2,6 @@ package empleadoControladoresVista;
 
 import clasesjava.Empleado;
 import clasesjava.Item;
-import clienteControladorVistas.FXMLModificarEliminarClienteController;
 import conexionbasedatos.ConexionInventario;
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +20,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import metodosjavaClass.Alertas;
+import clasesjava.CalcularDocumentoIdentidadCIF;
 import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.MetodosJavaClass;
 import metodosjavaClass.SentenciasSQL;
@@ -64,15 +64,17 @@ public class FXMLModificarEmpleadoController implements Initializable {
                         && !cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("PASAPORTE")) {
                     if (Alertas.puestoConfirmacion(cmbPuesto.getSelectionModel().getSelectedItem().getDescripcion())) {
                         if (existeEmpleado()) {
-                            sentencia = SentenciasSQL.sqlModificarEmpleado + " codigoEmpleado = " + Integer.parseInt(txtEmpleado.getText())
-                                    + ", cod_tipodocumento = " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
-                                    + ", DNI_NIE = '" + txtDocumento.getText() + "', Nombre = '" + txtNombre.getText()
-                                    + "', Apellidos = '" + txtApellido.getText() + "', Email = '" + txtEmail.getText()
-                                    + "', Puesto = " + cmbPuesto.getSelectionModel().getSelectedItem().getId()
-                                    + " WHERE codigoEmpleado = " + Integer.parseInt(txtEmpleado.getText());
-                            ConexionInventario.EjecutarSQL(sentencia);
-                            actualizarTabla();
-                            cerrarVentana(event);
+                            if (documentoValido(txtDocumento.getText())) {
+                                sentencia = SentenciasSQL.sqlModificarEmpleado + " codigoEmpleado = " + Integer.parseInt(txtEmpleado.getText())
+                                        + ", cod_tipodocumento = " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
+                                        + ", DNI_NIE = '" + txtDocumento.getText() + "', Nombre = '" + txtNombre.getText()
+                                        + "', Apellidos = '" + txtApellido.getText() + "', Email = '" + txtEmail.getText()
+                                        + "', Puesto = " + cmbPuesto.getSelectionModel().getSelectedItem().getId()
+                                        + " WHERE codigoEmpleado = " + Integer.parseInt(txtEmpleado.getText());
+                                ConexionInventario.EjecutarSQL(sentencia);
+                                actualizarTabla();
+                                cerrarVentana(event);
+                            }
                         }
                     } else {
                         Alertas.mensajeInformación("Puesto", "Elige otro cargo para el empleado.");
@@ -125,6 +127,16 @@ public class FXMLModificarEmpleadoController implements Initializable {
         llenarComb.llenarComboBox(listaPuesto, cmbPuesto, SentenciasSQL.sqlPuesto);
     }
 
+    private boolean documentoValido(String identificacionDocumento) {
+        CalcularDocumentoIdentidadCIF documento = new CalcularDocumentoIdentidadCIF();
+        if (documento.isvalidoDocumentoIdentificacion(identificacionDocumento)) {
+            return true;
+        } else {
+            Alertas.mensajeError("Documento Inválido!!!");
+            return false;
+        }
+    }
+
     private ObservableList<TextField> datosArray() {
         ObservableList<TextField> listaDatos = FXCollections.observableArrayList();
         listaDatos.removeAll(listaDatos);
@@ -162,7 +174,6 @@ public class FXMLModificarEmpleadoController implements Initializable {
         return empleado;
     }
 
-    
     private void recargarVentana() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/empleadoControladoresVista/FXMLModificarEliminarEmpleado.fxml"));

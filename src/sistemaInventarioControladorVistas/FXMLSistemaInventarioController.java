@@ -213,7 +213,7 @@ public class FXMLSistemaInventarioController extends Thread implements Initializ
         try {
             empleados = null;
             int codJefe = 0;
-            String sql = "Select nombre, apellidos, Puesto from empleado where CodigoEmpleado = " + user;
+            String sql = "Select nombre, apellidos, Puesto from empleado where CodigoEmpleado = " + user+";";
             ResultSet datos = ConexionInventario.sSQL(sql);
             while (datos.next()) {
                 empleados = (datos.getString("Nombre") + " " + datos.getString("Apellidos"));

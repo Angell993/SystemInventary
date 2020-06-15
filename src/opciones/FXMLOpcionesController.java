@@ -16,7 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import metodosjavaClass.SentenciasSQL;
 import metodosjavaClass.VentanaRootPane;
-import reportesistemainventario.CrearInforme;
+import clasesjava.CrearInforme;
 
 public class FXMLOpcionesController implements Initializable {
     

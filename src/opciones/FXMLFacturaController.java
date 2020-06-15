@@ -6,7 +6,6 @@ import conexionbasedatos.ConexionInventario;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,9 +18,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import metodosjavaClass.SentenciasSQL;
-import reportesistemainventario.CrearInforme;
+import clasesjava.CrearInforme;
 
 public class FXMLFacturaController implements Initializable {
 
@@ -71,7 +69,8 @@ public class FXMLFacturaController implements Initializable {
 
     private ObservableList<Venta> factura(String factura) {
         listaVenta = FXCollections.observableArrayList();
-        ResultSet datos = ConexionInventario.sSQL(SentenciasSQL.sqlFacturaImprimir + " '" + factura + "'");
+        ResultSet datos = ConexionInventario.sSQL(SentenciasSQL.sqlFacturaImprimir + " '" + factura + "'"
+                + " group by detalle_factura.cod_articulo;");
         try {
             double importe = 0;
             while (datos.next()) {

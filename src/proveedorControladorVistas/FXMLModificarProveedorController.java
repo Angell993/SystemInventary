@@ -20,6 +20,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import metodosjavaClass.Alertas;
+import clasesjava.CalcularDocumentoIdentidadCIF;
 import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.MetodosJavaClass;
 import metodosjavaClass.SentenciasSQL;
@@ -83,17 +84,19 @@ public class FXMLModificarProveedorController implements Initializable {
             if (MetodosJavaClass.verificarEmail(txtEmail)) {
                 if (cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")) {
                     if (existeProveedor()) {
-                        sentencia = SentenciasSQL.sqlModificarProveedor + "No_documento = '" + txtDocumento.getText() + "', cod_tipo_documento = " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
-                                + ", Nombre = '" + txtNombre.getText() + "', Apellido = '" + txtApellido.getText() + "', Nombre_comercial = '" + txtComercio.getText() + "',"
-                                + " Telefono = '" + txtTelefono.getText() + "', email = '" + txtEmail.getText() + "', Pais = '" + txtPais.getText()
-                                + "', Ciudad = '" + cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion()
-                                + "', Localidad = '" + cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion()
-                                + "', direccion = '" + txtDireccion.getText() 
-                                + "', Productos = " + cmbArticulo.getSelectionModel().getSelectedItem().getId()
-                                + " where id_proveedor = " + id;
-                        ConexionInventario.EjecutarSQL(sentencia);
-                        actualizartabla();
-                        cerrarVentana(event);
+                        if (documentoValido(txtDocumento.getText())) {
+                            sentencia = SentenciasSQL.sqlModificarProveedor + "No_documento = '" + txtDocumento.getText() + "', cod_tipo_documento = " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
+                                    + ", Nombre = '" + txtNombre.getText() + "', Apellido = '" + txtApellido.getText() + "', Nombre_comercial = '" + txtComercio.getText() + "',"
+                                    + " Telefono = '" + txtTelefono.getText() + "', email = '" + txtEmail.getText() + "', Pais = '" + txtPais.getText()
+                                    + "', Ciudad = '" + cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion()
+                                    + "', Localidad = '" + cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion()
+                                    + "', direccion = '" + txtDireccion.getText()
+                                    + "', Productos = " + cmbArticulo.getSelectionModel().getSelectedItem().getId()
+                                    + " where id_proveedor = " + id;
+                            ConexionInventario.EjecutarSQL(sentencia);
+                            actualizartabla();
+                            cerrarVentana(event);
+                        }
                     }
                 } else {
                     Alertas.mensajeInformación("Tipo de Documento", "El Tipo de Documento no es válido.\n\tDebe ser CIF");
@@ -133,10 +136,10 @@ public class FXMLModificarProveedorController implements Initializable {
 
         cmbDocumento.getSelectionModel().select(new Item(proveedor.getCod_tipo_doc(), MetodosJavaClass.obtenerTipoDoc(proveedor.getCod_tipo_doc())));
         cmbProvincia.getSelectionModel().select(new Item(proveedor.getProvinciaProveedor()));
-        cmbMunicipio.getSelectionModel().select(new Item(proveedor.getCiudadProveedor()));        
-        cmbArticulo.getSelectionModel().select(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlCodigoBarrasID+ "'' or descripcion ='"+proveedor.getProductosProveedor()+"'"),
+        cmbMunicipio.getSelectionModel().select(new Item(proveedor.getCiudadProveedor()));
+        cmbArticulo.getSelectionModel().select(new Item(MetodosJavaClass.obtenerId(SentenciasSQL.sqlCodigoBarrasID + "'' or descripcion ='" + proveedor.getProductosProveedor() + "'"),
                 proveedor.getProductosProveedor()));
-        
+
         llenarCmb.llenarComboBox(listaArticulo, cmbArticulo, SentenciasSQL.sqlProductoProveedor);
         llenarCmb.llenarComboBox(listaDocumento, cmbDocumento, SentenciasSQL.sqlDocumento);
         llenarCmb.llenarComboBox(listaProvincias, cmbProvincia, SentenciasSQL.sqlProvincia);
@@ -146,6 +149,16 @@ public class FXMLModificarProveedorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    }
+
+    private boolean documentoValido(String identificacionDocumento) {
+        CalcularDocumentoIdentidadCIF documento = new CalcularDocumentoIdentidadCIF();
+        if (documento.isvalidoDocumentoIdentificacion(identificacionDocumento)) {
+            return true;
+        } else {
+            Alertas.mensajeError("Documento Inválido!!!");
+            return false;
+        }
     }
 
     @FXML

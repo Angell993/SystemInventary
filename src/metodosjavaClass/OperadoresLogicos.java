@@ -52,7 +52,7 @@ public class OperadoresLogicos {
     
     //Con este metodo quitamos los decimales cuando un número de como resultado 14.0 y si da lo contrario se deja el decimal
     private String quitardecimal(Double resul){
-        String retorno="";
+        String retorno;
         retorno = Double.toString(resul);
         if(resul % 1 == 0){
             retorno = retorno.substring(0, retorno.length()-2);

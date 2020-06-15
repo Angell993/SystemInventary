@@ -16,7 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import metodosjavaClass.Alertas;
-import metodosjavaClass.CalcularDocumentoIdentidadCIF;
+import clasesjava.CalcularDocumentoIdentidadCIF;
 import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.MetodosJavaClass;
 import metodosjavaClass.SentenciasSQL;
@@ -55,29 +55,28 @@ public class FXMLRegistrarProveedorController implements Initializable {
 
     @FXML
     private void registrarProveedor(ActionEvent event) {
-
         if (MetodosJavaClass.txtVacios(datosArray())) {
             if (MetodosJavaClass.cmbSeleccionado(cmbDocumento) && MetodosJavaClass.cmbSeleccionado(cmbProvincia)
                     && MetodosJavaClass.cmbSeleccionado(cmbMunicipio)) {
-                //if (documentoValido(txtDocumento.getText())) {
-                if (MetodosJavaClass.verificarEmail(txtEmail)) {
-                    if (cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")) {
-                        if (existeProveedor()) {
-                            String sInsert = SentenciasSQL.ingresarProveedor + "( '" + txtDocumento.getText() + "', " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
-                                    + ", ' " + txtNombre.getText() + "', '" + txtApellido.getText() + "', '" + txtComercio.getText() + "', '"
-                                    + txtTelefono.getText() + "', '" + txtEmail.getText() + "', '" + txtPais.getText()
-                                    + "', '" + cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion()
-                                    + "', '" + cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion()
-                                    + "', '" + txtDireccion.getText() + "', " + cmbArticulo.getSelectionModel().getSelectedItem().getId() + ")";
+                if (documentoValido(txtDocumento.getText())) {
+                    if (MetodosJavaClass.verificarEmail(txtEmail)) {
+                        if (cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")) {
+                            if (existeProveedor()) {
+                                String sInsert = SentenciasSQL.ingresarProveedor + "( '" + txtDocumento.getText() + "', " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
+                                        + ", ' " + txtNombre.getText() + "', '" + txtApellido.getText() + "', '" + txtComercio.getText() + "', '"
+                                        + txtTelefono.getText() + "', '" + txtEmail.getText() + "', '" + txtPais.getText()
+                                        + "', '" + cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion()
+                                        + "', '" + cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion()
+                                        + "', '" + txtDireccion.getText() + "', " + cmbArticulo.getSelectionModel().getSelectedItem().getId() + ")";
 
-                            ConexionInventario.EjecutarSQL(sInsert);
-                            cancelar(event);
+                                ConexionInventario.EjecutarSQL(sInsert);
+                                cancelar(event);
+                            }
+                        } else {
+                            Alertas.mensajeInformación("Tipo de Documento", "El Tipo de Documento no es válido.\n\tDebe ser CIF.");
                         }
-                    } else {
-                        Alertas.mensajeInformación("Tipo de Documento", "El Tipo de Documento no es válido.\n\tDebe ser CIF.");
                     }
                 }
-                //}
             }
         }
 
@@ -94,10 +93,8 @@ public class FXMLRegistrarProveedorController implements Initializable {
     private boolean documentoValido(String identificacionDocumento) {
         CalcularDocumentoIdentidadCIF documento = new CalcularDocumentoIdentidadCIF();
         if (documento.isvalidoDocumentoIdentificacion(identificacionDocumento)) {
-            System.out.println("Este Documento es valido " + identificacionDocumento);
             return true;
         } else {
-            System.out.println("Este Documento no es valido!!!!! " + identificacionDocumento);
             Alertas.mensajeError("Documento Inválido!!!");
             return false;
         }

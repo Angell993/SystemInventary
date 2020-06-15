@@ -16,7 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import metodosjavaClass.Alertas;
-import metodosjavaClass.CalcularDocumentoIdentidadCIF;
+import clasesjava.CalcularDocumentoIdentidadCIF;
 import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.MetodosJavaClass;
 import metodosjavaClass.SentenciasSQL;
@@ -65,20 +65,20 @@ public class FXMLRegistrarClienteController implements Initializable {
             if (MetodosJavaClass.cmbSeleccionado(cmbDocumento) && MetodosJavaClass.cmbSeleccionado(cmbProvincia) && MetodosJavaClass.cmbSeleccionado(cmbMunicipio)) {
                 if (MetodosJavaClass.verificarEmail(txtEmail)) {
                     if (!cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("CIF")) {
-                        ///if (documentoValido(txtDni.getText())) {
-                        if (existeCliente()) {
-                            String sInsert = SentenciasSQL.ingresarCliente + "('" + txtDni.getText()
-                                    + "', " + cmbDocumento.getSelectionModel().getSelectedItem().getId() + " , '" + txtNombre.getText() + "', '" + txtApellido.getText() + "', '"
-                                    + txtTelefono.getText() + "','" + txtEmail.getText() + "', '" + txtPais.getText() + "', '"
-                                    + cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion() + "', '"
-                                    + cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion() + "', '"
-                                    + txtDireccion.getText() + "' , " + Integer.valueOf(txtCodigoPostal.getText()) + " , "
-                                    + Integer.parseInt(txtEmpleado.getText()) + ");";
-                            ConexionInventario.EjecutarSQL(sInsert);
-                            cleanFields(event);
+                        if (documentoValido(txtDni.getText())) {
+                            if (existeCliente()) {
+                                String sInsert = SentenciasSQL.ingresarCliente + "('" + txtDni.getText()
+                                        + "', " + cmbDocumento.getSelectionModel().getSelectedItem().getId() + " , '" + txtNombre.getText() + "', '" + txtApellido.getText() + "', '"
+                                        + txtTelefono.getText() + "','" + txtEmail.getText() + "', '" + txtPais.getText() + "', '"
+                                        + cmbProvincia.getSelectionModel().getSelectedItem().getDescripcion() + "', '"
+                                        + cmbMunicipio.getSelectionModel().getSelectedItem().getDescripcion() + "', '"
+                                        + txtDireccion.getText() + "' , " + Integer.valueOf(txtCodigoPostal.getText()) + " , "
+                                        + Integer.parseInt(txtEmpleado.getText()) + ");";
+                                ConexionInventario.EjecutarSQL(sInsert);
+                                cleanFields(event);
+                            }
                         }
-                        // }
-                    }else{
+                    } else {
                         Alertas.mensajeInformación("Tipo de Documento", "El Tipo de Documento no es válido.\n\tNo puede ser CIF.");
                     }
                 }
@@ -97,7 +97,7 @@ public class FXMLRegistrarClienteController implements Initializable {
         if (documento.isvalidoDocumentoIdentificacion(identificacionDocumento)) {
             return true;
         } else {
-            Alertas.mensajeError( "Documento Inválido!!!");
+            Alertas.mensajeError("Documento Inválido!!!");
             return false;
         }
     }

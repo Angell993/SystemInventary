@@ -5,13 +5,13 @@ public class SentenciasSQL {
     /*
     *Sentencias SQL para cargar datos en un comboBox
      */
-    public static String sqlProvincia = "SELECT Id_provincia, provincia FROM provincias";
+    public static String sqlProvincia = "SELECT Id_provincia, provincia FROM provincias;";
     public static String sqlMunicipios = "SELECT provincia, municipio FROM municipios where provincia = ";
 
     /*
     *Sentencias Tipo de Documento, tipo de articulo y documento Proveedor
      */
-    public static String sqlDocumento = "SELECT id_tipo_documento, Descripcion from tipo_de_documento";
+    public static String sqlDocumento = "SELECT id_tipo_documento, Descripcion from tipo_de_documento;";
     public static String sqlDocumentoId = "SELECT id_tipo_documento, Descripcion from tipo_de_documento where id_tipo_documento =  ";
     public static String sqlTipoArticulo = "SELECT id_tipoarticulo, descripcion_articulo from tipo_articulo WHERE descripcion_articulo = ";
     public static String sqlNomComercioProveedor = "SELECT No_documento, Nombre_comercial from proveedor  WHERE  Nombre_comercial = ";
@@ -25,7 +25,7 @@ public class SentenciasSQL {
             + ", Pais, Ciudad, Localidad, Direccion, CodigoPostal, Empleado) VALUES ";
     public static String sqlModificarCliente = "UPDATE cliente SET ";
     public static String sqlEliminarCliente = "DELETE FROM cliente WHERE ";
-    public static String sqlConsultarDocumentoCliente = "SELECT Documento, Nombre, Apellidos from cliente";
+    public static String sqlConsultarDocumentoCliente = "SELECT Documento, Nombre, Apellidos from cliente;";
     public static String sqlClienteTabla = "Select id_Cliente, Documento,cod_tipo_documento, Nombre, Apellidos, Telefono, Pais, Ciudad, Localidad, Direccion, CodigoPostal, email, Empleado "
             + "from cliente ";
 
@@ -55,7 +55,7 @@ public class SentenciasSQL {
             + " from articulo inner join proveedor  on articulo.cod_proveedor = proveedor.No_documento "
             + " inner join tipo_articulo  on articulo.cod_tipo_articulo = tipo_articulo.id_tipoarticulo "
             + " inner join producto on articulo.codigo_barras = producto.id_articulo ";
-    public static String sqlTipArticulo = "SELECT * from tipo_articulo";
+    public static String sqlTipArticulo = "SELECT * from tipo_articulo;";
     public static String sqlProducto = "select producto.id_articulo, producto.descripcion, producto.codigo_barras from producto "
             + "inner join proveedor on producto.id_articulo=proveedor.Productos group by producto.id_articulo;";
     public static String sqlProveedorComb = "SELECT No_documento, Nombre_comercial from proveedor where Productos = ";
@@ -65,7 +65,7 @@ public class SentenciasSQL {
     /*
     *Sentencias para registrar Empleados
      */
-    public static String sqlPuesto = "SELECT * from puesto_empleado";
+    public static String sqlPuesto = "SELECT * from puesto_empleado;";
     public static String sqlIdPuesto = "SELECT Id_puesto, Descripcion from puesto_empleado where Descripcion = ";
     public static String ingresarEmpleado = "INSERT INTO empleado (codigoEmpleado, cod_tipodocumento, DNI_NIE, Nombre, Apellidos, Email, Puesto) VALUES ";
     public static String ingresarLogin = "INSERT INTO login (Id_empleado, Password) VALUES ";
@@ -78,8 +78,8 @@ public class SentenciasSQL {
     /*
     *Sentencias de la interfaz Ventas y Pago
      */
-    public static String sqlPago = "SELECT * from forma_de_pago";
-    public static String sqlConsultarFactura = "SELECT cod_factura from detalle_factura ";
+    public static String sqlPago = "SELECT * from forma_de_pago;";
+    public static String sqlConsultarFactura = "SELECT cod_factura from detalle_factura;";
     public static String sqlRegCompra = "INSERT INTO detalle_factura (cod_factura, cod_articulo, cantidad, total) VALUES ";
     public static String insertarFactura = "INSERT INTO factura (Nnm_factura, cod_empleado, Fecha_facturacion, cod_formapago, total_factura) VALUES ";
     public static String sqlArticulos = "SELECT id_articulo, nombre FROM articulo order by id_articulo;";
@@ -102,7 +102,7 @@ public class SentenciasSQL {
     /*
     *Sentencia de Registrar Devoluciones
      */
-    public static String sqlDevolucionFactura = "SELECT Nnm_factura from factura";
+    public static String sqlDevolucionFactura = "SELECT Nnm_factura from factura;";
     public static String sqlExisteCodeBar = "SELECT codigo_barras from  producto where codigo_barras = ";
     public static String ingresarDevolucion = "INSERT INTO devolucion (cod_detallefactura, cod_detallearticulo, Motivo, Fecha_devolucion, cantidad,"
             + " total_devolver, cod_empleado) VALUES ";
@@ -131,7 +131,7 @@ public class SentenciasSQL {
     public static String sqlTicket = "Select Nnm_factura from factura where id_factura = (select max(id_factura) from factura)";
 
     /*Imprimir etiquetas */
-    public static String sqlCodebar = "SELECT codigo_barras from producto";
+    public static String sqlCodebar = "SELECT codigo_barras from producto;";
     public static String sqlEtiquetaCodeBar = "select producto.codigo_barras, articulo.nombre, "
             + " ((articulo.precio_venta * (tipo_articulo.IVA / 100)) + articulo.precio_venta ) as precio_iva "
             + " from articulo inner join tipo_articulo on articulo.cod_tipo_articulo = tipo_articulo.id_tipoarticulo"

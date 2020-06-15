@@ -1,5 +1,6 @@
 package opciones;
 
+import clasesjava.CodigoBarras;
 import clasesjava.Item;
 import conexionbasedatos.ConexionInventario;
 import java.io.File;
@@ -24,8 +25,6 @@ public class FXMLGenerarCodeBarController implements Initializable {
 
     @FXML
     private TextField txtGuardar;
-    @FXML
-    private TextArea txtACodeBar;
     @FXML
     private ComboBox<Item> cmbArticulo;
     private final LLenarCombos llenacomb = new LLenarCombos();

@@ -55,9 +55,11 @@
          </children>
       </GridPane>
       <Button layoutX="83.0" layoutY="621.0" mnemonicParsing="false" onAction="#comprobarConexionCorreo" text="Comprobar Correo" />
-      <Label fx:id="lblCorreo" layoutX="289.0" layoutY="623.0" prefHeight="39.0" prefWidth="320.0" />
+      <Label fx:id="lblCorreo" layoutX="275.0" layoutY="623.0" prefHeight="39.0" prefWidth="349.0" />
       <Separator layoutY="402.0" prefWidth="820.0" />
-      <Button fx:id="siguiente" layoutX="635.0" layoutY="621.0" mnemonicParsing="false" onAction="#ingresarSistema" prefHeight="42.0" prefWidth="144.0" text="Siguiente" />
+      <Button fx:id="siguiente" layoutX="635.0" layoutY="621.0" mnemonicParsing="false" onAction="#ingresarSistema" prefHeight="42.0" prefWidth="145.0" text="Siguiente" />
       <Label layoutX="78.0" layoutY="690.0" prefHeight="28.0" prefWidth="297.0" text="Los campos son obligatorios (*)." textFill="#e40e0e" />
+      <Button fx:id="guardarCorreo" layoutX="635.0" layoutY="623.0" mnemonicParsing="false" onAction="#guardarCorreo" prefHeight="42.0" prefWidth="167.0" text="Guardar Correo" visible="false" />
+      <Button fx:id="guardar" layoutX="668.0" layoutY="332.0" mnemonicParsing="false" onAction="#guardarFileDB" text="Guardar DB" visible="false" />
    </children>
 </AnchorPane>

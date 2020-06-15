@@ -24,7 +24,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import metodosjavaClass.Alertas;
-import metodosjavaClass.CalcularDocumentoIdentidadCIF;
+import clasesjava.CalcularDocumentoIdentidadCIF;
 import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.MetodosJavaClass;
 import metodosjavaClass.SentenciasSQL;
@@ -54,16 +54,18 @@ public class FXMLRegistrarEmpleadoController implements Initializable {
                         && !cmbDocumento.getSelectionModel().getSelectedItem().getDescripcion().equals("PASAPORTE")) {
                     if (MetodosJavaClass.verificarEmail(txtEmail)) {
                         if (Alertas.puestoConfirmacion(cmbPuesto.getSelectionModel().getSelectedItem().getDescripcion())) {
-                            String sentencia = SentenciasSQL.ingresarEmpleado + " (" + Integer.parseInt(txtEmpleado.getText()) + ", " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
-                                    + " , '" + txtDocumento.getText() + "', '" + txtNombre.getText() + "', '" + txtApellido.getText() + "', '" + txtEmail.getText()
-                                    + "', " + cmbPuesto.getSelectionModel().getSelectedItem().getId() + ")";
-                            ConexionInventario.EjecutarSQL(sentencia);
-                            cancelar(event);
-                            registrarContrasenia(event);
-                            txtEmpleado.setText(String.valueOf(metodosJavaclass.identificadorEmpleado()));
-                        }else{
+                            if (documentoValido(txtDocumento.getText())) {
+                                String sentencia = SentenciasSQL.ingresarEmpleado + " (" + Integer.parseInt(txtEmpleado.getText()) + ", " + cmbDocumento.getSelectionModel().getSelectedItem().getId()
+                                        + " , '" + txtDocumento.getText() + "', '" + txtNombre.getText() + "', '" + txtApellido.getText() + "', '" + txtEmail.getText()
+                                        + "', " + cmbPuesto.getSelectionModel().getSelectedItem().getId() + ")";
+                                ConexionInventario.EjecutarSQL(sentencia);
+                                cancelar(event);
+                                registrarContrasenia(event);
+                                txtEmpleado.setText(String.valueOf(metodosJavaclass.identificadorEmpleado()));
+                            }
+                        } else {
                             Alertas.mensajeInformación("Puesto", "Elige otro cargo para el empleado.");
-                        }                       
+                        }
                     }
                 } else {
                     Alertas.mensajeInformación("Tipo de Documento", "El Tipo de Documento no es válido.\n\tNo puede ser CIF ni Pasaporte.");
@@ -109,10 +111,8 @@ public class FXMLRegistrarEmpleadoController implements Initializable {
     private boolean documentoValido(String identificacionDocumento) {
         CalcularDocumentoIdentidadCIF documento = new CalcularDocumentoIdentidadCIF();
         if (documento.isvalidoDocumentoIdentificacion(identificacionDocumento)) {
-            System.out.println("Este Documento es valido " + identificacionDocumento);
             return true;
         } else {
-            System.out.println("Este Documento no es valido!!!!! " + identificacionDocumento);
             Alertas.mensajeError("Documento Inválido!!!");
             return false;
         }

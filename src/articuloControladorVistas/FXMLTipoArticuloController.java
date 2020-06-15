@@ -23,9 +23,6 @@ public class FXMLTipoArticuloController implements Initializable {
     
     @FXML
     private void registrarTipoArticulo(ActionEvent event) {
-        /*if ((!txtArticulo.getText().isEmpty() && !txtIva.getText().isEmpty())) {
-            
-        }*/
         if (!txtArticulo.getText().isEmpty() && !txtIva.getText().isEmpty()) {
             registrarTipoAr();
         }

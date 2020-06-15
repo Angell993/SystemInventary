@@ -9,7 +9,6 @@ import java.math.RoundingMode;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +28,7 @@ import metodosjavaClass.Alertas;
 import metodosjavaClass.Fecha;
 import metodosjavaClass.MetodosJavaClass;
 import metodosjavaClass.SentenciasSQL;
-import reportesistemainventario.CrearInforme;
+import clasesjava.CrearInforme;
 
 public class FXMLDevolucionController implements Initializable {
 
@@ -65,7 +64,7 @@ public class FXMLDevolucionController implements Initializable {
     private ObservableList<Double> listaTotalCompra;
     private ObservableList<Venta> listaVenta;
     private ResultSet dato;
-    private ConexionDB con = new ConexionDB();
+    private final ConexionDB con = new ConexionDB();
     private String sentencia;
     private int empleado, n_Compra = 1;
     private double total;
@@ -123,36 +122,7 @@ public class FXMLDevolucionController implements Initializable {
     private int idArticulo(String nombre) {
         return MetodosJavaClass.obtenerId(SentenciasSQL.sqlIdArticulo + "'" + nombre + "'");
     }
-
-    private ObservableList<Item> cantidaId() {
-        cantidadId = FXCollections.observableArrayList();
-        if (cmbDevolucion.getSelectionModel().getSelectedItem().getId() == 2) {
-            for (int i = 0; i < listaArticulo.size(); i++) {
-                dato = ConexionInventario.sSQL(SentenciasSQL.sqlCantidad + idArticulo(listaArticulo.get(i).getNombreArticulo()));
-                try {
-                    while (dato.next()) {
-                        cantidadId.add(new Item(dato.getInt(1), dato.getString(2)));
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(FXMLDevolucionController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            return cantidadId;
-        } else {
-            for (int i = 0; i < listaVenta.size(); i++) {
-                dato = ConexionInventario.sSQL(SentenciasSQL.sqlCantidad + idArticulo(listaVenta.get(i).getNombreArticulo()));
-                try {
-                    while (dato.next()) {
-                        cantidadId.add(new Item(dato.getInt(1), dato.getString(2)));
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(FXMLDevolucionController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            return cantidadId;
-        }
-    }
-
+    
     @FXML
     private void añadirArticulo() {
         try {

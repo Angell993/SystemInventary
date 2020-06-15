@@ -32,7 +32,7 @@ public class MetodosJavaClass {
     }
 
     public static String quitarDecimal(Double precio) {
-        String retorno = "";
+        String retorno;
         retorno = Double.toString(precio);
         if (precio % 1 == 0) {
             retorno = retorno.substring(0, retorno.length() - 2);

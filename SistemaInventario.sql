@@ -341,7 +341,7 @@ primary key(Id_empleado)
 -- Cargar datos Empleado
 --
 Insert into `empleado`(Id_empleado, codigoEmpleado, cod_tipodocumento, DNI_NIE, Nombre, Apellidos, Email, Puesto)values
-(1, 1, 1, '9999999A', 'Juan Carlos', 'Toledo', 'hola@mundo.com', 1),
+(1, 1, 1, '9999999A', 'Juan Carlos', 'Otero', 'hola@mundo.com', 1),
 (2, 2, 2, 'D8888888B',  'Angel Bruno', 'Lopez', 'hola@mundo.es', 2);
 --
 -- Estructura de tabla para la tabla Login
@@ -372,8 +372,7 @@ primary key(Id_puesto)
 --
 INSERT INTO `puesto_empleado` (`Id_puesto`, `Descripcion`) VALUES
 (1, 'Administrador'),
-(2, 'Usuario'),
-(3, 'ControlerAdmin');
+(2, 'Usuario');
 
 --
 -- Filtros para las tablas descargadas (dump)

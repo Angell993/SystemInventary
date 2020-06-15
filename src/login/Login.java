@@ -21,7 +21,7 @@ public class Login extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("/login/FXMLIngresar.fxml"));
 
             Scene scene = new Scene(root);
-            stage.setTitle("Sistema Inventario");
+            stage.setTitle("Sistema Inventario & Venta");
             stage.getIcons().add(new Image(getClass().getResource("/imagenes/iconoInventario.png").toExternalForm()));
             stage.setScene(scene);
             stage.show();
@@ -29,7 +29,7 @@ public class Login extends Application {
             Parent root = FXMLLoader.load(getClass().getResource("/configuracionadministrador/FXMLAdministradorConfig.fxml"));
 
             Scene scene = new Scene(root);
-            stage.setTitle("Sistema Inventario");
+            stage.setTitle("Sistema Inventario & Venta");
             stage.getIcons().add(new Image(getClass().getResource("/imagenes/iconoInventario.png").toExternalForm()));
             stage.setScene(scene);
             stage.show();

@@ -30,7 +30,7 @@ import metodosjavaClass.LLenarCombos;
 import metodosjavaClass.MetodosJavaClass;
 import metodosjavaClass.SentenciasSQL;
 import metodosjavaClass.VentanaRootPane;
-import reportesistemainventario.CrearInforme;
+import clasesjava.CrearInforme;
 
 public class FXMLPagoController implements Initializable {
 

@@ -38,7 +38,7 @@ public class FXMLAdministradorConfigController implements Initializable {
     @FXML
     private Label lblConexion, lblCorreo;
     @FXML
-    private Button siguiente;
+    private Button siguiente, guardar, guardarCorreo;
     private Boolean verifica = false, conexionAcess = false;
     private ConexionDB conexion;
     private final Fichero fich = new Fichero();
@@ -72,6 +72,7 @@ public class FXMLAdministradorConfigController implements Initializable {
                 lblConexion.setText("Conexión Fallida!!");
             } else {
                 lblConexion.setText("Conexón OK");
+                conexionAcess = true;
             }
         } else {
             if (!txtUrl.getText().isEmpty() && !txtUsuario.getText().isEmpty() && !txtPass.getText().isEmpty()) {
@@ -80,12 +81,38 @@ public class FXMLAdministradorConfigController implements Initializable {
                     lblConexion.setText("Conexión Fallida!!");
                 } else {
                     lblConexion.setText("Conexón OK");
-                    fich.escribirObjeto(txtUrl.getText(), txtUsuario.getText(), txtPass.getText());
+                    fich.escribirObjeto(txtUrl.getText(), txtUsuario.getText(), txtPass.getText(), false);
                     conexionAcess = true;
                 }
-            }else{
+            } else {
                 Alertas.mensajeAdvertencia("Campos", "Los campos están vacios.");
             }
+        }
+    }
+
+    @FXML
+    private void guardarFileDB() {
+        if (!txtUrl.getText().isEmpty() && !txtUsuario.getText().isEmpty() && !txtPass.getText().isEmpty()) {
+            if (conexionAcess) {
+                if (Alertas.guadarFile()) {
+                    fich.escribirObjeto(txtUrl.getText(), txtUsuario.getText(), txtPass.getText(), verifica);
+                }
+            }
+        }else{
+            Alertas.mensajeAdvertencia("Data Base", "Los campos están vacios.");            
+        }
+    }
+
+    @FXML
+    private void guardarCorreo() {
+        if (!txtCorreoEmpresa.getText().isEmpty() && !txtCorreoPass.getText().isEmpty()) {
+            if (verifica) {
+                if (Alertas.guadarFile()) {
+                    fich.escribirObjeto(txtCorreoEmpresa.getText(), txtCorreoPass.getText(), verifica);
+                }
+            }
+        } else {
+            Alertas.mensajeAdvertencia("Correo", "Los campos están vacios.");
         }
     }
 
@@ -128,7 +155,9 @@ public class FXMLAdministradorConfigController implements Initializable {
                 transport.close();
 
                 lblCorreo.setText("Comprueba tu correo electónico OK");
-                fich.escribirObjeto(txtCorreoEmpresa.getText(), txtCorreoPass.getText());
+                if (!verifica) {
+                    fich.escribirObjeto(txtCorreoEmpresa.getText(), txtCorreoPass.getText(), verifica);
+                }
             }
         } catch (AddressException ex) {
             Logger.getLogger(FXMLCorreoController.class.getName()).log(Level.SEVERE, null, ex);
@@ -174,6 +203,8 @@ public class FXMLAdministradorConfigController implements Initializable {
         this.verifica = verifica;
         if (verifica) {
             siguiente.setVisible(false);
+            guardar.setVisible(true);
+            guardarCorreo.setVisible(true);
             txtPass.setText(fich.leerObjetoDB().getPass());
         }
     }

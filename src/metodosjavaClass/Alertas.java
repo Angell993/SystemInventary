@@ -61,6 +61,15 @@ public class Alertas {
         return action.get() != ButtonType.CANCEL;
     }
     
+    public static Boolean guadarFile() {
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setTitle("Modificar");
+        alerta.setHeaderText(null);
+        alerta.setContentText("¿Estas seguro que deseas modificar el fichero de Comfiguración?");
+        Optional<ButtonType> action = alerta.showAndWait();
+        return action.get() != ButtonType.CANCEL;
+    }
+    
     public static Boolean puestoConfirmacion(String puesto) {
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setTitle("Puesto");

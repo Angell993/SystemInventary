@@ -74,7 +74,7 @@ public class FXMLIngresarController implements Initializable {
     private void ingresarSystem(ActionEvent event) {
         try {
             conectar = new ConexionDB();
-            String sql = "select * from login";
+            String sql = "select * from login;";
             datos = ConexionInventario.sSQL(sql);
             try {
                 while (datos.next()) {
@@ -173,7 +173,7 @@ public class FXMLIngresarController implements Initializable {
             conectar = new ConexionDB();
             try {
                 if (empleado == Integer.valueOf(usuario.getText())) {
-                    String sql = "select * from login where id_empleado=  " + empleado;
+                    String sql = "select * from login where id_empleado=  " + empleado+";";
                     datos = ConexionInventario.sSQL(sql);
 
                     while (datos.next()) {
