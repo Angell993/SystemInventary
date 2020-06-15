@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -41,35 +43,40 @@
             <Button fx:id="btnSalir" contentDisplay="RIGHT" layoutX="228.0" layoutY="380.0" mnemonicParsing="false" onAction="#desconectar" prefHeight="44.0" prefWidth="155.0" text="Salir" textFill="#fcfcfc" />
             </children>
         </AnchorPane>
-      <Label fx:id="lbl1" layoutX="74.0" layoutY="30.0" text="SISTEMA DE INVENTARIO" textAlignment="JUSTIFY" textFill="#75f90c">
+      <Label fx:id="lbl1" layoutX="50.0" layoutY="32.0" text="SISTEMA DE INVENTARIO" textAlignment="JUSTIFY" textFill="#fafafa">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <Label fx:id="lbl2" layoutX="190.0" layoutY="80.0" text="VENTA" textFill="#75f90c">
+      <Label fx:id="lbl2" layoutX="166.0" layoutY="94.0" text="VENTA" textFill="#fafafa">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <Label fx:id="lbl3" layoutX="30.0" layoutY="152.0" text="REALIZADO POR:" textFill="#f5f4f4">
+      <Label fx:id="lbl3" layoutX="14.0" layoutY="349.0" text="DEVELOPED BY:" textFill="#fafafa">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <Label fx:id="lbl4" layoutX="21.0" layoutY="213.0" text="LOPEZ TADAY ANGEL BRUNO" textFill="#fffefe">
+      <Label fx:id="lbl4" layoutX="30.0" layoutY="396.0" text="LOPEZ TADAY ANGEL BRUNO" textFill="#fffefe">
          <font>
-            <Font name="Times New Roman" size="28.0" />
+            <Font name="Times New Roman" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="lbl5" layoutX="176.0" layoutY="260.0" text="JM&amp;AL" textFill="#f5f3f3">
+      <Label fx:id="lbl6" layoutX="30.0" layoutY="424.0" text="OTERO MARTÍNEZ JUAN CARLOS" textFill="#f8f7f7">
+         <font>
+            <Font name="Times New Roman" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="lbl21" layoutX="201.0" layoutY="62.0" text="Y" textFill="#f88000">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <Label fx:id="lbl6" layoutX="12.0" layoutY="321.0" text="OTERO MARTÍNEZ JUAN CARLOS" textFill="#f8f7f7">
-         <font>
-            <Font name="Times New Roman" size="28.0" />
-         </font>
-      </Label>
+      <ImageView fitHeight="114.0" fitWidth="249.0" layoutX="85.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/Logo.PNG" />
+         </image>
+      </ImageView>
     </children>
 </AnchorPane>
