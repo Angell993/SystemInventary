@@ -38,8 +38,6 @@
 }
 
 
-/*Login error no funciona no se porque*/
-
 .error-ingresar{
     -fx-border-color: -fx-red;
 }
