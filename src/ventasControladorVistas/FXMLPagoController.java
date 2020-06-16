@@ -144,6 +144,9 @@ public class FXMLPagoController implements Initializable {
                     } catch (SQLException ex) {
                         Logger.getLogger(FXMLPagoController.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                }else{
+                    lblImporte.setText(null);
+                    txtImporte.setText("0,00");
                 }
             }
         }
