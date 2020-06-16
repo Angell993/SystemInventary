@@ -132,7 +132,7 @@ public class FXMLPagoController implements Initializable {
                         sentencia = SentenciasSQL.insertarFactura + "('" + txtFactura.getText()
                                 + "', " + Integer.parseInt(codEmpleado.getText()) + " ,'" + Fecha.fechaSQl()
                                 + "', " + combPago.getSelectionModel().getSelectedItem().getId()
-                                + " , " + MetodosJavaClass.isDouble(txtImporte.getText(), "Importe") + " )";
+                                + " , " + MetodosJavaClass.quitarComa(lblTotal.getText()) + " )";
 
                         ConexionInventario.EjecutarSQL(sentencia);
                         Alertas.mensajeInformación("Cambio", "El cambio a recibir.\n" + String.valueOf(cambio()));
