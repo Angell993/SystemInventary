@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import metodosjavaClass.MetodosJavaClass;
 import static metodosjavaClass.VentanaRootPane.closeVentana;
@@ -36,6 +37,8 @@ public class FXMLIngresarController implements Initializable {
     private Label error, lbl1, lbl2, lbl3, lbl4, lbl5, lbl6;
     @FXML
     private FontAwesomeIconView fontCandado, fontUser, fontLlave;
+    @FXML
+    private ImageView logo;
     @FXML
     private TextField usuario;
     @FXML
@@ -160,6 +163,7 @@ public class FXMLIngresarController implements Initializable {
         lbl4.setVisible(false);
         lbl5.setVisible(false);
         lbl6.setVisible(false);
+        logo.setVisible(false);
         fontCandado.getStyleClass().add("candado");
         fontUser.getStyleClass().add("userllave");
         fontLlave.getStyleClass().add("userllave");

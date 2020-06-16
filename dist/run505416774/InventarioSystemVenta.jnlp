@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="InventarioSystemVenta.jnlp">
+  <information>
+    <title>InventarioSystemVenta</title>
+    <vendor>Angel Lopez y Juan  Carlos Otero</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="InventarioSystemVenta.jar" size="2694643" download="eager" />
+    <jar href="lib\com.lowagie.text-2.1.7.jar" size="1782376" download="eager" />
+    <jar href="lib\commons-beanutils-1.8.3.jar" size="232019" download="eager" />
+    <jar href="lib\commons-digester-2.1.jar" size="196768" download="eager" />
+    <jar href="lib\commons-javaflow.jar" size="96529" download="eager" />
+    <jar href="lib\commons-logging-1.1.jar" size="52915" download="eager" />
+    <jar href="lib\commons.collections-3.2.1.jar" size="582765" download="eager" />
+    <jar href="lib\fontawesomefx-8.9.jar" size="571068" download="eager" />
+    <jar href="lib\iText-5.0.5.jar" size="1599728" download="eager" />
+    <jar href="lib\jasperreports-6.3.0.jar" size="5400490" download="eager" />
+    <jar href="lib\mail.jar" size="521052" download="eager" />
+    <jar href="lib\mysql-connector-java-5.1.48-bin.jar" size="1006959" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="InventarioSystemVenta" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="login.Login"  name="InventarioSystemVenta" />
+  <update check="always"/>
+</jnlp>

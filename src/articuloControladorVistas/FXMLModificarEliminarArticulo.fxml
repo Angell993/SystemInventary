@@ -29,7 +29,7 @@
          </graphic></Button>
       <AnchorPane layoutX="-3.0" prefHeight="58.0" prefWidth="1306.0" styleClass="titulo" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label contentDisplay="CENTER" layoutX="27.0" layoutY="8.0" prefHeight="43.0" prefWidth="354.0" styleClass="titulo" text="Modificar  &amp;  Eliminar  Artículo">
+            <Label contentDisplay="CENTER" layoutX="27.0" layoutY="8.0" prefHeight="43.0" prefWidth="354.0" styleClass="titulo" text="Control de Stock">
                <font>
                   <Font size="29.0" />
                </font>

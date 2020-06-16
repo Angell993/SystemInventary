@@ -68,12 +68,12 @@
             <Font name="Times New Roman" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="lbl21" layoutX="201.0" layoutY="62.0" text="Y" textFill="#f88000">
+      <Label fx:id="lbl5" layoutX="201.0" layoutY="62.0" text="Y" textFill="#f88000">
          <font>
             <Font size="28.0" />
          </font>
       </Label>
-      <ImageView fitHeight="114.0" fitWidth="249.0" layoutX="85.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="logo" fitHeight="114.0" fitWidth="249.0" layoutX="85.0" layoutY="187.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/Logo.PNG" />
          </image>

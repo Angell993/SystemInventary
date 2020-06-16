@@ -122,26 +122,28 @@ public class FXMLPagoController implements Initializable {
         if (cambio() >= 0) {
             String url = "src/ticket&factura/Ticket";
             if (MetodosJavaClass.cmbSeleccionado(combPago)) {
-                try {
-                    transaction.setAutoCommit(false);
-                    registrarCompraDetalle();
-                    actualizarDatosDB();
-                    transaction.commit();
-                    transaction.close();
-                    sentencia = SentenciasSQL.insertarFactura + "('" + txtFactura.getText()
-                            + "', " + Integer.parseInt(codEmpleado.getText()) + " ,'" + Fecha.fechaSQl()
-                            + "', " + combPago.getSelectionModel().getSelectedItem().getId()
-                            + " , " + MetodosJavaClass.quitarComa(lblTotal.getText()) + " )";
+                if (MetodosJavaClass.isDouble(txtImporte.getText(), "Importe")) {
+                    try {
+                        transaction.setAutoCommit(false);
+                        registrarCompraDetalle();
+                        actualizarDatosDB();
+                        transaction.commit();
+                        transaction.close();
+                        sentencia = SentenciasSQL.insertarFactura + "('" + txtFactura.getText()
+                                + "', " + Integer.parseInt(codEmpleado.getText()) + " ,'" + Fecha.fechaSQl()
+                                + "', " + combPago.getSelectionModel().getSelectedItem().getId()
+                                + " , " + MetodosJavaClass.isDouble(txtImporte.getText(), "Importe") + " )";
 
-                    ConexionInventario.EjecutarSQL(sentencia);
-                    Alertas.mensajeInformación("Cambio", "El cambio a recibir.\n" + String.valueOf(cambio()));
-                    //if (ticket) {
-                    CrearInforme ventaTicket = new CrearInforme();
-                    ventaTicket.ticketVenta(txtFactura.getText(), url);
-                    //}
-                    cargarNuevaVentana();
-                } catch (SQLException ex) {
-                    Logger.getLogger(FXMLPagoController.class.getName()).log(Level.SEVERE, null, ex);
+                        ConexionInventario.EjecutarSQL(sentencia);
+                        Alertas.mensajeInformación("Cambio", "El cambio a recibir.\n" + String.valueOf(cambio()));
+                        if (ticket) {
+                            CrearInforme ventaTicket = new CrearInforme();
+                            ventaTicket.ticketVenta(txtFactura.getText(), url);
+                        }
+                        cargarNuevaVentana();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(FXMLPagoController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
         }
