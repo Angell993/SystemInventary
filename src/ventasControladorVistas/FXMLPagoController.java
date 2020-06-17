@@ -238,7 +238,7 @@ public class FXMLPagoController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/ventasControladorVistas/FXMLRegistrarVenta.fxml"));
             AnchorPane root = loader.load();
             FXMLRegistrarVentaController registrar = loader.getController();
-            registrar.registrarMasCompra(listaVenta, txtFactura.getText(), codEmpleado.getText(), rootPane);
+            registrar.registrarMasCompra(listaVenta, txtFactura.getText(), codEmpleado.getText(), rootPane, idCantidadCompra);
             rootPane.getChildren().setAll(root);
         } catch (IOException ex) {
             Logger.getLogger(FXMLPagoController.class.getName()).log(Level.SEVERE, null, ex);

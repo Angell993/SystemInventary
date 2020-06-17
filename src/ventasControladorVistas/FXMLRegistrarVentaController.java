@@ -266,7 +266,8 @@ public class FXMLRegistrarVentaController implements Initializable {
         transaction = con.conectar();
     }
 
-    public void registrarMasCompra(ObservableList<Venta> listventa, String factura, String codEmpleado, AnchorPane rootPane) {
+    public void registrarMasCompra(ObservableList<Venta> listventa, String factura, String codEmpleado, AnchorPane rootPane, ObservableList<Item> idCantidadComprada) {
+        this.idCantidadComprada = idCantidadComprada;
         this.anchorPane = rootPane;
         this.codEmpleado = codEmpleado;
         transaction = con.conectar();
